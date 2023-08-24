@@ -11,6 +11,7 @@ SITEURL = ""
 
 PATH = "content"
 STATIC_PATHS = ["images", "downloads", "static"]
+EXTRA_PATH_METADATA = {'static/favicon.ico': {'path': 'favicon.ico'},}
 
 TIMEZONE = "Australia/Sydney"
 
