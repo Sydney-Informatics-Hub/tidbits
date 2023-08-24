@@ -79,14 +79,3 @@ pelican --listen --autoreload
 ```
 
 and opening `http://localhost:8000` in your browser.
-
-To rebuild the published version of the site, run:
-
-```bash
-pelican -s publishconf.py
-```
-
-Unlike Jekyll, Github Pages does not automatically build sites
-using Pelican, so to have the pages show up, we need to build
-it ourself and commit the contents of the `docs/` folder to the repo.
-MM will rebuild the output when necessary.
