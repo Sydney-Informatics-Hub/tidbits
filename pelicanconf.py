@@ -19,7 +19,7 @@ DEFAULT_LANG = "en"
 # Theme settings
 THEME = alchemy.path()
 THEME_TEMPLATES_OVERRIDES = ["custom_templates"]
-THEME_CSS_OVERRIDES = ["/static/css/tag_cloud.css", "/static/css/tipuesearch.css"]
+THEME_CSS_OVERRIDES = ["/static/css/tag_cloud.css"]
 THEME_JS_OVERRIDES = [
     "https://code.jquery.com/jquery-3.6.0.min.js",
     "/static/js/tipuesearch.min.js",
