@@ -8,20 +8,20 @@
 
   <title>  Getting ggplot to start at 0,0 | SIH Tech Tidbits
 </title>
-  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/getting-ggplot-to-start-at-00.html">
+  <link rel="canonical" href="https://sydney-informatics-hub.github.io/tidbits/getting-ggplot-to-start-at-00.html">
 
 
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/static/css/tipuesearch.css">
 
   <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
-        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/all.atom.xml">
   <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
-        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/r.atom.xml">  
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/r.atom.xml">  
   <meta name="description" content="This is not really a tech tidbit in itself, but is something that would be helpful for many of us when we need it, so I'm reposting/adapting it from …">
 
 
@@ -32,7 +32,7 @@
     <div class="container">
 <div class="row">
   <div class="col-sm-12">
-    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+    <h1 class="title"><a href="https://sydney-informatics-hub.github.io/tidbits/">SIH Tech Tidbits</a></h1>
       <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
   </div>
 </div>
@@ -79,14 +79,14 @@
         </li>
         <li class="list-inline-item">
           <i class="fas fa-folder-open"></i>
-          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/r.html">R</a>
+          <a href="https://sydney-informatics-hub.github.io/tidbits/category/r.html">R</a>
         </li>
           <li class="list-inline-item">
             <i class="fas fa-user"></i>
-              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/darya-vanichkina.html">Darya Vanichkina</a>          </li>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/author/darya-vanichkina.html">Darya Vanichkina</a>          </li>
           <li class="list-inline-item">
             <i class="fas fa-tag"></i>
-              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/r.html">#r</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/ggplot.html">#ggplot</a>          </li>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/tag/r.html">#r</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/ggplot.html">#ggplot</a>          </li>
       </ul>
     </header>
     <div class="content">
@@ -99,16 +99,16 @@
 <div class="highlight"><pre><span></span><code>mpg %&gt;% ggplot(aes(x = hwy-12, y = cty)) + geom_point()
 </code></pre></div>
 
-<p><img alt="image1" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/ggplotnonzero.png"></p>
+<p><img alt="image1" src="https://sydney-informatics-hub.github.io/tidbits/images/ggplotnonzero.png"></p>
 <p>Adding the above options results in things starting at (0,0), but you lose some data (as in this SO post)</p>
-<p><img alt="image2" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/ggplotnolimits.png"></p>
+<p><img alt="image2" src="https://sydney-informatics-hub.github.io/tidbits/images/ggplotnolimits.png"></p>
 <p>You also have to set the limits options to ensure all of the data is displayed!</p>
 <div class="highlight"><pre><span></span><code>mpg %&gt;% ggplot(aes(x = hwy-12, y = cty)) + geom_point() + theme_bw() + 
 scale_x_continuous(limits = c(0,40), expand = c(0, 0)) + 
 scale_y_continuous(limits = c(0,40), expand = c(0, 0)) 
 </code></pre></div>
 
-<p><img alt="image3" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/ggplotproperlimits.png"></p>
+<p><img alt="image3" src="https://sydney-informatics-hub.github.io/tidbits/images/ggplotproperlimits.png"></p>
 <p>Finally, if you don't want to manually specify the limits you can use the below:</p>
 <div class="highlight"><pre><span></span><code>mpg %&gt;% ggplot(aes(x = hwy-12, y = cty)) + geom_point() + theme_bw() + 
     scale_y_continuous(limits = c(0, NA),
@@ -117,7 +117,7 @@ scale_y_continuous(limits = c(0,40), expand = c(0, 0))
                        expand = expansion(mult = c(0, 0.1)))
 </code></pre></div>
 
-<p><img alt="image4" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/ggplotanotherapproach.png"></p>
+<p><img alt="image4" src="https://sydney-informatics-hub.github.io/tidbits/images/ggplotanotherapproach.png"></p>
     </div>
   </article>
     </div>
@@ -127,10 +127,10 @@ scale_y_continuous(limits = c(0,40), expand = c(0, 0))
     <div class="container">
 <div class="row">
   <ul class="col-sm-6 list-inline">
-      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
-    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
-    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
-      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/tags.html">Tags</a></li>
   </ul>
   <p class="col-sm-6 text-sm-right text-muted">
     Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
@@ -140,10 +140,10 @@ scale_y_continuous(limits = c(0,40), expand = c(0, 0))
   </footer>
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
