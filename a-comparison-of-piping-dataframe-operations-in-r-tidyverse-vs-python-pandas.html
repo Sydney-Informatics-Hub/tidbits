@@ -8,20 +8,20 @@
 
   <title>  A comparison of piping dataframe operations in R Tidyverse vs Python Pandas | SIH Tech Tidbits
 </title>
-  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/a-comparison-of-piping-dataframe-operations-in-r-tidyverse-vs-python-pandas.html">
+  <link rel="canonical" href="https://sydney-informatics-hub.github.io/tidbits/a-comparison-of-piping-dataframe-operations-in-r-tidyverse-vs-python-pandas.html">
 
 
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/static/css/tipuesearch.css">
 
   <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
-        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/all.atom.xml">
   <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
-        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/python.atom.xml">  
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/python.atom.xml">  
   <meta name="description" content="Getting the dataset Flight data downloaded from https://raw.githubusercontent.com/apache-superset/examples-data/master/tutorial_flights.csv: R library(dplyr) library(readr) data <- read_csv("https://raw.githubusercontent.com/apache-superset/examples-data/master …">
 
 
@@ -32,7 +32,7 @@
     <div class="container">
 <div class="row">
   <div class="col-sm-12">
-    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+    <h1 class="title"><a href="https://sydney-informatics-hub.github.io/tidbits/">SIH Tech Tidbits</a></h1>
       <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
   </div>
 </div>
@@ -79,14 +79,14 @@
         </li>
         <li class="list-inline-item">
           <i class="fas fa-folder-open"></i>
-          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/python.html">Python</a>
+          <a href="https://sydney-informatics-hub.github.io/tidbits/category/python.html">Python</a>
         </li>
           <li class="list-inline-item">
             <i class="fas fa-user"></i>
-              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/sergio-pintaldi.html">Sergio Pintaldi</a>          </li>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/author/sergio-pintaldi.html">Sergio Pintaldi</a>          </li>
           <li class="list-inline-item">
             <i class="fas fa-tag"></i>
-              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/python.html">#Python</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/pandas.html">#Pandas</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/r.html">#R</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/pipe.html">#pipe</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/tidy.html">#Tidy</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/dplyr.html">#dplyr</a>          </li>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/tag/python.html">#Python</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/pandas.html">#Pandas</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/r.html">#R</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/pipe.html">#pipe</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/tidy.html">#Tidy</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/dplyr.html">#dplyr</a>          </li>
       </ul>
     </header>
     <div class="content">
@@ -260,7 +260,7 @@ $<span class="s2"> tot_cost_country_euro     &lt;dbl&gt; 489900.229, 489900.229,
 </code></pre></div>
 
 <p>Output:</p>
-<p><img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/dataframe-pipe-r-vs-pandas/r_plot.png"></p>
+<p><img alt="" src="https://sydney-informatics-hub.github.io/tidbits/images/dataframe-pipe-r-vs-pandas/r_plot.png"></p>
 <h2>Python</h2>
 <div class="highlight"><pre><span></span><code><span class="p">(</span>
     <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Origin Country&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Germany&quot;</span><span class="p">]</span>
@@ -280,7 +280,7 @@ $<span class="s2"> tot_cost_country_euro     &lt;dbl&gt; 489900.229, 489900.229,
 </code></pre></div>
 
 <p>Output:</p>
-<p><img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/dataframe-pipe-r-vs-pandas/python_plot.png"></p>
+<p><img alt="" src="https://sydney-informatics-hub.github.io/tidbits/images/dataframe-pipe-r-vs-pandas/python_plot.png"></p>
 <h1>Data pipelines</h1>
 <p>A classic data pipeline with loading, processing, writing steps:</p>
 <h2>R</h2>
@@ -352,10 +352,10 @@ $<span class="s2"> tot_cost_country_euro     &lt;dbl&gt; 489900.229, 489900.229,
     <div class="container">
 <div class="row">
   <ul class="col-sm-6 list-inline">
-      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
-    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
-    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
-      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/tags.html">Tags</a></li>
   </ul>
   <p class="col-sm-6 text-sm-right text-muted">
     Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
@@ -365,10 +365,10 @@ $<span class="s2"> tot_cost_country_euro     &lt;dbl&gt; 489900.229, 489900.229,
   </footer>
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

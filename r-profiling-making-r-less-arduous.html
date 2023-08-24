@@ -8,20 +8,20 @@
 
   <title>  R Profiling: Making R less aRduous | SIH Tech Tidbits
 </title>
-  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/r-profiling-making-r-less-arduous.html">
+  <link rel="canonical" href="https://sydney-informatics-hub.github.io/tidbits/r-profiling-making-r-less-arduous.html">
 
 
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
-  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/static/css/tipuesearch.css">
 
   <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
-        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/all.atom.xml">
   <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
-        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/r.atom.xml">  
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/r.atom.xml">  
   <meta name="description" content="Table of contents: Brief introduction to profiling, and why we might want to do it Methods to measure function speed/performance Ways to generate function profiles Visualizing and analaysing profiles …">
 
 
@@ -32,7 +32,7 @@
     <div class="container">
 <div class="row">
   <div class="col-sm-12">
-    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+    <h1 class="title"><a href="https://sydney-informatics-hub.github.io/tidbits/">SIH Tech Tidbits</a></h1>
       <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
   </div>
 </div>
@@ -79,14 +79,14 @@
         </li>
         <li class="list-inline-item">
           <i class="fas fa-folder-open"></i>
-          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/r.html">R</a>
+          <a href="https://sydney-informatics-hub.github.io/tidbits/category/r.html">R</a>
         </li>
           <li class="list-inline-item">
             <i class="fas fa-user"></i>
-              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/henry-lydecker.html">Henry Lydecker</a>          </li>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/author/henry-lydecker.html">Henry Lydecker</a>          </li>
           <li class="list-inline-item">
             <i class="fas fa-tag"></i>
-              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/r.html">#r</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/profiling.html">#profiling</a>          </li>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/tag/r.html">#r</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/profiling.html">#profiling</a>          </li>
       </ul>
     </header>
     <div class="content">
@@ -280,7 +280,7 @@
 <span class="nf">library</span><span class="p">(</span><span class="n">proftools</span><span class="p">)</span>
 </code></pre></div>
 
-<p><img alt="plot of chunk unnamed-chunk-2" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/r_profiling/rstudio_gui_profile.png"></p>
+<p><img alt="plot of chunk unnamed-chunk-2" src="https://sydney-informatics-hub.github.io/tidbits/images/r_profiling/rstudio_gui_profile.png"></p>
 <h2>Basic R profiling: Create a profile of your function</h2>
 <p>To profile your code, you can just go up to the profiling menu tab and click "start profiling". However, another option is to manually start profiling with code. I've shown how to do this here. I first start profiling with <strong>Rprof()</strong>, where you can see I specified a name for the profile output to be saved. I then run the code I want to profile. Once this is done, I then stopped profiling byt clicking on the red box in R studio's GUI.</p>
 <div class="highlight"><pre><span></span><code><span class="nf">Rprof</span><span class="p">(</span><span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;demo_prof.out&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1"># file name for your profile</span>
@@ -294,10 +294,10 @@
 <span class="c1"># Click on the red box in the console in R studio to end profiling.</span>
 </code></pre></div>
 
-<p><img src="https://pages.github.sydney.edu.au/informatics/tidbits/images/r_profiling/stop_profiling.png" title="plot of chunk red clicky box" alt="plot of chunk red clicky box" width="400px" /></p>
+<p><img src="https://sydney-informatics-hub.github.io/tidbits/images/r_profiling/stop_profiling.png" title="plot of chunk red clicky box" alt="plot of chunk red clicky box" width="400px" /></p>
 <h2>Basic R profiling: Results</h2>
 <p>When you stop profiling, a profile visualization is generated by the <strong>profvis</strong> package. This visualization shows two things. One shows your code line by line with measurements of memory consumption and time consumption for each line. You also get to see a flame graph, which show long long each bit of code took to run. This can be scrolled and zoomed, but can be a bit hard to understand.</p>
-<p><img src="https://pages.github.sydney.edu.au/informatics/tidbits/images/r_profiling/prof_results1.png" title="plot of chunk example profile" alt="plot of chunk example profile" width="800px" /><img src="https://pages.github.sydney.edu.au/informatics/tidbits/images/r_profiling/prof_results2.png" title="plot of chunk example profile" alt="plot of chunk example profile" width="800px" /></p>
+<p><img src="https://sydney-informatics-hub.github.io/tidbits/images/r_profiling/prof_results1.png" title="plot of chunk example profile" alt="plot of chunk example profile" width="800px" /><img src="https://sydney-informatics-hub.github.io/tidbits/images/r_profiling/prof_results2.png" title="plot of chunk example profile" alt="plot of chunk example profile" width="800px" /></p>
 <p>I personally find the line by line measurements to be the most useful bit. Here we can see that two helper functions are consuming a fair chunk of memory and are taking a bit of time to process.</p>
 <h2>Basic R profiling: Flame Graph</h2>
 <p>However, you can also bring back in the profile output and manually create a flame graph using a <strong>proftools</strong> function. This can be more easily read. </p>
@@ -305,7 +305,7 @@
 <span class="nf">flameGraph</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span>
 </code></pre></div>
 
-<p><img alt="plot of chunk rainbow flame graph" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/r_profiling/rainbow flame graph-1.png"></p>
+<p><img alt="plot of chunk rainbow flame graph" src="https://sydney-informatics-hub.github.io/tidbits/images/r_profiling/rainbow flame graph-1.png"></p>
 <p>From this flame graph you can see that some portions of the code took the majority of memory/time to run, but also that other portions took a lot of time but really didn't do much. One of those actually ended up being a faulty progress bar that just pointlessly counted down time while nothing was happening.</p>
 <h2>What did I learn from using R studio's default profiling tools?</h2>
 <ul>
@@ -338,7 +338,7 @@
 </code></pre></div>
 
 <p>However it doesn't appear to be able to properly understand the pipe opperator. Ironically the documentation for this function wasn't very clear, so I wasn't able to figure out if there was a way to make it so that the function would understand the pipe operator.
-<img alt="plot of chunk unnamed-chunk-3" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/r_profiling/depend_graph.png"></p>
+<img alt="plot of chunk unnamed-chunk-3" src="https://sydney-informatics-hub.github.io/tidbits/images/r_profiling/depend_graph.png"></p>
 <h2>Pilgrimage to Bioconductor to find solutions</h2>
 <p>After much Googling, I found a solution in the documentation of the <strong>proftools</strong> package: a profile call graph function called <strong>plotProfileCallGraph()</strong> that would create a nice flow chart of what happens when you run your function. </p>
 <p>However, it requires two packages that are not in the CRAN ecosystem. However, they are on Bioconductor</p>
@@ -356,11 +356,11 @@
 <div class="highlight"><pre><span></span><code><span class="n">graph1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">plotProfileCallGraph</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span>
 </code></pre></div>
 
-<p><img alt="plot of chunk first call graph" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/r_profiling/first call graph-1.png"></p>
+<p><img alt="plot of chunk first call graph" src="https://sydney-informatics-hub.github.io/tidbits/images/r_profiling/first call graph-1.png"></p>
 <p>Interestingly, when I generated this while making this post, I realized that I had actually cloned a past development build which had already been optimized somewhat!</p>
 <h2>A call graph that overcomes the pipe</h2>
 <p>Here is the call graph I originally created months ago when working on this piece of software. You can see here that there are portions of the function that don't do anything, and that much of the compute time is wasted by the useless progress bars.</p>
-<p><img src="https://pages.github.sydney.edu.au/informatics/tidbits/images/r_profiling/call_graph.png" title="plot of chunk original call graph" alt="plot of chunk original call graph" width="600px" height="500px" /></p>
+<p><img src="https://sydney-informatics-hub.github.io/tidbits/images/r_profiling/call_graph.png" title="plot of chunk original call graph" alt="plot of chunk original call graph" width="600px" height="500px" /></p>
 <h2>How did call graphs help my code?</h2>
 <ul>
 <li>
@@ -419,10 +419,10 @@
     <div class="container">
 <div class="row">
   <ul class="col-sm-6 list-inline">
-      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
-    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
-    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
-      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/tags.html">Tags</a></li>
   </ul>
   <p class="col-sm-6 text-sm-right text-muted">
     Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
@@ -432,10 +432,10 @@
   </footer>
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
