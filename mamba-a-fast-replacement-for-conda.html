@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  mamba: a fast replacement for conda | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/mamba-a-fast-replacement-for-conda.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/python.atom.xml">  
+  <meta name="description" content="If your conda environment is taking a long time to solve (or failing to solve altogether), you might want to try mamba, which reimplements conda in C++ with an improved …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  mamba: a fast replacement for conda
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2021-04-22T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Thu 22 April 2021
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/python.html">Python</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/marius-mather.html">Marius Mather</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/python.html">#python</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/conda.html">#conda</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/package-management.html">#package-management</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>If your <code>conda</code> environment is taking a long time to solve (or
+failing to solve altogether), you might want to try <a href="https://github.com/mamba-org/mamba">mamba</a>,
+which reimplements <code>conda</code> in C++ with an improved dependency
+solving algorithm.</p>
+<p>To install in your existing conda setup (from their instructions <a href="https://github.com/mamba-org/mamba">on Github</a>)</p>
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>install<span class="w"> </span>mamba<span class="w"> </span>-n<span class="w"> </span>base<span class="w"> </span>-c<span class="w"> </span>conda-forge
+</code></pre></div>
+
+<p>Then you should be able to run <code>mamba</code> instead of <code>conda</code> for
+commands like creating environments:</p>
+<div class="highlight"><pre><span></span><code>mamba<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>my_project<span class="w"> </span>--file<span class="w"> </span>environment.yml
+</code></pre></div>
+
+<p>It's not a complete replacement for <code>conda</code> (yet), you still have to use
+<code>conda activate</code> to activate your environments, but it seems
+to greatly speed up installing packages and creating environments.</p>
+<p>The same developers have also created <a href="https://github.com/mamba-org/rhumba">rhumba</a>,
+a similar package manager for R - this might also be worth looking
+at for creating reproducible R environments.</p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

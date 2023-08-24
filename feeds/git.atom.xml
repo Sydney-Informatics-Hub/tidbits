@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits - git</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/" rel="alternate"></link><link href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/git.atom.xml" rel="self"></link><id>https://pages.github.sydney.edu.au/informatics/tidbits/</id><updated>2023-04-30T00:00:00+10:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Find github pages</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/find-github-pages.html" rel="alternate"></link><published>2023-04-30T00:00:00+10:00</published><updated>2023-04-30T00:00:00+10:00</updated><author><name>Nathaniel Butterworth</name></author><id>tag:pages.github.sydney.edu.au,2023-04-30:/informatics/tidbits/find-github-pages.html</id><summary type="html">&lt;p&gt;To gauge how many github repos have a "github pages" within a particular an organisation, you can run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gh&lt;span class="w"&gt; &lt;/span&gt;api&lt;span class="w"&gt; &lt;/span&gt;-H&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Accept: application/vnd.github+json&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;/orgs/Sydney-Informatics-Hub/repos&lt;span class="w"&gt; &lt;/span&gt;--jq …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;To gauge how many github repos have a "github pages" within a particular an organisation, you can run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gh&lt;span class="w"&gt; &lt;/span&gt;api&lt;span class="w"&gt; &lt;/span&gt;-H&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Accept: application/vnd.github+json&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;/orgs/Sydney-Informatics-Hub/repos&lt;span class="w"&gt; &lt;/span&gt;--jq&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.[] | {name: .name, has_pages}&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;--paginate&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;grep&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This returns output like:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training.artemis.introhpc&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training.artemis&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training.home&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;workshopbmc&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;lessonbmc&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;2018_12_10_GISworkshop&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training.artemis.interhpc&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training-template-old&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training.artemis.gpu&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;190318_MLR&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training-RNAseq&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;190408_MLpy&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training-RNAseq-slides&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training.artemis.rds&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;codeofconduct&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training.artemis.python&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;lessons-mlpy&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;elfr&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;recocam&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training.artemis.r&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;geopython&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;simplelesson&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training.gadi.intro&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;jenkins_docker_test&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training.argus.gpu&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training.blockchain&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;geopython-bhp&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;stats-resources&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;geopython-pawsey&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;BioCommons_RNASeq_dryRun&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training-template&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;intro-git&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;AgReFed-Workshop&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rna-seq-pt2-quarto&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rna-seq-pt1-quarto&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;training.RNAseq.series-quarto&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;dataharvester&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;ParallelPython&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;geodata-harvester&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;PIPE-3034-obesity2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;customising-nfcore-workshop&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;masterclass_RStudio_GitHub&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;RStudio_github_versioncontrol&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;lessons_mlr_tidymodels&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;has_pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Git_RStudio_masterclass&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="git"></category><category term="git"></category><category term="github"></category></entry><entry><title>Show off your development history with gource</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/show-off-your-development-history-with-gource.html" rel="alternate"></link><published>2021-07-23T00:00:00+10:00</published><updated>2021-07-23T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:pages.github.sydney.edu.au,2021-07-23:/informatics/tidbits/show-off-your-development-history-with-gource.html</id><summary type="html">&lt;p&gt;Want to show off your hard work on a project? &lt;a href="https://gource.io/"&gt;gource&lt;/a&gt;
+displays the history of a git repo with a cool moving
+visualisation of how the files + folders have been …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Want to show off your hard work on a project? &lt;a href="https://gource.io/"&gt;gource&lt;/a&gt;
+displays the history of a git repo with a cool moving
+visualisation of how the files + folders have been worked on over time.
+You can install it through homebrew: &lt;code&gt;brew install gource&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Here's the 10 year history of the OMIA project as a 1 minute video:&lt;/p&gt;
+&lt;video controls width="600" preload="metadata"&gt;
+&lt;source src="https://pages.github.sydney.edu.au/informatics/tidbits/downloads/omia_gource.m4v" type="video/mp4"&gt;
+&lt;/video&gt;
+
+&lt;p&gt;By default, running &lt;code&gt;gource&lt;/code&gt; in a directory with a git repo
+will generate a moving visualisation of the commit history -
+depending on the speed of development on your project there
+are a lot of settings you can tweak to get better results.
+For &lt;code&gt;omia&lt;/code&gt; I ended up with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gource&lt;span class="w"&gt; &lt;/span&gt;--filename-time&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;.0&lt;span class="w"&gt; &lt;/span&gt;--date-format&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;%B %Y&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;--hide&lt;span class="w"&gt; &lt;/span&gt;filenames&lt;span class="w"&gt; &lt;/span&gt;--time-scale&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;.0&lt;span class="w"&gt; &lt;/span&gt;--seconds-per-day&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.2&lt;span class="w"&gt; &lt;/span&gt;--auto-skip-seconds&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Also check the project's &lt;a href="https://github.com/acaudwell/Gource/wiki/Videos"&gt;documentation&lt;/a&gt;
+for how to export this to a video file using tools like &lt;code&gt;ffmpeg&lt;/code&gt;.&lt;/p&gt;</content><category term="git"></category><category term="git"></category><category term="shell"></category><category term="fun"></category></entry><entry><title>git pre-commit hooks: check or style your code with every commit</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/git-pre-commit-hooks-check-or-style-your-code-with-every-commit.html" rel="alternate"></link><published>2021-07-07T00:00:00+10:00</published><updated>2021-07-07T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:pages.github.sydney.edu.au,2021-07-07:/informatics/tidbits/git-pre-commit-hooks-check-or-style-your-code-with-every-commit.html</id><summary type="html">&lt;p&gt;You can use tools like &lt;a href="https://github.com/psf/black"&gt;black&lt;/a&gt; to automatically
+style your Python code in a consistent way. However, if you're just running
+it manually, you have to remember to run it …&lt;/p&gt;</summary><content type="html">&lt;p&gt;You can use tools like &lt;a href="https://github.com/psf/black"&gt;black&lt;/a&gt; to automatically
+style your Python code in a consistent way. However, if you're just running
+it manually, you have to remember to run it regularly, and you'll probably
+end up with lots of git commits that are just "Style fixes".&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://pre-commit.com/"&gt;pre-commit&lt;/a&gt; uses 
+&lt;a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks"&gt;git hooks&lt;/a&gt; 
+to run different tools before each git commit. A hook that runs
+&lt;code&gt;black&lt;/code&gt; allows you to automatically style any new code before it gets 
+committed.&lt;/p&gt;
+&lt;p&gt;To set up &lt;code&gt;pre-commit&lt;/code&gt;, install the &lt;code&gt;pre-commit&lt;/code&gt; package into
+your Python environment, and create a &lt;code&gt;.pre-commit-config.yaml&lt;/code&gt;
+file. The config file for running &lt;code&gt;black&lt;/code&gt; looks like:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nt"&gt;repos&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="nt"&gt;repo&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;https://github.com/psf/black&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;rev&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;21.6b0&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;hooks&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="nt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;black&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Once you've created the config file you can run &lt;code&gt;pre-commit install&lt;/code&gt;
+and the hooks will be set up. If you have existing code you
+can run &lt;code&gt;pre-commit run --all-files&lt;/code&gt; to style it all.&lt;/p&gt;
+&lt;p&gt;You can also use commit hooks for automated testing with &lt;code&gt;pytest&lt;/code&gt;
+(you can run commits at each push rather than each commit if
+this would be too slow), fixing minor whitespace errors, 
+or custom tests you've created. There's a big list of
+available hooks &lt;a href="https://pre-commit.com/hooks.html"&gt;here&lt;/a&gt; to
+get you started.&lt;/p&gt;</content><category term="git"></category><category term="git"></category><category term="python"></category><category term="black"></category></entry><entry><title>Cleaning a git diff</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/cleaning-a-git-diff.html" rel="alternate"></link><published>2020-07-02T00:00:00+10:00</published><updated>2020-07-02T00:00:00+10:00</updated><author><name>Sydney Informatics Hub</name></author><id>tag:pages.github.sydney.edu.au,2020-07-02:/informatics/tidbits/cleaning-a-git-diff.html</id><summary type="html">&lt;p&gt;Code review is easiest when the changes offered by a &lt;em&gt;head branch&lt;/em&gt; onto a &lt;em&gt;base
+branch&lt;/em&gt; are focussed on a single purpose of change.  When they are not, the
+diff …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Code review is easiest when the changes offered by a &lt;em&gt;head branch&lt;/em&gt; onto a &lt;em&gt;base
+branch&lt;/em&gt; are focussed on a single purpose of change.  When they are not, the
+diff shown in GitHub can be long and hard to read, and the pull request is more
+susceptible to merge conflicts.&lt;/p&gt;
+&lt;p&gt;Here we use "diff" (elsewhere "patch") to refer to what's seen on the Files
+Changed tab in GitHub.&lt;/p&gt;
+&lt;p&gt;This tidbit proposes to give some hints about how you can use git to isolate
+the changes relevant to a specific pull request, i.e. to "clean the diff",
+using git shell commands.&lt;/p&gt;
+&lt;h2&gt;Case study&lt;/h2&gt;
+&lt;p&gt;We have been supporting the maintainers of the Hydromad R package to adopt
+contemporary best practices around open-source software maintenance.&lt;/p&gt;
+&lt;p&gt;Pull Request &lt;a href="https://github.com/josephguillaume/hydromad/pull/112"&gt;#112&lt;/a&gt;
+proposed to resolve
+&lt;a href="https://github.com/josephguillaume/hydromad/issues/61$"&gt;#61&lt;/a&gt;: making the
+pacakge conform with the CRAN requirement that package code does not use
+&lt;code&gt;library&lt;/code&gt; or &lt;code&gt;require&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Two things made this contribution difficult to process:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The contributor made changes beyond the scope of the PR, additionally
+   resolving linter complaints of long lines, etc, by reformatting those lines.&lt;/li&gt;
+&lt;li&gt;A new commit had been added to master in the meantime, performing wholesale
+   stylistic changes across the codebase, but not identical to the changes made
+   by the contributor.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This post covers some of the questions and ideas raised there.
+"Splitting one branch into multiple patches" below is the main solution.&lt;/p&gt;
+&lt;h2&gt;Preface: What does the diff in GitHub show?&lt;/h2&gt;
+&lt;p&gt;The diff in GitHub compares each file in the HEAD commit of the head branch to
+each file in the base branch... But not always the latest ("HEAD") commit of
+the base branch.&lt;/p&gt;
+&lt;p&gt;GitHub will firstly try to merge the latest base branch into the head branch.
+This will be successful if one of the following conditions can be met:
+* There are no new commits on the base branch (i.e. the head is built by
+  appending commits to the latest base commit). This is called a "fast forward
+  merge".
+* Any new commits on the base branch modify only different files, or different
+  parts of the same file, such that Git can perform an "automatic merge". Note
+  that an automatic merge &lt;em&gt;can&lt;/em&gt; be incorrect, which is one reason that
+  automated testing (e.g. with GitHub workflows) is invaluable.&lt;/p&gt;
+&lt;p&gt;If successful, GitHub's diff &lt;strong&gt;will compare the head branch to the base
+branch&lt;/strong&gt; through the merge commit, thus showing only those changes introduced
+in the head branch.&lt;/p&gt;
+&lt;p&gt;If unsuccessful, GitHub's diff &lt;strong&gt;will compare the head branch to the &lt;/strong&gt;nearest
+common ancestor commit** shared by the head branch and the base branch.  This
+might be the point in the base branch that the contributor started building on,
+or it might be the latest time the contributor merged in commits from the base
+branch.&lt;/p&gt;
+&lt;h2&gt;Preface: Starting from the right point&lt;/h2&gt;
+&lt;p&gt;Prevention first! &lt;em&gt;Before you make any changes&lt;/em&gt;, you can reduce the chance of
+merge conflicts by making sure you're building on the latest version of the
+base branch. Assuming the base branch is on the remote called &lt;code&gt;origin&lt;/code&gt; in the
+branch called &lt;code&gt;master&lt;/code&gt;, the following will create a new branch in your working
+copy based on the latest master, and check it out (i.e. get in to the branch to
+work on it):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;fetch&lt;span class="w"&gt; &lt;/span&gt;origin
+git&lt;span class="w"&gt; &lt;/span&gt;checkout&lt;span class="w"&gt; &lt;/span&gt;-b&lt;span class="w"&gt; &lt;/span&gt;my-new-branch&lt;span class="w"&gt; &lt;/span&gt;origin/master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Aside: working with a fork&lt;/h3&gt;
+&lt;p&gt;If you're developing a pull request from a fork of some central repo, you might
+want to branch from that "upstream" master instead. Do so by adding the
+upstream as a remote:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;origin&lt;span class="w"&gt; &lt;/span&gt;https://github.com/my-username/some-repo
+git&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;upstream&lt;span class="w"&gt; &lt;/span&gt;https://github.com/central-username/some-repo
+git&lt;span class="w"&gt; &lt;/span&gt;fetch&lt;span class="w"&gt; &lt;/span&gt;upstream
+git&lt;span class="w"&gt; &lt;/span&gt;checkout&lt;span class="w"&gt; &lt;/span&gt;-b&lt;span class="w"&gt; &lt;/span&gt;my-new-branch&lt;span class="w"&gt; &lt;/span&gt;upstream/master&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;# like above&lt;/span&gt;
+git&lt;span class="w"&gt; &lt;/span&gt;push&lt;span class="w"&gt; &lt;/span&gt;-u&lt;span class="w"&gt; &lt;/span&gt;origin&lt;span class="w"&gt; &lt;/span&gt;my-new-branch
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This branches from &lt;code&gt;upstream&lt;/code&gt;, but pushes to &lt;code&gt;origin&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Preface: Making a backup of your work&lt;/h2&gt;
+&lt;p&gt;If you've already made changes, you shouldn't have to worry about losing your
+current work before trying risky Git operations. Some people use &lt;code&gt;git stash&lt;/code&gt;
+for this, but I recommend just creating a commit.&lt;/p&gt;
+&lt;p&gt;Commit all changes (NB: staged and unstaged changes included):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;status&lt;span class="w"&gt;                  &lt;/span&gt;&lt;span class="c1"&gt;# Check for any files you&amp;#39;ve forgotten to add&lt;/span&gt;
+git&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;path/to/new/files&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="c1"&gt;# Add any files you&amp;#39;ve forgotten to add&lt;/span&gt;
+git&lt;span class="w"&gt; &lt;/span&gt;commit&lt;span class="w"&gt; &lt;/span&gt;-a&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;WIP&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;# Commit all changes, but leave a message for&lt;/span&gt;
+&lt;span class="w"&gt;                            &lt;/span&gt;&lt;span class="c1"&gt;# myself that this commit is a work-in-progress&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The name (SHA ref) of the new commit should be shown after committing, or you
+can get it from &lt;code&gt;git log&lt;/code&gt;. Note it somewhere if you might want to refer to it
+later.
+Or, give a name to your latest commit by copying it into another branch:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;branch&lt;span class="w"&gt; &lt;/span&gt;-b&lt;span class="w"&gt; &lt;/span&gt;new-backup-branch-name
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Once you've safely made a backup, you can undo your commit and keep working on
+your changes:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;reset&lt;span class="w"&gt; &lt;/span&gt;HEAD^&lt;span class="w"&gt;             &lt;/span&gt;&lt;span class="c1"&gt;# Undo the commit, but leave the files changed&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that this doesn't &lt;em&gt;delete&lt;/em&gt; the commit, it just removes it from your
+current branch.  You can still reference the old commit using that SHA ref
+you noted down, or the name of that backup branch.&lt;/p&gt;
+&lt;h2&gt;Should I worry about cleaning up the list of commits?&lt;/h2&gt;
+&lt;p&gt;Below we talk about cleaning up the diff: the set of changes to files.
+You might also want a neat commit history, but IMO it's not usually worth
+neatening up the commit history shown in a pull request.&lt;/p&gt;
+&lt;p&gt;Why? One neat feature of GitHub is the option to "Squash and Merge" a pull
+request onto the base branch when it is merged. This means that all of the mess
+of commits made along the way will be turned into a single commit.&lt;/p&gt;
+&lt;p&gt;This means that you can focus on the diff and make as many messy commits as you
+like to get to the right place.&lt;/p&gt;
+&lt;h2&gt;Not committing all your changes&lt;/h2&gt;
+&lt;p&gt;If you've made changes in your working copy, some of which you want to commit
+because they're related to the pull request you are building, and some of which
+you don't want to commit (because they're only for your local use, or because
+you want to stash them for a different pull request), there are several useful
+tools. Most important, perhaps, is &lt;code&gt;git add --patch&lt;/code&gt; (or &lt;code&gt;git add -p&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;First, some tools to check what would be committed if you did &lt;code&gt;git commit&lt;/code&gt; at
+any point:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;status&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="c1"&gt;# show an overview of what&amp;#39;s staged to be committed and what&amp;#39;s not&lt;/span&gt;
+git&lt;span class="w"&gt; &lt;/span&gt;diff&lt;span class="w"&gt; &lt;/span&gt;--cached&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;# show lines you&amp;#39;ve already staged to be committed&lt;/span&gt;
+git&lt;span class="w"&gt; &lt;/span&gt;diff&lt;span class="w"&gt;           &lt;/span&gt;&lt;span class="c1"&gt;# show lines you&amp;#39;ve not already staged to committed&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;To add only selected parts of files, use:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;--patch&lt;span class="w"&gt;           &lt;/span&gt;&lt;span class="c1"&gt;# select all the lines to add&lt;/span&gt;
+git&lt;span class="w"&gt; &lt;/span&gt;commit&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="c1"&gt;# when you&amp;#39;re ready...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This is an interactive process, in which you type &lt;code&gt;y&lt;/code&gt; for chunks you want to
+keep, and &lt;code&gt;n&lt;/code&gt; for chunks you don't. Try it! Press &lt;code&gt;?&lt;/code&gt; for other commands.&lt;/p&gt;
+&lt;p&gt;If you have a new file in your repo directory that's not known to git, the
+following tells git about that path (adds it to the index) without staging its
+lines:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;-N&lt;span class="w"&gt; &lt;/span&gt;path/to/file&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="c1"&gt;# repeat for each new file&lt;/span&gt;
+git&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;--patch&lt;span class="w"&gt;           &lt;/span&gt;&lt;span class="c1"&gt;# select which lines to add, from all your uncommited files&lt;/span&gt;
+git&lt;span class="w"&gt; &lt;/span&gt;commit&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="c1"&gt;# when you&amp;#39;re ready...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Removing files from the commit: If you've staged something and decide you don't
+want to commit that (whole) file:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;reset&lt;span class="w"&gt; &lt;/span&gt;path/to/file
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Undoing a commit but keeping the changes&lt;/h2&gt;
+&lt;p&gt;This will undo the latest commit, but keep the changes to the files in your
+working copy, allowing you to do a patch commit or similar.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;reset&lt;span class="w"&gt; &lt;/span&gt;HEAD^
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Again, you can follow this with &lt;code&gt;git add --patch&lt;/code&gt; and &lt;code&gt;git commit&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Selecting only some commits&lt;/h2&gt;
+&lt;p&gt;Sometimes there are good things localised in past commits... or bad things you
+want to remove from a diff.&lt;/p&gt;
+&lt;p&gt;NB: You might want to make a backup of your work first.&lt;/p&gt;
+&lt;p&gt;You can show what was in a specific commit with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;show&lt;span class="w"&gt; &lt;/span&gt;some-commit-ref
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If you want to select only some commits, you have a few options:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;interactive rebase: this is really powerful, but may take a bit of practice
+  to get used to. Identify a good commit you've built on, then use &lt;code&gt;git rebase
+  -i that-good-commit-ref&lt;/code&gt;, and edit the file shown to pick or skip commits
+  since then that you want. You will need to force-push any changes to GitHub
+  &lt;code&gt;git push -f&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;adopt only selected commits with &lt;code&gt;cherry-pick&lt;/code&gt;: Start a clean branch &lt;code&gt;git
+  checkout -b new-branch-name that-good-commit-ref&lt;/code&gt; and use &lt;code&gt;git cherry-pick&lt;/code&gt;
+  to adopt individual commits from your changes. Make sure to do it in order.&lt;/li&gt;
+&lt;li&gt;undo selected commits with &lt;code&gt;git revert&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Undoing changes to some files&lt;/h2&gt;
+&lt;p&gt;Often you're happy with the diff you've got on some files, but not with others.
+You can use &lt;code&gt;git checkout&lt;/code&gt; to adopt the state of a selected file from a
+selected commit/branch.&lt;/p&gt;
+&lt;p&gt;NB: You might want to make a backup of your work first.&lt;/p&gt;
+&lt;p&gt;Let's say you've changed some file called &lt;code&gt;path/to/file&lt;/code&gt; and committed those
+changes, but now want to adopt whatever is in the base branch (because the
+change was irrelevant to the current pull request, or because there were
+conflicting changes in the base which you prefer).
+Let's assume the base branch is called &lt;code&gt;master&lt;/code&gt; on a remote called &lt;code&gt;origin&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Then you can adopt the version from &lt;code&gt;origin/master&lt;/code&gt; with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;fetch&lt;span class="w"&gt; &lt;/span&gt;origin&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="c1"&gt;# Make sure we have the latest origin/master branch&lt;/span&gt;
+git&lt;span class="w"&gt; &lt;/span&gt;checkout&lt;span class="w"&gt; &lt;/span&gt;origin/master&lt;span class="w"&gt; &lt;/span&gt;path/to/file
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If you want to try before you buy, you can &lt;em&gt;look&lt;/em&gt; at the version from
+origin/master with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;show&lt;span class="w"&gt; &lt;/span&gt;origin/master:path/to/file
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;or save it to some other path with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;show&lt;span class="w"&gt; &lt;/span&gt;origin/master:path/to/file&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;/tmp/put-it-here-please
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Splitting one branch into multiple patches&lt;/h2&gt;
+&lt;p&gt;Back to the case study: In a complicated situation like this, we may have a
+long history of commits composing the current messy diff.  One approach to
+resolving this is to create several separate branches (and corresponding pull
+requests) with more focussed diffs.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Create a copy of the current branch where we will commit the first patch
+   &lt;code&gt;git checkout -b patch1&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Find a common place to start, the nearest common ancestor with origin's
+   master: &lt;code&gt;base=$(git merge-base HEAD origin/master)&lt;/code&gt;. Here we are using
+   a bash feature to store the merge base ref in a variable called &lt;code&gt;$base&lt;/code&gt;.
+   View it with &lt;code&gt;echo $base&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Reset &lt;code&gt;patch1&lt;/code&gt; back to &lt;code&gt;$base&lt;/code&gt;, keeping all changes, but not adding them.
+   &lt;code&gt;git reset $base&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Add parts of files that you want &lt;code&gt;git add --patch&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Add any whole files that are missing from the patch with &lt;code&gt;git status&lt;/code&gt; then
+   &lt;code&gt;git add path/to/file&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Commit &lt;code&gt;git commit -m "blah blah blah"&lt;/code&gt;, then push this branch if
+   appropriate.&lt;/li&gt;
+&lt;li&gt;If you look at &lt;code&gt;git diff&lt;/code&gt;, the remainder should be changes you want in
+   another patch commit. Let's open a new branch like &lt;code&gt;patch2&lt;/code&gt; at &lt;code&gt;$base&lt;/code&gt;
+   keeping those changes in our working copy: &lt;code&gt;git checkout -b patch2 $base&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Repeat from step 4. until all the changes have been committed (and pushed,
+   and pull requests opened) in a focussed pull request.&lt;/li&gt;
+&lt;/ol&gt;</content><category term="git"></category><category term="git"></category><category term="shell"></category><category term="github"></category><category term="code review"></category></entry></feed>

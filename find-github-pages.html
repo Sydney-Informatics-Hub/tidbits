@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Find github pages | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/find-github-pages.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/git.atom.xml">  
+  <meta name="description" content="To gauge how many github repos have a "github pages" within a particular an organisation, you can run: gh api -H "Accept: application/vnd.github+json" /orgs/Sydney-Informatics-Hub/repos --jq …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Find github pages
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2023-04-30T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Sun 30 April 2023
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/git.html">git</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/nathaniel-butterworth.html">Nathaniel Butterworth</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/git.html">#git</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/github.html">#github</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>To gauge how many github repos have a "github pages" within a particular an organisation, you can run:</p>
+<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>api<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Accept: application/vnd.github+json&quot;</span><span class="w"> </span>/orgs/Sydney-Informatics-Hub/repos<span class="w"> </span>--jq<span class="w"> </span><span class="s1">&#39;.[] | {name: .name, has_pages}&#39;</span><span class="w"> </span>--paginate<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="nb">true</span>
+</code></pre></div>
+
+<p>This returns output like:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training.artemis.introhpc&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training.artemis&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training.home&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;workshopbmc&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;lessonbmc&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;2018_12_10_GISworkshop&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training.artemis.interhpc&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training-template-old&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training.artemis.gpu&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;190318_MLR&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training-RNAseq&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;190408_MLpy&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training-RNAseq-slides&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training.artemis.rds&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;codeofconduct&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training.artemis.python&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;lessons-mlpy&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;elfr&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;recocam&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training.artemis.r&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;geopython&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;simplelesson&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training.gadi.intro&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;jenkins_docker_test&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training.argus.gpu&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training.blockchain&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;geopython-bhp&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;stats-resources&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;geopython-pawsey&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;BioCommons_RNASeq_dryRun&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training-template&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;intro-git&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;AgReFed-Workshop&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;rna-seq-pt2-quarto&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;rna-seq-pt1-quarto&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;training.RNAseq.series-quarto&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;dataharvester&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;ParallelPython&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;geodata-harvester&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;PIPE-3034-obesity2&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;customising-nfcore-workshop&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;masterclass_RStudio_GitHub&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;RStudio_github_versioncontrol&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;lessons_mlr_tidymodels&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&quot;has_pages&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;Git_RStudio_masterclass&quot;</span><span class="p">}</span>
+</code></pre></div>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

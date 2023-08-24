@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Add some colour to your shell: modern terminal tools | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/add-some-colour-to-your-shell-modern-terminal-tools.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/misc.atom.xml">  
+  <meta name="description" content="While I'm pretty comfortable with basic shell commands, I like the convenience of features like syntax highlighting. Lately I've discovered a few replacements for common shell commands that add an …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Add some colour to your shell: modern terminal tools
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2020-06-16T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Tue 16 June 2020
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/misc.html">Misc</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/marius-mather.html">Marius Mather</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/shell.html">#shell</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/terminal.html">#terminal</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/zsh.html">#zsh</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>While I'm pretty comfortable with basic shell commands, I like
+the convenience of features like syntax highlighting. Lately
+I've discovered a few replacements for common shell commands
+that add an extra bit of colour:</p>
+<h2>bat: cat with syntax highlighting</h2>
+<p><code>bat</code> is a drop-in replacement for <code>cat</code> that adds syntax highlighting
+and line numbers by default - great for when you want to check
+the contents of a script:</p>
+<p><img alt="Syntax highlighting with bat" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/colourful_shell/bat_screenshot.png"></p>
+<p>On Mac you can install it via Homebrew:</p>
+<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>bat
+</code></pre></div>
+
+<h2>exa: ls with syntax highlighting</h2>
+<p>On a (very) similar note, <code>exa</code> is a drop-in replacement for <code>ls</code> that adds
+a bit more colour. By default, it just adds some colouring for different
+file types:</p>
+<p><img alt="exa default output" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/colourful_shell/exa_default.png"></p>
+<p>When used with options like <code>-l</code> it adds some colour to the structured
+information, e.g. the permissions:</p>
+<p><img alt="exa with -l" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/colourful_shell/exa_permissions.png"></p>
+<p>Again, install with Homebrew:</p>
+<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>exa
+</code></pre></div>
+
+<h2>ripgrep: an easier grep</h2>
+<p>I'm very bad at using <code>grep</code> -  I can never remember whether the
+file or the pattern goes first. <a href="https://github.com/BurntSushi/ripgrep">ripgrep</a> 
+makes <code>grep</code> more convenient:
+by default you can just give it a pattern and it will search the
+current folder recursively (automatically skipping hidden files and files
+in your <code>.gitignore</code>).</p>
+<p>You get nice colourful output with the matches highlighted:</p>
+<p><img alt="ripgrep output" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/colourful_shell/ripgrep.png"></p>
+<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>ripgrep
+</code></pre></div>
+
+<h2>Lots more</h2>
+<p>I've only covered tools that I've been using regularly - there
+are plenty more out there if you want to improve your shell.
+There's a long list <a href="https://github.com/alebcay/awesome-shell">here</a>,
+and other fun tools like <a href="https://asciinema.org/">asciinema</a> which
+lets you record gifs/videos of your shell sessions.</p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

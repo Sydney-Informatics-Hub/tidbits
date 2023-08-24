@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Use logging instead of print | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/use-logging-instead-of-print.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/python.atom.xml">  
+  <meta name="description" content="Like a lot of people, I'm guilty of using print() to debug my code. While it's a good idea to use a proper debugger, it can also be good to …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Use logging instead of print
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2022-06-06T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Mon 06 June 2022
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/python.html">python</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/marius-mather.html">Marius Mather</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/python.html">#python</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/development.html">#development</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>Like a lot of people, I'm guilty of using <code>print()</code> to debug
+my code. While it's a good idea to use a proper debugger,
+it can also be good to have your programs log useful
+information as they run, particularly if they're going
+to run on a server relatively unsupervised. That's where
+Python's <a href="https://docs.python.org/3/library/logging.html">logging</a>
+module comes in. It's best to use <code>logging</code> instead
+of <code>print</code> right from the start of a project, so keep
+it in mind for your next one!</p>
+<p>At the most basic level, <code>logging</code> lets you set the importance
+level of each message you're sending. The levels (in order of importance) are:</p>
+<ul>
+<li>DEBUG</li>
+<li>INFO</li>
+<li>WARNING</li>
+<li>ERROR</li>
+<li>CRITICAL</li>
+</ul>
+<p>To log each kind of message, just use the equivalent function from <code>logging</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Log a debug message&quot;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Log a warning&quot;</span><span class="p">)</span>
+<span class="c1"># etc.</span>
+</code></pre></div>
+
+<p>When running your code, you can set the log level (using a command line
+argument, environment variable, config file, etc.), and only messages
+of that importance or higher will be shown:</p>
+<div class="highlight"><pre><span></span><code><span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;This won&#39;t be shown&quot;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Anything at info level or higher will be logged&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The benefit of this is you can have your programs show a lot of information
+on what they're doing through <code>debug</code> messages, without making
+the output too noisy for regular use. If you find yourself going
+back through your code removing <code>print()</code> statements once it's finished,
+consider using <code>logging</code> instead.</p>
+<p>Going further, the <code>logging</code> module has lots of useful functionality like:</p>
+<ul>
+<li>Logging to a file instead of/as well as the console - and easily switching
+  between these</li>
+<li>Automatically including context like the current Python module and line number in messages</li>
+<li>Running multiple loggers with different settings.</li>
+</ul>
+<p>See <a href="https://realpython.com/python-logging/">this RealPython tutorial</a> for info
+on some of these.</p>
+<p>The closest equivalent in R seems to be the <a href="https://github.com/daroczig/logger/">logger</a>
+package, which is inspired by Python's logging.</p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

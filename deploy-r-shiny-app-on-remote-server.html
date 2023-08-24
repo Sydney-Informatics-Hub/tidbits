@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Deploy R Shiny App on Remote Server | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/deploy-r-shiny-app-on-remote-server.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/r.atom.xml">  
+  <meta name="description" content="The Problem Data Scientists are used to running R code with the click of a mouse using Rstudio and deploying it to a Shiny Server in the same way. The …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Deploy R Shiny App on Remote Server
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2020-04-07T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Tue 07 April 2020
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/r.html">R</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/sergio-pintaldi.html">Sergio Pintaldi</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/r.html">#R</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/shiny.html">#shiny</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/server.html">#server</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/production.html">#production</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/unitfile.html">#unitfile</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>The Problem</h1>
+<p>Data Scientists are used to running R code with the click of a mouse using <code>Rstudio</code> and deploying it to a <code>Shiny Server</code> in the same way.</p>
+<p><img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/deploy_shiny_app/runapp_rstudio.png"></p>
+<p>The reality is that many production servers use command line to run the process/webserver/app/... and use a master process (the supervisor) to control the execution of the app.</p>
+<h1>A Simple Solution</h1>
+<p>All you need to run the app is to execute the following lines:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>R<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;shiny::runApp()&quot;</span>
+</code></pre></div>
+
+<p><strong>Note</strong>: the assumption here is that you are in a folder where an <code>app.R</code> is present (and where all your app code reside)!</p>
+<p>Even better, you can improve your app by creating a <code>runapp.R</code> file, that look like this:</p>
+<div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="n">optparse</span><span class="p">)</span>
+
+<span class="c1"># declare script input options</span>
+<span class="n">args_list</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span>
+<span class="w">  </span><span class="nf">make_option</span><span class="p">(</span>
+<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;-d&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;--data-dir&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;character&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">help</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;Data folder path&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">dest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;data_dir&#39;</span>
+<span class="w">  </span><span class="p">),</span>
+<span class="w">  </span><span class="nf">make_option</span><span class="p">(</span>
+<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;-u&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;--username&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;character&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">help</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;API username&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">dest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;username&#39;</span>
+<span class="w">  </span><span class="p">),</span>
+<span class="w">  </span><span class="nf">make_option</span><span class="p">(</span>
+<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;-p&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;--password&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;character&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">help</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;API password&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">dest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;password&#39;</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># parsing arguments</span>
+<span class="n">opt_parser</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">OptionParser</span><span class="p">(</span><span class="n">option_list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">args_list</span><span class="p">);</span>
+<span class="n">opt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">parse_args</span><span class="p">(</span><span class="n">opt_parser</span><span class="p">);</span>
+
+<span class="nf">if </span><span class="p">(</span><span class="nf">is.null</span><span class="p">(</span><span class="n">opt</span><span class="o">$</span><span class="n">username</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nf">is.null</span><span class="p">(</span><span class="n">opt</span><span class="o">$</span><span class="n">password</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nf">print_help</span><span class="p">(</span><span class="n">opt_parser</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">stop</span><span class="p">(</span><span class="s">&#39;Must supply username and password&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">username</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">opt</span><span class="o">$</span><span class="n">username</span>
+<span class="n">password</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">opt</span><span class="o">$</span><span class="n">password</span>
+
+<span class="n">shiny</span><span class="o">::</span><span class="nf">runApp</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">&#39;127.0.0.1&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">port</span><span class="o">=</span><span class="m">7744</span><span class="p">,</span><span class="w"> </span><span class="n">launch.browser</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+</code></pre></div>
+
+<p>As you can see you can pass in the command line, arguments such as username and password, that can be used somewhere. Also you can add checks on those arguments. In the <code>runApp</code> command you can also specify the IP address and the port.</p>
+<p>Until now nothing new... you can run this from a shell in your machine. Well in a server is not that different, you still need to run that command above, but the <em>"Supervisor"</em> program will take care of that.</p>
+<p>Usually Unix machines use the <code>systemd</code> as processes supervisor. It controls all the Linux OS processes, such as network and others. In order to let the <code>systemd</code> take care of your process (in this case the shiny app), you need to create a <code>unit</code> file (e.g. <code>myapp.service</code>), like this:</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>Unit<span class="o">]</span>
+<span class="nv">Description</span><span class="o">=</span>My<span class="w"> </span>Shiny<span class="w"> </span>App
+<span class="nv">After</span><span class="o">=</span>syslog.target<span class="w"> </span>network.target
+
+<span class="o">[</span>Service<span class="o">]</span>
+<span class="nv">Type</span><span class="o">=</span>simple
+<span class="nv">ExecStart</span><span class="o">=</span>/bin/R<span class="w"> </span>/path/to/my/app/runapp.R
+<span class="nv">Restart</span><span class="o">=</span>always
+<span class="nv">StandardOutput</span><span class="o">=</span>syslog
+<span class="nv">StandardError</span><span class="o">=</span>syslog
+<span class="nv">SyslogIdentifier</span><span class="o">=</span>MyShinyApp
+
+<span class="o">[</span>Install<span class="o">]</span>
+<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</code></pre></div>
+
+<p>And save in <code>/etc/systemd</code>. Then update the list of services <code>systemctl daemon-reload</code>, enable your service at startup <code>systemctl enable myapp.service</code>, and finally start your service <code>systemctl start myapp.service</code>.</p>
+<p>Add a <code>syslog</code> config file to re-direct all logs of your process/App to a specific file. Create a new configuration file in <code>/etc/rsyslog.d/my_shiny_app.conf</code> with the following:</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nv">$programname</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;MyShinyApp&#39;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span>/path/to/log/file.log
+<span class="p">&amp;</span><span class="w"> </span>stop
+</code></pre></div>
+
+<p>Make sure permissions are all set for the specific logging file.</p>
+<h1>Some More Background</h1>
+<p>People on the internet mention a few ways to deploy Shiny Apps on a server (see links in section below):</p>
+<ol>
+<li><a href="https://rstudio.com/products/rstudio/#rstudio-server">Shiny (R)Server Open Source</a> - <strong>FREE</strong></li>
+<li><a href="https://rstudio.com/products/shiny/shiny-server/">Shiny Server Pro / R Studio Connect and Shinyapps.io</a> - <strong>PAID!</strong></li>
+<li><a href="https://www.shinyproxy.io/">ShinyProxy</a>: open source enterprise level Shiny App server, with built-in functionality for LDAP authentication and no limits on concurrent usage.  - <strong>FREE</strong></li>
+<li>Custom architectures - <strong>FREE/PAID</strong></li>
+</ol>
+<p><img alt="" src="https://appsilon.com/wp-content/uploads/2018/12/Scaling-Shiny-1-1-1024x714.png"></p>
+<h1>My Conclusions/Gothas</h1>
+<ul>
+<li>The approach above is equivalent to "Click-Upload-Run" your Shiny App on an open-source R Studio server. Both run a single R process!</li>
+<li>The approach above is more than enough to serve the app to a limited amount of users (&lt; 50/100)</li>
+<li>Need to look into scaling up if the number of users is higher (ShinyProxy or R server pro/shinyconnect, etc.)</li>
+</ul>
+<h1>Useful Links and More Reading</h1>
+<h2>Shiny Deployment</h2>
+<ul>
+<li>HowTo put your Shiny App behind a proxy/load balancer: <a href="https://support.rstudio.com/hc/en-us/articles/213733868-Running-Shiny-Server-with-a-Proxy">https://support.rstudio.com/hc/en-us/articles/213733868-Running-Shiny-Server-with-a-Proxy</a></li>
+<li><a href="https://www.shinyproxy.io/">ShinyProxy</a></li>
+<li>4(5) ways to run Shiny App: <a href="https://appsilon.com/alternatives-to-scaling-shiny/"></a></li>
+<li><a href="https://speakerdeck.com/jcheng5/shiny-in-production?slide=47">Shiny in Production slides</a>: talking about async, app profiling, etc.</li>
+<li>Create an App package with <a href="https://thinkr-open.github.io/building-shiny-apps-workflow/stepbuild.html">Golem</a>: good app cookie-cutter template generator</li>
+<li><a href="https://bookdown.org/hadrien/how_to_build_a_shiny_app_from_scratch">How to Build a Shiny App from scratch</a></li>
+<li><a href="https://bookdown.org/hadrien/how_to_build_a_shiny_app_from_scratch/optimizing-your-application.html">Shiny App profiling (R code profiling)</a></li>
+<li><a href="https://kellobri.github.io/shiny-prod-book/">Shiny in Production workshop</a></li>
+<li><a href="https://github.com/rstudio/cranwhales">Async Shiny App: Cranwhales</a></li>
+</ul>
+<h2>Links on Unit Files:</h2>
+<ul>
+<li>example <a href="https://github.sydney.edu.au/informatics/pipe312-protehome-system/blob/master/protehome-prod.service">ProteHome</a></li>
+<li>example <a href="https://github.sydney.edu.au/informatics/PIPE-1185-DigiFarms-Deployment/blob/master/digifarm.service">Digifarm</a></li>
+</ul>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Shell Tips | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/shell-tips.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/misc.atom.xml">  
+  <meta name="description" content="A collection of misc commands and short snippets that might make your life a lot easier when using the shell locally, on remote, or on hpc. Table of Contents Check …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Shell Tips
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2022-07-06T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Wed 06 July 2022
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/misc.html">misc</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/henry-lydecker.html">Henry Lydecker</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/shell.html">#shell</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/hpc.html">#hpc</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>A collection of misc commands and short snippets that might make your life a lot easier when using the shell locally, on remote, or on hpc.</p>
+<h3>Table of Contents</h3>
+<ul>
+<li><a href="#check-permissions">Check permissions</a></li>
+<li><a href="#change-permissions">Change permissions</a></li>
+<li><a href="#count-all-files">Count all files</a></li>
+<li><a href="#count-all-files-of-a-certain-type">Count all files of a certain type</a></li>
+<li><a href="#force-quit-a-pesky-app-that-wont-quit">Force Quit a Pesky App That Won't Quit</a></li>
+<li><a href="#hpc-job-resource-monitoring">HPC job resource monitoring</a></li>
+<li><a href="#find-all-txt-files-and-then-run-some-code-on-each-of-them">Find all .txt files and then run some code on each of them</a></li>
+<li><a href="#remove-any-line-not-beginning-with-apples-from-text-files-in-this-folder">Remove any line not beginning with "apples" from text files in this folder</a>  </li>
+<li><a href="#rsync-from-local-folder-to-folder-on-HPC">Rsync from local folder to folder on HPC</a>  </li>
+<li><a href="#set-up-and-use-ssh-keys-for-remote-access-to-RDS">Set up and use ssh keys for remote access to RDS</a>  </li>
+</ul>
+<h2>Check permissions</h2>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-lah
+</code></pre></div>
+
+<h2>Change permissions</h2>
+<p>If you want to change the permissons for a directory and its contents, use this:</p>
+<div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>a+rwx<span class="w"> </span>&lt;some_dir&gt;<span class="w"> </span>-R
+</code></pre></div>
+
+<p>Where <code>a</code> is all users, <code>rwx</code> means Read + Write + eXecute, <code>&lt;some_dir&gt;</code> is a directory you want to change permissions for, and <code>-R</code> applies these changes to all contents recursively. Can also use this <a href="https://chmodcommand.com/">chmod calculator</a> to generate specific permissions in numerical and symbolic formats.  </p>
+<h2>Count all files</h2>
+<div class="highlight"><pre><span></span><code>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+</code></pre></div>
+
+<h2>Count all files of a certain type(s)</h2>
+<p>There are several ways to count all files of a certain type(s), but this is by far the fastest simple shell command.</p>
+<p>For example, if you want to recursively look through a directory and count all files of several different extentsions (in this case images):</p>
+<div class="highlight"><pre><span></span><code>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;s/.*\.//&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-n<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-Ei<span class="w"> </span><span class="s1">&#39;(tiff|bmp|jpeg|jpg|png|gif)$&#39;</span>
+</code></pre></div>
+
+<h2>Find all .txt files and then run some code on each of them</h2>
+<div class="highlight"><pre><span></span><code>find<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.txt&quot;</span><span class="w"> </span>-exec<span class="w"> </span>&lt;command&gt;
+</code></pre></div>
+
+<h2>Remove any line not beginning with "apples" from text files in this folder</h2>
+<div class="highlight"><pre><span></span><code>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="s1">&#39;/^apples/!d&#39;</span><span class="w"> </span>*.txt
+</code></pre></div>
+
+<h2>Force quit a pesky app that won't quit</h2>
+<p>Imagine you are trying to quit an application (e.g. Docker) or killa process using activity monitor, but for some reason the application keeps coming back or won't quit.</p>
+<div class="highlight"><pre><span></span><code>osascript<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;quit app &quot;Docker&quot;&#39;</span>
+</code></pre></div>
+
+<p>This will effecitevly nuke the app for you.</p>
+<h2>Rsync from local folder to folder on HPC</h2>
+<div class="highlight"><pre><span></span><code>rsync<span class="w"> </span>-tvxPr<span class="w"> </span>/local/path/to/files<span class="w"> </span>unikey@hpc.sydney.edu.au:/remote/path/to/copy/to
+</code></pre></div>
+
+<h2>Check when your HPC job should start</h2>
+<p>If you have a bunch of jobs in the queue on artemis, you might want to check when they are expected to start.</p>
+<div class="highlight"><pre><span></span><code>qstat<span class="w"> </span>-u<span class="w"> </span>&lt;your_unikey&gt;<span class="w"> </span>-T
+</code></pre></div>
+
+<h2>HPC job resource monitoring</h2>
+<p><a href="https://github.com/Sydney-Informatics-Hub/HPC_usage_reports">Scripts availabile here</a> will pull compute (CPU, memory, walltime etc) resource consumption from PBS job logs into tab-delimited format and to report queue time from job history. Usage reporting scripts are currently available for:</p>
+<ul>
+<li>University of Sydney's Artemis  </li>
+<li>National Compute Infrastructure's Raijin </li>
+<li>National Compute Infrastructure's Gadi  </li>
+<li>University of Queensland's Flashlite  </li>
+</ul>
+<p>Run the script from within the directory that contains the usage log files to be read. Optionally, can include the prefix of the usage logs as an argument on the command line. For example, to collate resource usage from Gadi PBS job logs, run: </p>
+<div class="highlight"><pre><span></span><code>perl /g/data/er01/gadi_usage_report_v1.1.pl &lt;log file prefix&gt;
+</code></pre></div>
+
+<p>To live fast and free, add the following alias to your .bashrc profile:</p>
+<div class="highlight"><pre><span></span><code>alias joblogs=&#39;perl /g/data/er01/HPC_usage_reports/gadi_usage_report_v1.1.pl&#39;
+</code></pre></div>
+
+<p>And run from within the directory housing log files, with: </p>
+<div class="highlight"><pre><span></span><code>joblogs
+</code></pre></div>
+
+<p>An example of the output: </p>
+<table>
+<thead>
+<tr>
+<th>#JobName</th>
+<th>CPUs_requested</th>
+<th>CPUs_used</th>
+<th>Mem_requested</th>
+<th>Mem_used</th>
+<th>CPUtime</th>
+<th>CPUtime_mins</th>
+<th>Walltime_req</th>
+<th>Walltime_used</th>
+<th>Walltime_mins</th>
+<th>JobFS_req</th>
+<th>JobFS_used</th>
+<th>Efficiency</th>
+<th>Service_units</th>
+<th>Job_exit_status</th>
+<th>Date</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>amber_T115991B2.o</td>
+<td>16</td>
+<td>16</td>
+<td>190.0GB</td>
+<td>65.47GB</td>
+<td>03:58:20</td>
+<td>238.33</td>
+<td>02:00:00</td>
+<td>00:41:19</td>
+<td>41.32</td>
+<td>100.0MB</td>
+<td>0B</td>
+<td>0.36</td>
+<td>65.42</td>
+<td>0</td>
+<td>2022-05-09</td>
+<td>18:10:57</td>
+</tr>
+<tr>
+<td>amber_T519706C1.o</td>
+<td>16</td>
+<td>16</td>
+<td>190.0GB</td>
+<td>73.16GB</td>
+<td>03:35:27</td>
+<td>215.45</td>
+<td>02:00:00</td>
+<td>00:37:43</td>
+<td>37.72</td>
+<td>100.0MB</td>
+<td>0B</td>
+<td>0.36</td>
+<td>59.72</td>
+<td>0</td>
+<td>2022-05-09</td>
+<td>18:06:46</td>
+</tr>
+<tr>
+<td>amber_T530707.o</td>
+<td>16</td>
+<td>16</td>
+<td>190.0GB</td>
+<td>73.96GB</td>
+<td>02:53:58</td>
+<td>173.97</td>
+<td>02:00:00</td>
+<td>00:33:51</td>
+<td>33.85</td>
+<td>100.0MB</td>
+<td>0B</td>
+<td>0.32</td>
+<td>53.60</td>
+<td>0</td>
+<td>2022-05-09</td>
+<td>18:02:30</td>
+</tr>
+<tr>
+<td>amber_T531207.o</td>
+<td>16</td>
+<td>16</td>
+<td>190.0GB</td>
+<td>70.38GB</td>
+<td>03:25:54</td>
+<td>205.90</td>
+<td>02:00:00</td>
+<td>00:37:04</td>
+<td>37.07</td>
+<td>100.0MB</td>
+<td>0B</td>
+<td>0.35</td>
+<td>58.69</td>
+<td>0</td>
+<td>2022-05-09</td>
+<td>18:05:28</td>
+</tr>
+<tr>
+<td>amber_T547109.o</td>
+<td>16</td>
+<td>16</td>
+<td>190.0GB</td>
+<td>73.53GB</td>
+<td>03:33:23</td>
+<td>213.38</td>
+<td>02:00:00</td>
+<td>00:42:44</td>
+<td>42.73</td>
+<td>100.0MB</td>
+<td>0B</td>
+<td>0.31</td>
+<td>67.66</td>
+<td>0</td>
+<td>2022-05-09</td>
+<td>18:10:41</td>
+</tr>
+<tr>
+<td>amber_T563810.o</td>
+<td>16</td>
+<td>16</td>
+<td>190.0GB</td>
+<td>68.73GB</td>
+<td>02:55:47</td>
+<td>175.78</td>
+<td>02:00:00</td>
+<td>00:30:21</td>
+<td>30.35</td>
+<td>100.0MB</td>
+<td>0B</td>
+<td>0.36</td>
+<td>48.05</td>
+<td>0</td>
+<td>2022-05-09</td>
+<td>17:57:43</td>
+</tr>
+</tbody>
+</table>
+<h2>How to SCP if there are spaces in folder names</h2>
+<p>Add three <code>\\\</code> after every space.</p>
+<p>Like so:</p>
+<div class="highlight"><pre><span></span><code>folder<span class="se">\\\ </span>with<span class="se">\\\ </span>spaces/*
+</code></pre></div>
+
+<h2>Set up and use ssh keys for remote access to RDS</h2>
+<p>Connecting to RDS (research-data-ext.sydney.edu.au) remotely is only permissable via an SFTP connection. If you're working on a server external to the University (i.e. NCI Gadi) and need to transfer data to and from the RDS and this system, you can connect to the RDS on the command line with: </p>
+<div class="highlight"><pre><span></span><code><span class="n">sftp</span><span class="w"> </span><span class="o">&lt;</span><span class="n">UNIKEY</span><span class="o">&gt;</span><span class="nv">@research</span><span class="o">-</span><span class="k">data</span><span class="o">-</span><span class="n">ext</span><span class="p">.</span><span class="n">sydney</span><span class="p">.</span><span class="n">edu</span><span class="p">.</span><span class="n">au</span>
+</code></pre></div>
+
+<p>You will be prompted to provide your password with: </p>
+<div class="highlight"><pre><span></span><code>Authorised users only. All activity may be monitored and reported.
+Password:
+</code></pre></div>
+
+<p>However, if you are attempting to connect to RDS and transfer files via a PBS job, where the scheduling of these operations is driven by a batch controlled workflow, relying on entering a password or passphrase at the time of the operation is not feasible. In this case, you will need to <strong>set up password-free ssh keys</strong>. You can do this with the following process: </p>
+<p><strong>On the remote server, wanting to access RDS</strong> 
+1. Log into the remote server 
+2. <code>cd ~</code>
+3. <code>ls .ssh</code> (If this doesnt exist, then <code>mkdir .ssh</code>)
+4. <code>chmod 700 .ssh</code>
+5. <code>ssh-keygen</code> Just press enter when prompted, saving the key in ~/.ssh/id_rsa and enter for no passphrase
+6. <code>cd .ssh</code> You will now see two files, id_rsa (private key) and id_rsa.pub (your public key)
+7. <code>chmod 700 id_rsa*</code>
+8. <code>cat ~/.ssh/id_rsa.pub &gt;&gt; authorized_keys</code> this will create the authorized_keys file that you will copy to RDS to allow password-free connection
+9. <code>chmod 700 authorized_keys</code>
+10. <code>sftp &lt;UNIKEY&gt;@research-data-ext.sydney.edu.au</code> 
+11. You will be prompted to provide your password, same as above. Once your login is successful you will be in remotely logged into your home directory on RDS/Artemis.
+12. <code>cd .ssh</code> If this doesn't exist, then run <code>mkdir ~/.ssh</code>
+13. <code>put authorized_keys</code> This will transfer authorized_keys on Gadi to your current directory. With sftp, it will look for the file relative to where you launched sftp. You can check where you are on Gadi using lls
+14. Logout using ctrl+z and 
+15. Test the sftp connection again by trying to log in, same as above. You should not need to use a password this time. </p>
+<p><strong>Something to keep in mind</strong> <br>
+Using ssh keys is <em>very</em> sensitive to file and directory permissions on both sides – and it looks not just at the key itself, but also the .ssh folder and your home directory. If you somehow managed to mess your keys up (like me) and cannot get the password-free method to work, you probably have messed up permissions of your ~/.ssh directories, as well as the authorized_keys and id_rsa.pub files.  </p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

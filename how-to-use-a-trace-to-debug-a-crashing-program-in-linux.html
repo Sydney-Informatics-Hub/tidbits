@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  How to use a 'trace' to debug a crashing program in Linux | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/how-to-use-a-trace-to-debug-a-crashing-program-in-linux.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/unix.atom.xml">  
+  <meta name="description" content="When software crashes, it usually produces a runtime error and wil give you a hint to why it is failing. Digging into the libraries and system calls and monitoring "where …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  How to use a 'trace' to debug a crashing program in Linux
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2023-05-17T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Wed 17 May 2023
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/unix.html">unix</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/nathaniel-butterworth.html">Nathaniel Butterworth</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/debugging.html">#debugging</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/linux.html">#linux</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/unix.html">#unix</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/debug.html">#debug</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>When software crashes, it usually produces a runtime error and wil give you a hint to why it is failing. Digging into the libraries and system calls and monitoring "where the program gets to" can be informative.</p>
+<h3>Expected execution</h3>
+<div class="highlight"><pre><span></span><code><span class="k">user</span><span class="nv">@host</span><span class="err">$</span><span class="w"> </span><span class="n">matlab</span>
+<span class="n">MATLAB</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">selecting</span><span class="w"> </span><span class="n">SOFTWARE</span><span class="w"> </span><span class="n">OPENGL</span><span class="w"> </span><span class="n">rendering</span><span class="p">.</span>
+
+<span class="w">                                                </span><span class="o">&lt;</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span>
+<span class="w">                                      </span><span class="n">Copyright</span><span class="w"> </span><span class="mi">1984</span><span class="o">-</span><span class="mi">2021</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">MathWorks</span><span class="p">,</span><span class="w"> </span><span class="n">Inc</span><span class="p">.</span>
+<span class="w">                                 </span><span class="n">R2021a</span><span class="w"> </span><span class="k">Update</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">(</span><span class="mf">9.10.0.2198249</span><span class="p">)</span><span class="w"> </span><span class="mi">64</span><span class="o">-</span><span class="nc">bit</span><span class="w"> </span><span class="p">(</span><span class="n">glnxa64</span><span class="p">)</span>
+<span class="w">                                                 </span><span class="n">February</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="mi">2023</span>
+
+
+<span class="k">For</span><span class="w"> </span><span class="n">online</span><span class="w"> </span><span class="n">documentation</span><span class="p">,</span><span class="w"> </span><span class="n">see</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">mathworks</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">support</span>
+<span class="k">For</span><span class="w"> </span><span class="n">product</span><span class="w"> </span><span class="n">information</span><span class="p">,</span><span class="w"> </span><span class="n">visit</span><span class="w"> </span><span class="n">www</span><span class="p">.</span><span class="n">mathworks</span><span class="p">.</span><span class="n">com</span><span class="p">.</span>
+
+<span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">disp</span><span class="p">(</span><span class="ss">&quot;hello world&quot;</span><span class="p">)</span>
+<span class="n">hello</span><span class="w"> </span><span class="n">world</span>
+<span class="o">&gt;&gt;</span><span class="w"> </span>
+</code></pre></div>
+
+<h3>Loudly crashing - enough info to search for a solution!</h3>
+<div class="highlight"><pre><span></span><code><span class="k">user</span><span class="nv">@host</span><span class="err">$</span><span class="w"> </span><span class="n">matlab</span>
+<span class="n">java</span><span class="p">.</span><span class="n">lang</span><span class="p">.</span><span class="n">NullPointerException</span>
+<span class="k">at</span><span class="w"> </span><span class="n">javax</span><span class="p">.</span><span class="n">swing</span><span class="p">.</span><span class="n">JList</span><span class="err">$</span><span class="n">AccessibleJList</span><span class="err">$</span><span class="n">AccessibleJListChild</span><span class="p">.</span><span class="n">getAccessibleValue</span><span class="p">(</span><span class="n">JList</span><span class="p">.</span><span class="nl">java</span><span class="p">:</span><span class="mi">3400</span><span class="p">)</span>
+<span class="k">at</span><span class="w"> </span><span class="n">sun</span><span class="p">.</span><span class="n">lwawt</span><span class="p">.</span><span class="n">macosx</span><span class="p">.</span><span class="n">CAccessibility</span><span class="err">$</span><span class="mf">31.</span><span class="k">call</span><span class="p">(</span><span class="n">CAccessibility</span><span class="p">.</span><span class="nl">java</span><span class="p">:</span><span class="mi">542</span><span class="p">)</span>
+<span class="k">at</span><span class="w"> </span><span class="n">sun</span><span class="p">.</span><span class="n">lwawt</span><span class="p">.</span><span class="n">macosx</span><span class="p">.</span><span class="n">CAccessibility</span><span class="err">$</span><span class="mf">31.</span><span class="k">call</span><span class="p">(</span><span class="n">CAccessibility</span><span class="p">.</span><span class="nl">java</span><span class="p">:</span><span class="mi">534</span><span class="p">)</span>
+<span class="k">at</span><span class="w"> </span><span class="n">sun</span><span class="p">.</span><span class="n">lwawt</span><span class="p">.</span><span class="n">macosx</span><span class="p">.</span><span class="n">LWCToolkit</span><span class="err">$</span><span class="n">CallableWrapper</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">LWCToolkit</span><span class="p">.</span><span class="nl">java</span><span class="p">:</span><span class="mi">511</span><span class="p">)</span>
+<span class="k">at</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="n">awt</span><span class="p">.</span><span class="n">event</span><span class="p">.</span><span class="n">InvocationEvent</span><span class="p">.</span><span class="n">dispatch</span><span class="p">(</span><span class="n">InvocationEvent</span><span class="p">.</span><span class="nl">java</span><span class="p">:</span><span class="mi">302</span><span class="p">)</span>
+<span class="k">at</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="n">awt</span><span class="p">.</span><span class="n">EventQueue</span><span class="p">.</span><span class="n">dispatchEventImpl</span><span class="p">(</span><span class="n">EventQueue</span><span class="p">.</span><span class="nl">java</span><span class="p">:</span><span class="mi">733</span><span class="p">)</span>
+<span class="k">at</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="n">awt</span><span class="p">.</span><span class="n">EventQueue</span><span class="p">.</span><span class="n">access</span><span class="err">$</span><span class="mi">200</span><span class="p">(</span><span class="n">EventQueue</span><span class="p">.</span><span class="nl">java</span><span class="p">:</span><span class="mi">103</span><span class="p">)</span>
+<span class="k">at</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="n">awt</span><span class="p">.</span><span class="n">EventQueue</span><span class="err">$</span><span class="mf">3.</span><span class="n">run</span><span class="p">(</span><span class="n">EventQueue</span><span class="p">.</span><span class="nl">java</span><span class="p">:</span><span class="mi">694</span><span class="p">)</span>
+<span class="k">at</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="n">awt</span><span class="p">.</span><span class="n">EventQueue</span><span class="err">$</span><span class="mf">3.</span><span class="n">run</span><span class="p">(</span><span class="n">EventQueue</span><span class="p">.</span><span class="nl">java</span><span class="p">:</span><span class="mi">692</span><span class="p">)</span>
+<span class="p">...</span>
+</code></pre></div>
+
+<h3>Quietly crashing! How to debug!?</h3>
+<div class="highlight"><pre><span></span><code><span class="k">user</span><span class="nv">@host</span><span class="err">$</span><span class="w"> </span><span class="n">matlab</span>
+<span class="n">MATLAB</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">selecting</span><span class="w"> </span><span class="n">SOFTWARE</span><span class="w"> </span><span class="n">OPENGL</span><span class="w"> </span><span class="n">rendering</span><span class="p">.</span>
+<span class="k">user</span><span class="nv">@host</span><span class="err">$</span>
+</code></pre></div>
+
+<h2>ldd</h2>
+<p>List Dynamic Dependencies (ldd), tells you all the libraries that your application requires. Often a missing package is the source of your problems.</p>
+<div class="highlight"><pre><span></span><code><span class="k">user</span><span class="nv">@host</span><span class="err">$</span><span class="w"> </span><span class="n">ldd</span><span class="w"> </span><span class="n">matlab</span>
+
+<span class="n">linux</span><span class="o">-</span><span class="n">vdso</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span><span class="w"> </span><span class="p">(</span><span class="mh">0x00007ffe4d5d1000</span><span class="p">)</span>
+<span class="n">libm</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">x86_64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libm</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span><span class="w"> </span><span class="p">(</span><span class="mh">0x00007f3721a87000</span><span class="p">)</span>
+<span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">x86_64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span><span class="w"> </span><span class="p">(</span><span class="mh">0x00007f3721866000</span><span class="p">)</span>
+<span class="n">librt</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">x86_64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">librt</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span><span class="w"> </span><span class="p">(</span><span class="mh">0x00007f372165e000</span><span class="p">)</span>
+<span class="n">libdl</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">x86_64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libdl</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span><span class="w"> </span><span class="p">(</span><span class="mh">0x00007f372145a000</span><span class="p">)</span>
+<span class="n">libstdc</span><span class="o">++</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">x86_64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libstdc</span><span class="o">++</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span><span class="w"> </span><span class="p">(</span><span class="mh">0x00007f37210d6000</span><span class="p">)</span>
+<span class="n">libmwmclmcrrt</span><span class="p">.</span><span class="n">so</span><span class="mf">.11.1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="k">found</span>
+<span class="n">libgcc_s</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">x86_64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libgcc_s</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span><span class="w"> </span><span class="p">(</span><span class="mh">0x00007f3720eba000</span><span class="p">)</span>
+<span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">x86_64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span><span class="w"> </span><span class="p">(</span><span class="mh">0x00007f3720ad9000</span><span class="p">)</span>
+<span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">ld</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">x86</span><span class="o">-</span><span class="mf">64.</span><span class="n">so</span><span class="mf">.2</span><span class="w"> </span><span class="p">(</span><span class="mh">0x00007f3721f10000</span><span class="p">)</span>
+</code></pre></div>
+
+<h2>strace</h2>
+<p>The output can be formidable, but the errors may be informative.</p>
+<p>Strace intercepts and records the system calls which are called by a process and the signals which are received by a process.</p>
+<div class="highlight"><pre><span></span><code><span class="n">user</span><span class="err">@</span><span class="n">host</span><span class="o">$</span><span class="w"> </span><span class="n">strace</span><span class="w"> </span><span class="o">-</span><span class="n">v</span><span class="w"> </span><span class="n">matlab</span>
+<span class="n">execve</span><span class="p">(</span><span class="s2">&quot;/opt/matlab/bin/glnxa64/MATLAB&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;/opt/matlab/bin/glnxa64/MATLAB&quot;</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;MODULE_VERSION_STACK=3.2.10&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;HOSTNAME=hpc055&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_ACCOUNT=RDS-CORE-SIHnextgen-&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;TERM=xterm-256color&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;SHELL=/bin/bash&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;HISTSIZE=1000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;TMPDIR=/tmp/pbs.6846183.pbsserve&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PYTHON_PATH=:/home/nbut3013/ptBa&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_JOBNAME=STDIN&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_ENVIRONMENT=PBS_INTERACTIVE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;QTDIR=/usr/lib64/qt-3.3&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;QTINC=/usr/lib64/qt-3.3/include&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_O_WORKDIR=/home/nbut3013&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;SINGULARITY_COMMAND=run&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;NCPUS=2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;USER_PATH=/usr/local/singularity&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;USER=nbut3013&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_TASKNUM=1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;LS_COLORS=rs=0:di=38;5;27:ln=38;&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;LD_LIBRARY_PATH=/.singularity.d/&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_O_HOME=/home/nbut3013&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;SINGULARITY_NAME=matlab-ubu.img&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_MOMPORT=15003&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_O_QUEUE=defaultQ&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_O_LOGNAME=nbut3013&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PATH=/home/nbut3013/anaconda2/bi&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;MODULE_VERSION=3.2.10&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;MAIL=/var/spool/mail/nbut3013&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_O_LANG=en_AU.UTF-8&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_JOBCOOKIE=0000000038FCE62400&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PWD=/project/RDS-CORE-SIHnextgen&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;_LMFILES_=/usr/local/Modules/mod&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_NODENUM=0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;LANG=en_US.UTF-8&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;MODULEPATH=/usr/local/Modules/ve&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;TZ=Etc/UTC&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_JOBDIR=/home/nbut3013&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;LOADEDMODULES=singularity/3.7.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;SINGULARITY_ENVIRONMENT=/.singul&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PS1=Singularity&gt; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_O_SHELL=/bin/bash&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;SINGULARITY_BIND=&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_JOBID=6846183.pbsserver&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;HISTCONTROL=ignoredups&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;SHLVL=2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;HOME=/home/nbut3013&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_O_HOST=login3.hpc.sydney.edu&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;LOGNAME=nbut3013&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;QTLIB=/usr/lib64/qt-3.3/lib&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;CVS_RSH=ssh&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_QUEUE=interactive&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;MODULESHOME=/usr/local/Modules/3&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_O_MAIL=/var/spool/mail/nbut3&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;OMP_NUM_THREADS=2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;LESSOPEN=||/usr/bin/lesspipe.sh &quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;SINGULARITY_CONTAINER=/project/S&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;BASH_FUNC_module()=() {  eval `/&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_O_SYSTEM=Linux&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_NODEFILE=/var/spool/PBS/aux/&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;G_BROKEN_FILENAMES=1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PBS_O_PATH=/home/nbut3013/anacon&quot;</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;_=/usr/bin/strace&quot;</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="n">brk</span><span class="p">(</span><span class="n">NULL</span><span class="p">)</span><span class="w">                               </span><span class="o">=</span><span class="w"> </span><span class="mh">0x5d3000</span>
+<span class="n">access</span><span class="p">(</span><span class="s2">&quot;/etc/ld.so.nohwcap&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">F_OK</span><span class="p">)</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="n">ENOENT</span><span class="w"> </span><span class="p">(</span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="p">)</span>
+<span class="n">readlink</span><span class="p">(</span><span class="s2">&quot;/proc/self/exe&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;/opt/matlab/bin/glnxa64/MATLAB&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span>
+<span class="n">access</span><span class="p">(</span><span class="s2">&quot;/etc/ld.so.preload&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">R_OK</span><span class="p">)</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="n">ENOENT</span><span class="w"> </span><span class="p">(</span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="p">)</span>
+<span class="n">open</span><span class="p">(</span><span class="s2">&quot;/opt/matlab/bin/glnxa64/tls/x86_64/libmwi18n.so&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">O_RDONLY</span><span class="o">|</span><span class="n">O_CLOEXEC</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="n">ENOENT</span><span class="w"> </span><span class="p">(</span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="p">)</span>
+<span class="n">stat</span><span class="p">(</span><span class="s2">&quot;/opt/matlab/bin/glnxa64/tls/x86_64&quot;</span><span class="p">,</span><span class="w"> </span><span class="mh">0x7ffff310fcb0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="n">ENOENT</span><span class="w"> </span><span class="p">(</span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="p">)</span>
+<span class="n">open</span><span class="p">(</span><span class="s2">&quot;/opt/matlab/bin/glnxa64/tls/libmwi18n.so&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">O_RDONLY</span><span class="o">|</span><span class="n">O_CLOEXEC</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="n">ENOENT</span><span class="w"> </span><span class="p">(</span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="p">)</span>
+<span class="n">stat</span><span class="p">(</span><span class="s2">&quot;/opt/matlab/bin/glnxa64/tls&quot;</span><span class="p">,</span><span class="w"> </span><span class="mh">0x7ffff310fcb0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="n">ENOENT</span><span class="w"> </span><span class="p">(</span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="p">)</span>
+<span class="n">open</span><span class="p">(</span><span class="s2">&quot;/opt/matlab/bin/glnxa64/x86_64/libmwi18n.so&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">O_RDONLY</span><span class="o">|</span><span class="n">O_CLOEXEC</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="n">ENOENT</span><span class="w"> </span><span class="p">(</span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="p">)</span>
+<span class="n">stat</span><span class="p">(</span><span class="s2">&quot;/opt/matlab/bin/glnxa64/x86_64&quot;</span><span class="p">,</span><span class="w"> </span><span class="mh">0x7ffff310fcb0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="n">ENOENT</span><span class="w"> </span><span class="p">(</span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="mi">3000</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="n">truncated</span>
+</code></pre></div>
+
+<h2>ltrace</h2>
+<p>Intercepts and records the dynamic library calls which are called by the executed process and the signals which are received by that process.  It can also intercept and print the system calls executed by the program.</p>
+<div class="highlight"><pre><span></span><code><span class="k">user</span><span class="nv">@host</span><span class="err">$</span><span class="w"> </span><span class="n">ltrace</span><span class="w"> </span><span class="n">matlab</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="mh">0x7ffcc608fc70</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;int8&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="mh">0x7ffcc608fc70</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="mh">0x990c50</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;int8&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">                      </span><span class="o">=</span><span class="w"> </span><span class="mh">0x990c50</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="mh">0x7ffcc608fc70</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;int16&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="mh">0x7ffcc608fc70</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="mh">0x7ffcc608fc70</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;int16&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="mh">0x7ffcc608fc70</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="mh">0x990ca0</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;int16&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="mh">0x990ca0</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="mh">0x7ffcc608fc70</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;int32&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="mh">0x7ffcc608fc70</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="mh">0x7ffcc608fc70</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;int32&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="mh">0x7ffcc608fc70</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="mh">0x990cf0</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;int32&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="mh">0x990cf0</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="mh">0x7ffcc608fc70</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;int64&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="mh">0x7ffcc608fc70</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="mh">0x7ffcc608fc70</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;int64&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="mh">0x7ffcc608fc70</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="mh">0x990d40</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;int64&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="mh">0x990d40</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="mh">0x7ffcc608fc70</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;uint8&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="mh">0x7ffcc608fc70</span>
+</code></pre></div>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

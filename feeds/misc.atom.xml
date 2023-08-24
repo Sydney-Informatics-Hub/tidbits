@@ -1,0 +1,1005 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits - Misc</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/" rel="alternate"></link><link href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/misc.atom.xml" rel="self"></link><id>https://pages.github.sydney.edu.au/informatics/tidbits/</id><updated>2023-07-28T00:00:00+10:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Starship: a terminal prompt that puts the most important info up front</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/starship-a-terminal-prompt-that-puts-the-most-important-info-up-front.html" rel="alternate"></link><published>2023-07-28T00:00:00+10:00</published><updated>2023-07-28T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:pages.github.sydney.edu.au,2023-07-28:/informatics/tidbits/starship-a-terminal-prompt-that-puts-the-most-important-info-up-front.html</id><summary type="html">&lt;p&gt;As part of my continuing quest to make my terminal &lt;a href="https://pages.github.sydney.edu.au/informatics/tidbits/add-some-colour-to-your-shell-modern-terminal-tools.html"&gt;more colourful&lt;/a&gt;,
+I've starting using &lt;a href="https://starship.rs/"&gt;Starship&lt;/a&gt;. Starship gives you a colourful,
+customisable prompt, with lots of useful information about your …&lt;/p&gt;</summary><content type="html">&lt;p&gt;As part of my continuing quest to make my terminal &lt;a href="https://pages.github.sydney.edu.au/informatics/tidbits/add-some-colour-to-your-shell-modern-terminal-tools.html"&gt;more colourful&lt;/a&gt;,
+I've starting using &lt;a href="https://starship.rs/"&gt;Starship&lt;/a&gt;. Starship gives you a colourful,
+customisable prompt, with lots of useful information about your current programming
+environment, git branch, or shell built in.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Example Starship prompt" src="images/starship_prompt/starship_example.png"&gt;&lt;/p&gt;
+&lt;h2&gt;Installation&lt;/h2&gt;
+&lt;p&gt;The best way to install &lt;strong&gt;Starship&lt;/strong&gt; is to follow the &lt;a href="https://starship.rs/guide/"&gt;official instructions&lt;/a&gt; - usually 
+there's a single terminal command to install, plus another to set it up for your specific
+shell.&lt;/p&gt;
+&lt;p&gt;You'll need a "nerd font" that has some extra symbols in it - find lots of options &lt;a href="https://www.nerdfonts.com/font-downloads"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;Starship is configured through a configuration file at &lt;code&gt;~/.config/starship.toml&lt;/code&gt;.
+To get started, you can try one of the nice looking presets like Tokyo Night,
+which can be set up automatically with a single command:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;starship&lt;span class="w"&gt; &lt;/span&gt;preset&lt;span class="w"&gt; &lt;/span&gt;tokyo-night&lt;span class="w"&gt; &lt;/span&gt;-o&lt;span class="w"&gt; &lt;/span&gt;~/.config/starship.toml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img alt="Tokyo Night preset" src="images/starship_prompt/tokyo-night.png"&gt;&lt;/p&gt;
+&lt;p&gt;See &lt;a href="https://starship.rs/config/"&gt;Starship's documentation&lt;/a&gt; for information
+about how to tweak the prompt for specific languages and tools.&lt;/p&gt;</content><category term="Misc"></category><category term="shell"></category><category term="terminal"></category><category term="bash"></category></entry><entry><title>Automating linting and error checking with Trunk</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/automating-linting-and-error-checking-with-trunk.html" rel="alternate"></link><published>2023-02-07T00:00:00+11:00</published><updated>2023-02-07T00:00:00+11:00</updated><author><name>Januar Harianto</name></author><id>tag:pages.github.sydney.edu.au,2023-02-07:/informatics/tidbits/automating-linting-and-error-checking-with-trunk.html</id><summary type="html">&lt;h2&gt;See Trunk in action in the &lt;code&gt;eeharvest&lt;/code&gt; package &lt;a href="https://github.com/Sydney-Informatics-Hub/eeharvest"&gt;repository&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Use &lt;a href="https://trunk.io"&gt;Trunk&lt;/a&gt; to check and monitor code prior to pushing it to production,
+allowing you to catch issues quickly. It works …&lt;/p&gt;</summary><content type="html">&lt;h2&gt;See Trunk in action in the &lt;code&gt;eeharvest&lt;/code&gt; package &lt;a href="https://github.com/Sydney-Informatics-Hub/eeharvest"&gt;repository&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Use &lt;a href="https://trunk.io"&gt;Trunk&lt;/a&gt; to check and monitor code prior to pushing it to production,
+allowing you to catch issues quickly. It works like a local CI or pre-commit
+hook for linting and formatting, but is &lt;strong&gt;instantenous&lt;/strong&gt;. Best of all, it doesn't
+force collaborators to install anything, and they may appreciate you for it.&lt;/p&gt;
+&lt;p&gt;With trunk you can replace:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;linters: e.g. &lt;code&gt;flake8&lt;/code&gt;, &lt;code&gt;pylint&lt;/code&gt;, &lt;code&gt;eslint&lt;/code&gt;, &lt;code&gt;stylelint&lt;/code&gt;, &lt;code&gt;shellcheck&lt;/code&gt;,
+  &lt;code&gt;markdownlint&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;formatters: e.g. &lt;code&gt;black&lt;/code&gt;, &lt;code&gt;prettier&lt;/code&gt;, &lt;code&gt;isort&lt;/code&gt;, &lt;code&gt;shfmt&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;issue detection: e.g. &lt;code&gt;bandit&lt;/code&gt;, &lt;code&gt;safety&lt;/code&gt;, &lt;code&gt;mypy&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens"&gt;ErrorLens&lt;/a&gt;:
+  in-line error reporting - installing this will result in "double" error reporting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All of the above are configured, installed and managed for you by Trunk, and
+editable in a &lt;code&gt;.trunk.yaml&lt;/code&gt; file.&lt;/p&gt;
+&lt;h2&gt;Lint&lt;/h2&gt;
+&lt;p&gt;Trunk can lint your files as you type and shows you the errors inline:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://pages.github.sydney.edu.au/informatics/tidbits/images/trunk/flake8@2x.png" alt= “” width="500"&gt;&lt;/p&gt;
+&lt;h2&gt;Format&lt;/h2&gt;
+&lt;p&gt;Enable automatic formatting on save - using &lt;code&gt;black&lt;/code&gt;, &lt;code&gt;prettier&lt;/code&gt;, or other
+formatters of choice:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://pages.github.sydney.edu.au/informatics/tidbits/images/trunk/black_preview.gif" alt= “” width="800"&gt;&lt;/p&gt;
+&lt;p&gt;Trunk is available for free in &lt;em&gt;most&lt;/em&gt; circumstances.&lt;/p&gt;
+&lt;h2&gt;Check&lt;/h2&gt;
+&lt;p&gt;When used in VS Code, Trunk can consolidate all issues in a "Check" sidebar:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://pages.github.sydney.edu.au/informatics/tidbits/images/trunk/check.png" alt= “” width="400"&gt;&lt;/p&gt;
+&lt;h2&gt;Other functionality&lt;/h2&gt;
+&lt;p&gt;Trunk works with continuous integration workflows, accepts custom linters and
+parsers, and has a robust CLI interface which allows developlers to allow
+teammates to use its features without installing anything (if Trunk is commited
+directly into the repo). Check out the documentation
+&lt;a href="https://docs.trunk.io/docs"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In most cases, a local install of Trunk is sufficient for routine linting and
+error checks.&lt;/strong&gt; It's just so convenient.&lt;/p&gt;
+&lt;h2&gt;Installation&lt;/h2&gt;
+&lt;h3&gt;VS Code (recommended)&lt;/h3&gt;
+&lt;p&gt;Install via &lt;a href="https://marketplace.visualstudio.com/items?itemName=Trunk.io"&gt;VS Code
+extensions&lt;/a&gt;. For
+every new project, you will be asked if you want to initialise Trunk.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://pages.github.sydney.edu.au/informatics/tidbits/images/trunk/vscode_init_trunk.png" alt= “” width="300"&gt;&lt;/p&gt;
+&lt;h3&gt;Bash&lt;/h3&gt;
+&lt;p&gt;If you use other editors, you can install Trunk via the command line:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl&lt;span class="w"&gt; &lt;/span&gt;https://get.trunk.io&lt;span class="w"&gt; &lt;/span&gt;-fsSL&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, initialise trunk for a project by running the following command in the root folder:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;trunk&lt;span class="w"&gt; &lt;/span&gt;init
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Use &lt;code&gt;trunk check&lt;/code&gt; to run all linters, or &lt;code&gt;trunk fmt&lt;/code&gt; to run all formatters. More
+information ca be found in the documentation
+&lt;a href="https://docs.trunk.io/docs/check-cli"&gt;here&lt;/a&gt;.&lt;/p&gt;</content><category term="misc"></category><category term="linting"></category><category term="error-checking"></category><category term="devEx"></category><category term="automation"></category></entry><entry><title>Use git on VMs easily and securely with SSH agent forwarding</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/use-git-on-vms-easily-and-securely-with-ssh-agent-forwarding.html" rel="alternate"></link><published>2022-10-04T00:00:00+11:00</published><updated>2022-10-04T00:00:00+11:00</updated><author><name>Marius Mather</name></author><id>tag:pages.github.sydney.edu.au,2022-10-04:/informatics/tidbits/use-git-on-vms-easily-and-securely-with-ssh-agent-forwarding.html</id><summary type="html">&lt;p&gt;If you use git repos on a VM (or other remote server),
+you'll know the pain of entering your login details
+whenever you need to pull down new code.&lt;/p&gt;
+&lt;p&gt;To …&lt;/p&gt;</summary><content type="html">&lt;p&gt;If you use git repos on a VM (or other remote server),
+you'll know the pain of entering your login details
+whenever you need to pull down new code.&lt;/p&gt;
+&lt;p&gt;To avoid this, you can use &lt;strong&gt;SSH agent forwarding&lt;/strong&gt;
+to use your local SSH keys in a remote session.
+If you're already using SSH to log in to the server,
+you just need to add the &lt;code&gt;-A&lt;/code&gt; option to your SSH
+command, like:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;ssh&lt;span class="w"&gt; &lt;/span&gt;-A&lt;span class="w"&gt; &lt;/span&gt;username@host
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;With SSH forwarding:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You don't have to enter your username/password repeatedly on
+  the remote server.&lt;/li&gt;
+&lt;li&gt;You don't have to copy SSH keys to the server, which might
+  create security issues.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;On the server, you need to use the SSH version
+of the repo's URL, e.g. &lt;code&gt;git@github.com:USERNAME/REPOSITORY.git&lt;/code&gt;.
+If you're currently using the HTTPS version you can
+switch with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git&lt;span class="w"&gt; &lt;/span&gt;remote&lt;span class="w"&gt; &lt;/span&gt;set-url&lt;span class="w"&gt; &lt;/span&gt;git@github.com:USERNAME/REPOSITORY.git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If you're just starting out with SSH and git and don't understand the above, 
+&lt;a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account"&gt;GitHub has good documentation&lt;/a&gt; on
+how to get set up with it.&lt;/p&gt;</content><category term="misc"></category><category term="git"></category><category term="ssh"></category></entry><entry><title>Shell Tips</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/shell-tips.html" rel="alternate"></link><published>2022-07-06T00:00:00+10:00</published><updated>2022-07-06T00:00:00+10:00</updated><author><name>Henry Lydecker</name></author><id>tag:pages.github.sydney.edu.au,2022-07-06:/informatics/tidbits/shell-tips.html</id><summary type="html">&lt;p&gt;A collection of misc commands and short snippets that might make your life a lot easier when using the shell locally, on remote, or on hpc.&lt;/p&gt;
+&lt;h3&gt;Table of Contents&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="#check-permissions"&gt;Check …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;A collection of misc commands and short snippets that might make your life a lot easier when using the shell locally, on remote, or on hpc.&lt;/p&gt;
+&lt;h3&gt;Table of Contents&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="#check-permissions"&gt;Check permissions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#change-permissions"&gt;Change permissions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#count-all-files"&gt;Count all files&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#count-all-files-of-a-certain-type"&gt;Count all files of a certain type&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#force-quit-a-pesky-app-that-wont-quit"&gt;Force Quit a Pesky App That Won't Quit&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#hpc-job-resource-monitoring"&gt;HPC job resource monitoring&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#find-all-txt-files-and-then-run-some-code-on-each-of-them"&gt;Find all .txt files and then run some code on each of them&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#remove-any-line-not-beginning-with-apples-from-text-files-in-this-folder"&gt;Remove any line not beginning with "apples" from text files in this folder&lt;/a&gt;  &lt;/li&gt;
+&lt;li&gt;&lt;a href="#rsync-from-local-folder-to-folder-on-HPC"&gt;Rsync from local folder to folder on HPC&lt;/a&gt;  &lt;/li&gt;
+&lt;li&gt;&lt;a href="#set-up-and-use-ssh-keys-for-remote-access-to-RDS"&gt;Set up and use ssh keys for remote access to RDS&lt;/a&gt;  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Check permissions&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;ls&lt;span class="w"&gt; &lt;/span&gt;-lah
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Change permissions&lt;/h2&gt;
+&lt;p&gt;If you want to change the permissons for a directory and its contents, use this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;chmod&lt;span class="w"&gt; &lt;/span&gt;a+rwx&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;some_dir&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;-R
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Where &lt;code&gt;a&lt;/code&gt; is all users, &lt;code&gt;rwx&lt;/code&gt; means Read + Write + eXecute, &lt;code&gt;&amp;lt;some_dir&amp;gt;&lt;/code&gt; is a directory you want to change permissions for, and &lt;code&gt;-R&lt;/code&gt; applies these changes to all contents recursively. Can also use this &lt;a href="https://chmodcommand.com/"&gt;chmod calculator&lt;/a&gt; to generate specific permissions in numerical and symbolic formats.  &lt;/p&gt;
+&lt;h2&gt;Count all files&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;find&lt;span class="w"&gt; &lt;/span&gt;.&lt;span class="w"&gt; &lt;/span&gt;-type&lt;span class="w"&gt; &lt;/span&gt;f&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;wc&lt;span class="w"&gt; &lt;/span&gt;-l
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Count all files of a certain type(s)&lt;/h2&gt;
+&lt;p&gt;There are several ways to count all files of a certain type(s), but this is by far the fastest simple shell command.&lt;/p&gt;
+&lt;p&gt;For example, if you want to recursively look through a directory and count all files of several different extentsions (in this case images):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;find&lt;span class="w"&gt; &lt;/span&gt;.&lt;span class="w"&gt; &lt;/span&gt;-type&lt;span class="w"&gt; &lt;/span&gt;f&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sed&lt;span class="w"&gt; &lt;/span&gt;-e&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;s/.*\.//&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sort&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;uniq&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sort&lt;span class="w"&gt; &lt;/span&gt;-n&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;grep&lt;span class="w"&gt; &lt;/span&gt;-Ei&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;(tiff|bmp|jpeg|jpg|png|gif)$&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Find all .txt files and then run some code on each of them&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;find&lt;span class="w"&gt; &lt;/span&gt;-name&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;*.txt&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-exec&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;command&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Remove any line not beginning with "apples" from text files in this folder&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sed&lt;span class="w"&gt; &lt;/span&gt;-i&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/^apples/!d&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;*.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Force quit a pesky app that won't quit&lt;/h2&gt;
+&lt;p&gt;Imagine you are trying to quit an application (e.g. Docker) or killa process using activity monitor, but for some reason the application keeps coming back or won't quit.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;osascript&lt;span class="w"&gt; &lt;/span&gt;-e&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;quit app &amp;quot;Docker&amp;quot;&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This will effecitevly nuke the app for you.&lt;/p&gt;
+&lt;h2&gt;Rsync from local folder to folder on HPC&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;rsync&lt;span class="w"&gt; &lt;/span&gt;-tvxPr&lt;span class="w"&gt; &lt;/span&gt;/local/path/to/files&lt;span class="w"&gt; &lt;/span&gt;unikey@hpc.sydney.edu.au:/remote/path/to/copy/to
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Check when your HPC job should start&lt;/h2&gt;
+&lt;p&gt;If you have a bunch of jobs in the queue on artemis, you might want to check when they are expected to start.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;qstat&lt;span class="w"&gt; &lt;/span&gt;-u&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;your_unikey&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;-T
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;HPC job resource monitoring&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/Sydney-Informatics-Hub/HPC_usage_reports"&gt;Scripts availabile here&lt;/a&gt; will pull compute (CPU, memory, walltime etc) resource consumption from PBS job logs into tab-delimited format and to report queue time from job history. Usage reporting scripts are currently available for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;University of Sydney's Artemis  &lt;/li&gt;
+&lt;li&gt;National Compute Infrastructure's Raijin &lt;/li&gt;
+&lt;li&gt;National Compute Infrastructure's Gadi  &lt;/li&gt;
+&lt;li&gt;University of Queensland's Flashlite  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Run the script from within the directory that contains the usage log files to be read. Optionally, can include the prefix of the usage logs as an argument on the command line. For example, to collate resource usage from Gadi PBS job logs, run: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;perl /g/data/er01/gadi_usage_report_v1.1.pl &amp;lt;log file prefix&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;To live fast and free, add the following alias to your .bashrc profile:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;alias joblogs=&amp;#39;perl /g/data/er01/HPC_usage_reports/gadi_usage_report_v1.1.pl&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And run from within the directory housing log files, with: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;joblogs
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;An example of the output: &lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;#JobName&lt;/th&gt;
+&lt;th&gt;CPUs_requested&lt;/th&gt;
+&lt;th&gt;CPUs_used&lt;/th&gt;
+&lt;th&gt;Mem_requested&lt;/th&gt;
+&lt;th&gt;Mem_used&lt;/th&gt;
+&lt;th&gt;CPUtime&lt;/th&gt;
+&lt;th&gt;CPUtime_mins&lt;/th&gt;
+&lt;th&gt;Walltime_req&lt;/th&gt;
+&lt;th&gt;Walltime_used&lt;/th&gt;
+&lt;th&gt;Walltime_mins&lt;/th&gt;
+&lt;th&gt;JobFS_req&lt;/th&gt;
+&lt;th&gt;JobFS_used&lt;/th&gt;
+&lt;th&gt;Efficiency&lt;/th&gt;
+&lt;th&gt;Service_units&lt;/th&gt;
+&lt;th&gt;Job_exit_status&lt;/th&gt;
+&lt;th&gt;Date&lt;/th&gt;
+&lt;th&gt;Time&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;amber_T115991B2.o&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;190.0GB&lt;/td&gt;
+&lt;td&gt;65.47GB&lt;/td&gt;
+&lt;td&gt;03:58:20&lt;/td&gt;
+&lt;td&gt;238.33&lt;/td&gt;
+&lt;td&gt;02:00:00&lt;/td&gt;
+&lt;td&gt;00:41:19&lt;/td&gt;
+&lt;td&gt;41.32&lt;/td&gt;
+&lt;td&gt;100.0MB&lt;/td&gt;
+&lt;td&gt;0B&lt;/td&gt;
+&lt;td&gt;0.36&lt;/td&gt;
+&lt;td&gt;65.42&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;2022-05-09&lt;/td&gt;
+&lt;td&gt;18:10:57&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;amber_T519706C1.o&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;190.0GB&lt;/td&gt;
+&lt;td&gt;73.16GB&lt;/td&gt;
+&lt;td&gt;03:35:27&lt;/td&gt;
+&lt;td&gt;215.45&lt;/td&gt;
+&lt;td&gt;02:00:00&lt;/td&gt;
+&lt;td&gt;00:37:43&lt;/td&gt;
+&lt;td&gt;37.72&lt;/td&gt;
+&lt;td&gt;100.0MB&lt;/td&gt;
+&lt;td&gt;0B&lt;/td&gt;
+&lt;td&gt;0.36&lt;/td&gt;
+&lt;td&gt;59.72&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;2022-05-09&lt;/td&gt;
+&lt;td&gt;18:06:46&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;amber_T530707.o&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;190.0GB&lt;/td&gt;
+&lt;td&gt;73.96GB&lt;/td&gt;
+&lt;td&gt;02:53:58&lt;/td&gt;
+&lt;td&gt;173.97&lt;/td&gt;
+&lt;td&gt;02:00:00&lt;/td&gt;
+&lt;td&gt;00:33:51&lt;/td&gt;
+&lt;td&gt;33.85&lt;/td&gt;
+&lt;td&gt;100.0MB&lt;/td&gt;
+&lt;td&gt;0B&lt;/td&gt;
+&lt;td&gt;0.32&lt;/td&gt;
+&lt;td&gt;53.60&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;2022-05-09&lt;/td&gt;
+&lt;td&gt;18:02:30&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;amber_T531207.o&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;190.0GB&lt;/td&gt;
+&lt;td&gt;70.38GB&lt;/td&gt;
+&lt;td&gt;03:25:54&lt;/td&gt;
+&lt;td&gt;205.90&lt;/td&gt;
+&lt;td&gt;02:00:00&lt;/td&gt;
+&lt;td&gt;00:37:04&lt;/td&gt;
+&lt;td&gt;37.07&lt;/td&gt;
+&lt;td&gt;100.0MB&lt;/td&gt;
+&lt;td&gt;0B&lt;/td&gt;
+&lt;td&gt;0.35&lt;/td&gt;
+&lt;td&gt;58.69&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;2022-05-09&lt;/td&gt;
+&lt;td&gt;18:05:28&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;amber_T547109.o&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;190.0GB&lt;/td&gt;
+&lt;td&gt;73.53GB&lt;/td&gt;
+&lt;td&gt;03:33:23&lt;/td&gt;
+&lt;td&gt;213.38&lt;/td&gt;
+&lt;td&gt;02:00:00&lt;/td&gt;
+&lt;td&gt;00:42:44&lt;/td&gt;
+&lt;td&gt;42.73&lt;/td&gt;
+&lt;td&gt;100.0MB&lt;/td&gt;
+&lt;td&gt;0B&lt;/td&gt;
+&lt;td&gt;0.31&lt;/td&gt;
+&lt;td&gt;67.66&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;2022-05-09&lt;/td&gt;
+&lt;td&gt;18:10:41&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;amber_T563810.o&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;190.0GB&lt;/td&gt;
+&lt;td&gt;68.73GB&lt;/td&gt;
+&lt;td&gt;02:55:47&lt;/td&gt;
+&lt;td&gt;175.78&lt;/td&gt;
+&lt;td&gt;02:00:00&lt;/td&gt;
+&lt;td&gt;00:30:21&lt;/td&gt;
+&lt;td&gt;30.35&lt;/td&gt;
+&lt;td&gt;100.0MB&lt;/td&gt;
+&lt;td&gt;0B&lt;/td&gt;
+&lt;td&gt;0.36&lt;/td&gt;
+&lt;td&gt;48.05&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;2022-05-09&lt;/td&gt;
+&lt;td&gt;17:57:43&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;How to SCP if there are spaces in folder names&lt;/h2&gt;
+&lt;p&gt;Add three &lt;code&gt;\\\&lt;/code&gt; after every space.&lt;/p&gt;
+&lt;p&gt;Like so:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;folder&lt;span class="se"&gt;\\\ &lt;/span&gt;with&lt;span class="se"&gt;\\\ &lt;/span&gt;spaces/*
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Set up and use ssh keys for remote access to RDS&lt;/h2&gt;
+&lt;p&gt;Connecting to RDS (research-data-ext.sydney.edu.au) remotely is only permissable via an SFTP connection. If you're working on a server external to the University (i.e. NCI Gadi) and need to transfer data to and from the RDS and this system, you can connect to the RDS on the command line with: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;sftp&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;UNIKEY&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nv"&gt;@research&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="k"&gt;data&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ext&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sydney&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;edu&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;au&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You will be prompted to provide your password with: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Authorised users only. All activity may be monitored and reported.
+Password:
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;However, if you are attempting to connect to RDS and transfer files via a PBS job, where the scheduling of these operations is driven by a batch controlled workflow, relying on entering a password or passphrase at the time of the operation is not feasible. In this case, you will need to &lt;strong&gt;set up password-free ssh keys&lt;/strong&gt;. You can do this with the following process: &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;On the remote server, wanting to access RDS&lt;/strong&gt; 
+1. Log into the remote server 
+2. &lt;code&gt;cd ~&lt;/code&gt;
+3. &lt;code&gt;ls .ssh&lt;/code&gt; (If this doesnt exist, then &lt;code&gt;mkdir .ssh&lt;/code&gt;)
+4. &lt;code&gt;chmod 700 .ssh&lt;/code&gt;
+5. &lt;code&gt;ssh-keygen&lt;/code&gt; Just press enter when prompted, saving the key in ~/.ssh/id_rsa and enter for no passphrase
+6. &lt;code&gt;cd .ssh&lt;/code&gt; You will now see two files, id_rsa (private key) and id_rsa.pub (your public key)
+7. &lt;code&gt;chmod 700 id_rsa*&lt;/code&gt;
+8. &lt;code&gt;cat ~/.ssh/id_rsa.pub &amp;gt;&amp;gt; authorized_keys&lt;/code&gt; this will create the authorized_keys file that you will copy to RDS to allow password-free connection
+9. &lt;code&gt;chmod 700 authorized_keys&lt;/code&gt;
+10. &lt;code&gt;sftp &amp;lt;UNIKEY&amp;gt;@research-data-ext.sydney.edu.au&lt;/code&gt; 
+11. You will be prompted to provide your password, same as above. Once your login is successful you will be in remotely logged into your home directory on RDS/Artemis.
+12. &lt;code&gt;cd .ssh&lt;/code&gt; If this doesn't exist, then run &lt;code&gt;mkdir ~/.ssh&lt;/code&gt;
+13. &lt;code&gt;put authorized_keys&lt;/code&gt; This will transfer authorized_keys on Gadi to your current directory. With sftp, it will look for the file relative to where you launched sftp. You can check where you are on Gadi using lls
+14. Logout using ctrl+z and 
+15. Test the sftp connection again by trying to log in, same as above. You should not need to use a password this time. &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Something to keep in mind&lt;/strong&gt; &lt;br&gt;
+Using ssh keys is &lt;em&gt;very&lt;/em&gt; sensitive to file and directory permissions on both sides – and it looks not just at the key itself, but also the .ssh folder and your home directory. If you somehow managed to mess your keys up (like me) and cannot get the password-free method to work, you probably have messed up permissions of your ~/.ssh directories, as well as the authorized_keys and id_rsa.pub files.  &lt;/p&gt;</content><category term="misc"></category><category term="shell"></category><category term="hpc"></category></entry><entry><title>Improve your email communications skills!</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/improve-your-email-communications-skills.html" rel="alternate"></link><published>2022-03-02T00:00:00+11:00</published><updated>2022-03-02T00:00:00+11:00</updated><author><name>Marius Mather</name></author><id>tag:pages.github.sydney.edu.au,2022-03-02:/informatics/tidbits/improve-your-email-communications-skills.html</id><summary type="html">&lt;h2&gt;Use active voice!&lt;/h2&gt;
+&lt;p&gt;Academics use a lot of passive voice. It's a hard habit to break!
+Active voice is usually simpler,
+clearer, and more interesting to read. Here's an anonymous …&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Use active voice!&lt;/h2&gt;
+&lt;p&gt;Academics use a lot of passive voice. It's a hard habit to break!
+Active voice is usually simpler,
+clearer, and more interesting to read. Here's an anonymous
+example from someone at SIH:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;As part of this process we will be starting to offer options for in-person workshops&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Why not just say&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;We're offering in-person workshops&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;Use calls to action&lt;/h2&gt;
+&lt;p&gt;Think about what you want the reader to do after reading your story. Stories
+about interesting projects are great, but do you
+just want them to sit and think about the mysteries of the universe?
+Every marketing email you get from a charity, business, political party
+will include a clear &lt;strong&gt;call to action&lt;/strong&gt;, a prompt to actually do
+something with the information. If you just want people to
+&lt;a href="https://pubmed.ncbi.nlm.nih.gov/35202601/"&gt;read the article&lt;/a&gt;,
+that's great! Other good prompts can include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Apply online&lt;/li&gt;
+&lt;li&gt;Contact us&lt;/li&gt;
+&lt;li&gt;Tell us your thoughts&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Be a bit less formal&lt;/h2&gt;
+&lt;p&gt;Stick to conversational, informal language in emails. That means
+using real words like "Professor" instead of abbreviations
+like "Assoc. Prof.", and "Doctor Y and her team" rather than
+"Y et al."&lt;/p&gt;</content><category term="misc"></category><category term="communication"></category></entry><entry><title>CUDA VS CPU: BERT embedding benchmarks</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/cuda-vs-cpu-bert-embedding-benchmarks.html" rel="alternate"></link><published>2021-07-23T00:00:00+10:00</published><updated>2021-07-23T00:00:00+10:00</updated><author><name>Henry Lydecker</name></author><id>tag:pages.github.sydney.edu.au,2021-07-23:/informatics/tidbits/cuda-vs-cpu-bert-embedding-benchmarks.html</id><summary type="html">&lt;h1&gt;cuda-vs-cpu-example&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;CUDA is faster than CPU for deep learning, but how fast are we talking about? Let's find out!&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;At the core of most of the popular whizbang deep …&lt;/p&gt;</summary><content type="html">&lt;h1&gt;cuda-vs-cpu-example&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;CUDA is faster than CPU for deep learning, but how fast are we talking about? Let's find out!&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;At the core of most of the popular whizbang deep learning methods are complex matrix operations.
+These operations are very taxing for CPUs.
+However, the architecture of GPUs, particularly NVIDIA's RTX consumer gaming cards and various enterprise cards is far more ammenable to deep learning.&lt;/p&gt;
+&lt;p&gt;Last year, Chao and I developed a pipeline for using Google's BERT (Bidirectional Encoder Representations from Transformers) to classify different portions of text in academic journal articles.
+We used Pytorch and Huggingface's Transformers to implement a pre-trained BERT model that had been trained on scientific texts (SciBERT).
+While this pipeline gave us very impressive results, it was extremely CPU intensive.
+We ended up having to deploy it at scale on a virtual machine, to prevent melting our MacBooks(I honestly wonder if my aggressive use of BERT on my MacBook contributed to its freaky phantom kernal panics...suffice to say you DO NOT want those!).&lt;/p&gt;
+&lt;p&gt;All along the way, I kept asking myself: how much faster would this be with CUDA? Without further adieou, let's find out!!!&lt;/p&gt;
+&lt;h2&gt;Scenario: Using BERT&lt;/h2&gt;
+&lt;p&gt;We built a Python pipeline to generate SciBERT sentence embeddings from full texts of academic journal articles; these embeddings would then be passed to a random forest classifier model to predict whether a particular sentence was conflict of interest, funding statement, or anything else. &lt;/p&gt;
+&lt;p&gt;Here's the portion of the pipeline concerned that we are interested in:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;cpu&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="nf"&gt;log&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getLogger&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;basicConfig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;level&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;warnings&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filterwarnings&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;ignore&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;ap&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;argparse&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ArgumentParser&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;ap&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_argument&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;--text-dir&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;./texts&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;pathlib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;Path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;ap&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_argument&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;-o&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;--out-path&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;./pickles&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;pathlib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;Path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ap&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;parse_args&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="ss"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="ss"&gt;A function to extract text from Academic pdfs that have been converted into DOCX files.&lt;/span&gt;
+&lt;span class="ss"&gt;This function excludes content from the references section onwards.&lt;/span&gt;
+&lt;span class="ss"&gt;To include references and onwards, remove the if statements from this function.&lt;/span&gt;
+&lt;span class="ss"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;TODO&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;incorporate&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pdf&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;DOCX&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;conversion&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;via&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Acrobat&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Pro&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;API&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;TODO&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;images&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;
+&lt;span class="n"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;getText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="ss"&gt;    Extract text from a DOCX file, excluding tables.&lt;/span&gt;
+&lt;span class="ss"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;docx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Document&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;fullText&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;[]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;para&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nl"&gt;paragraphs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;para&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sub&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;-\n(\w+ *)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;\1\n&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;para&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;para&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sub&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;\s\s+&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;para&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;para&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sub&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;-\s(\w+ *)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;\1\n&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;para&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;para&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;startswith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;Heading&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;and&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;para&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;startswith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;References&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;references&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;REFERENCES&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;Bibliography&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;Citations&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;para&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;startswith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;References&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;references&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;REFERENCES&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;Bibliography&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;Citations&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;fullText&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;para&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fullText&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;check_if_file_exists&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pom_file_path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;extension&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pom_file_path&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;with_suffix&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;extension&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="ow"&gt;exists&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="n"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sent_span&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="ss"&gt;    Perform sentence segmentation, and then generate spans describing these sentences.&lt;/span&gt;
+&lt;span class="ss"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sentences&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;nltk&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sent_tokenize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;spans&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;[]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sent&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;reversed&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sentences&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rfind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sent&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;spans&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sent&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;:st&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;spans&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;reverse&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;spans&lt;/span&gt;
+
+
+&lt;span class="n"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sents&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="ss"&gt;    Perform sentence segmentation.&lt;/span&gt;
+&lt;span class="ss"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sentences&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;nltk&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sent_tokenize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sentences&lt;/span&gt;
+
+
+&lt;span class="n"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;flatten_text&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="ss"&gt;    Squish the nested sentences.&lt;/span&gt;
+&lt;span class="ss"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;data&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;[]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;enumerate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;&amp;quot;sent_spans&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;filename&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;&amp;quot;filename&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;.docx&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;span&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;location&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;round&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;&amp;quot;length&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;sentence&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;&amp;quot;text&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;][&lt;/span&gt;&lt;span class="n"&gt;s[0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;data&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DataFrame&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_dict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;SciBERT&lt;/span&gt;
+&lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;AutoTokenizer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;allenai/scibert_scivocab_uncased&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;AutoModel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;allenai/scibert_scivocab_uncased&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;TODO&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;check&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;see&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;input&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;file&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;has&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;already&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;been&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;turned&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;into&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pickle&lt;/span&gt;
+&lt;span class="ss"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="ss"&gt;Loop through files in the text directory:&lt;/span&gt;
+&lt;span class="ss"&gt;1. read each one in, &lt;/span&gt;
+&lt;span class="ss"&gt;2. sentence segmentation,&lt;/span&gt;
+&lt;span class="ss"&gt;3. tokenize using SciBERT,&lt;/span&gt;
+&lt;span class="ss"&gt;4. generate SciBERT embeddings, and &lt;/span&gt;
+&lt;span class="ss"&gt;5. export as pickles.&lt;/span&gt;
+&lt;span class="ss"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;progress&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tqdm&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;text_dir&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;glob&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;*.docx&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;text_path&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;progress&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;path&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;isfile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;out_path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;text_path&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.pkl&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text_path&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot; has already been processed&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;continue&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;progress&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_description&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text_path&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;corpus_list&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;[]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;index&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;[]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;[]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;cur_corpus&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;getText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text_path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;corpus_list&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cur_corpus&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text_path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;path&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;basename&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text_path&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DataFrame&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;index&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;filename&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;text&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;corpus_list&lt;/span&gt;&lt;span class="err"&gt;}&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assign&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;doc_words&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lambda&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;t&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;())))&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Word&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Counts&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assign&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;doc_characters&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;str&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;[\s\n\t]&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;str&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;len&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;Character&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Counts&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assign&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sent_spans&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lambda&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sent_span&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assign&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;str&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;len&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assign&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sents&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lambda&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sents&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sent_df&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;concat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;flatten_text(df.loc[idx&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;index&lt;/span&gt;&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sent_df&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;&amp;quot;sentence&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sent_df&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;&amp;quot;sentence&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;astype&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;str&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sent_df&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;&amp;quot;sentence&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sent_df&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;&amp;quot;sentence&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;lambda&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;:512&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Cut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;all&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;character&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;strings&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;max&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;of&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;512&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;characters&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sent_df&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sent_df&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;
+&lt;span class="n"&gt;        sent_df[&amp;quot;sentence&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;str&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;contains&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;[A-Za-z]&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;na&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;False&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Remove&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;any&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;rows&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;that&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;contains&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;only&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;non&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;alphanumeric&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;characters&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sent_df&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sent_df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dropna&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Remove&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;any&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;lines&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;that&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;are&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;NA&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sent_df&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sent_df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;reset_index&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;drop&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sent_df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;index&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;tokenized&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sent_df&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;&amp;quot;sentence&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lambda&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;encode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;add_special_tokens&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;True&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;max_len&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tokenized&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;values&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;max_len&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;max_len&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;padded&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;array&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i + [0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_len&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tokenized&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;values&lt;/span&gt;&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;attention_mask&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;where&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;padded&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;input_ids&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tensor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;padded&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;input_ids&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tensor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;padded&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="k"&gt;to&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;int64&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;attention_mask&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tensor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;attention_mask&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;with&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;no_grad&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;last_hidden_states&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_ids&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;attention_mask&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;attention_mask&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;features&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;last_hidden_states&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;0&lt;/span&gt;&lt;span class="o"&gt;][&lt;/span&gt;&lt;span class="n"&gt;:, 0, :&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;numpy&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;features&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sent_df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DataFrame&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;features&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rsuffix&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;_&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;output_str&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;out_path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;base&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;path&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;basename&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text_path&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;text_str&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;base&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;output&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;base&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;.docx&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;.pickle&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;output&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;output_str&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;output&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;with&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;output&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;wb&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;output_file&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;pickle&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;features&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;output_file&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Ok, that's a lot of stuff to look at. 
+Lets just look at the parts that are involved with running PyTorch on either CPU or GPU:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;    device = torch.device(&amp;quot;cpu&amp;quot;)
+
+    # SciBERT
+    tokenizer = AutoTokenizer.from_pretrained(&amp;quot;allenai/scibert_scivocab_uncased&amp;quot;)
+    model = AutoModel.from_pretrained(&amp;quot;allenai/scibert_scivocab_uncased&amp;quot;)
+
+    # input_ids = torch.tensor(padded)
+    input_ids = torch.tensor(padded).to(torch.int64)
+    attention_mask = torch.tensor(attention_mask)
+
+    with torch.no_grad():
+        last_hidden_states = model(input_ids, attention_mask=attention_mask)
+
+    features = last_hidden_states[0][:, 0, :].numpy()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;With a few simple changes, we can tell our install of PyTorch to use CUDA.&lt;/p&gt;
+&lt;p&gt;NOTE: on MacOS your PyTorch install will by default be the CPU only version.
+To work with CUDA and GPUs, you should use a computer with a compatible GPU and OS (Linux or Windows are the best for now).&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gh"&gt;#&lt;/span&gt; Check if you have CUDA available
+    if torch.cuda.is_available():
+        device = torch.device(&amp;#39;cuda:0&amp;#39;)
+    else:
+        device = torch.device(&amp;#39;cpu&amp;#39;)
+        print(&amp;quot;You have to use this script on a computer with CUDA&amp;quot;)
+        exit()
+
+    # SciBERT
+    tokenizer = AutoTokenizer.from_pretrained(&amp;quot;allenai/scibert_scivocab_uncased&amp;quot;)
+    model = AutoModel.from_pretrained(&amp;quot;allenai/scibert_scivocab_uncased&amp;quot;).to(device)
+
+    input_ids = torch.tensor(padded).to(device)
+    attention_mask = torch.tensor(attention_mask).to(device)
+
+
+    with torch.no_grad():
+        last_hidden_states = model(input_ids, attention_mask=attention_mask)
+
+    # Pass tensors back to the cpu for numpy
+    features = last_hidden_states[0][:, 0, :].cpu().numpy()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Setup&lt;/h2&gt;
+&lt;p&gt;For this simple comparison, we will be running our example pipeline on two very different computers.
+NOTE: these names were invented fo this article.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. Computer 1 "Ol'Steevie" - 16 inch Macbook Pro&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;OS: macOS Big Sur&lt;/li&gt;
+&lt;li&gt;Processor: 2.3 Ghz 8-Core Intel Core i9&lt;/li&gt;
+&lt;li&gt;Memory: 64 GB 2667 MHz DDR4&lt;/li&gt;
+&lt;li&gt;GPU: AMD Radeon Pro 5500M 4 GB (0 CUDA cores)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;2. Computer 2 "Clippy's Revenge" - Henry's home built PC&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;OS: Windows 10 Home&lt;/li&gt;
+&lt;li&gt;Processor: 3.7 GHz 8-Core AMD Ryzen 7 2700x&lt;/li&gt;
+&lt;li&gt;Memory: 16 GB 3000 MHz DDR4&lt;/li&gt;
+&lt;li&gt;GPU: NVIDIA GeForce RTX 2070 Super 8 GB (2560 CUDA cores)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Clever readers will want to ask: why didn't you just run it once with cuda and once without on your desktop?
+That makes a lot of sense, and I will do that as well.
+However, I think this comparison of my SIH-issued ultra MacBook vs my medium-high end gaming PC is still interesting and relevant to many of us.&lt;/p&gt;
+&lt;h2&gt;Results&lt;/h2&gt;
+&lt;p&gt;Ol'Steevie: 188 seconds, 9.42 iterations / second
+&lt;img alt="https://github.sydney.edu.au/hlyd4326/cuda-vs-cpu-example/blob/master/images/Screen%20Shot%202021-07-27%20at%209.33.21%20pm.png" src="https://github.sydney.edu.au/hlyd4326/cuda-vs-cpu-example/blob/master/images/Screen%20Shot%202021-07-27%20at%209.33.21%20pm.png"&gt;&lt;/p&gt;
+&lt;p&gt;Clippy's Revenge (CUDA): 12 seconds, 1.54 iterations / second
+&lt;img alt="https://github.sydney.edu.au/hlyd4326/cuda-vs-cpu-example/blob/master/images/bert_cuda_test.PNG" src="https://github.sydney.edu.au/hlyd4326/cuda-vs-cpu-example/blob/master/images/bert_cuda_test.PNG"&gt;&lt;/p&gt;
+&lt;p&gt;Clippy's Revenge (CPU): 481 seconds, 24.09 iterations / second
+&lt;img alt="https://github.sydney.edu.au/hlyd4326/cuda-vs-cpu-example/blob/master/images/bert_cpu_test.PNG" src="https://github.sydney.edu.au/hlyd4326/cuda-vs-cpu-example/blob/master/images/bert_cpu_test.PNG"&gt;&lt;/p&gt;
+&lt;h2&gt;Discussion&lt;/h2&gt;
+&lt;p&gt;What did we learn? &lt;/p&gt;
+&lt;p&gt;In this case, using CUDA was &lt;strong&gt;15x faster&lt;/strong&gt; than the MacBook, and &lt;strong&gt;40x&lt;/strong&gt; faster than using my desktop's CPU!!! &lt;/p&gt;
+&lt;p&gt;It is also interesting to see how different CPU performance was between my MacBook and my desktop. 
+It appears that the higher speed of my CPU was not sufficient to make up for the huge difference in RAM. 
+This also suggests that performance on more typical laptops or desktops will be absolutely atrocious. &lt;/p&gt;
+&lt;p&gt;If you use PyTorch already, it is super easy to make the switch to using it with CUDA. 
+If you have access to a device with CUDA, it is a no brainer to run your deep learning pipelines on CUDA instead of CPU.&lt;/p&gt;
+&lt;h2&gt;Further Reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://arxiv.org/abs/1810.04805"&gt;The original paper&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://jalammar.github.io/illustrated-bert/"&gt;An explanation with pictures&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://huggingface.co/"&gt;Hugging Face Transformers&lt;/a&gt;: lots of great pre trained models to choose from!&lt;/li&gt;
+&lt;/ul&gt;</content><category term="misc"></category><category term="python"></category><category term="cuda"></category><category term="pytorch"></category></entry><entry><title>Setting up SSH for an easy login to VMs etc</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/setting-up-ssh-for-an-easy-login-to-vms-etc.html" rel="alternate"></link><published>2021-03-03T00:00:00+11:00</published><updated>2021-03-03T00:00:00+11:00</updated><author><name>Joel Nothman</name></author><id>tag:pages.github.sydney.edu.au,2021-03-03:/informatics/tidbits/setting-up-ssh-for-an-easy-login-to-vms-etc.html</id><summary type="html">&lt;p&gt;Make it easier to SSH into your VMs.&lt;/p&gt;
+&lt;h2&gt;You shouldn't need to enter your username&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;mkdir&lt;span class="w"&gt; &lt;/span&gt;-p&lt;span class="w"&gt; &lt;/span&gt;~/.ssh&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="c1"&gt;# make sure you have an SSH config directory&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;cat&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;~/.ssh/config&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;lt;&amp;lt; EOF …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Make it easier to SSH into your VMs.&lt;/p&gt;
+&lt;h2&gt;You shouldn't need to enter your username&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;mkdir&lt;span class="w"&gt; &lt;/span&gt;-p&lt;span class="w"&gt; &lt;/span&gt;~/.ssh&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="c1"&gt;# make sure you have an SSH config directory&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;cat&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;~/.ssh/config&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
+
+&lt;span class="s"&gt;Host *.sydney.edu.au&lt;/span&gt;
+&lt;span class="s"&gt;    User &amp;lt;PUT-YOUR-UNIKEY-HERE&amp;gt;&lt;/span&gt;
+&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This add some lines to &lt;code&gt;~/.ssh/config&lt;/code&gt;, that tell &lt;code&gt;ssh&lt;/code&gt; that if you try to login to a machine whose name ends with
+.sydney.edu.au, it should not use your current &lt;code&gt;$USER&lt;/code&gt; name, but should use the value inserted in &lt;code&gt;&amp;lt;PUT-YOUR-UNIKEY-HERE&amp;gt;&lt;/code&gt; above.&lt;/p&gt;
+&lt;p&gt;Now try:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;ssh&lt;span class="w"&gt; &lt;/span&gt;research-data-int.sydney.edu.au
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;You shouldn't need to enter a password&lt;/h2&gt;
+&lt;p&gt;If you do not have a private key set up on your current machine (check &lt;code&gt;ls
+~/.ssh/id_*&lt;/code&gt; for files not ending &lt;code&gt;.pub&lt;/code&gt;), use:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;ssh-keygen&lt;span class="w"&gt; &lt;/span&gt;-t&lt;span class="w"&gt; &lt;/span&gt;rsa
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Once you have a private key set up, you can copy your public key to the VM,
+which should be the last time you enter your password for that VM:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;ssh-copy-id&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;PUT-THE-VM-HOSTNAME-HERE&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;SECURITY WARNING: think carefully about putting a private key on a machine that others have sudo powers on. It's giving them the keys to wherever the corresponding public key exists.&lt;/p&gt;
+&lt;h2&gt;You shouldn't need to remember the VM name&lt;/h2&gt;
+&lt;p&gt;If you prefer an alias to writing out the full VM name, you can make another entry in &lt;code&gt;~/.ssh/config&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;cat&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;~/.ssh/config&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
+
+&lt;span class="s"&gt;Host &amp;lt;ALIAS&amp;gt;&lt;/span&gt;
+&lt;span class="s"&gt;    User &amp;lt;PUT-YOUR-UNIKEY-HERE&amp;gt;&lt;/span&gt;
+&lt;span class="s"&gt;    HostName &amp;lt;PUT-THE-VM-HOSTNAME-HERE&amp;gt;.srv.sydney.edu.au&lt;/span&gt;
+&lt;span class="s"&gt;EOF&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This applies only to &lt;code&gt;ssh&lt;/code&gt; (and &lt;code&gt;scp&lt;/code&gt;, &lt;code&gt;sftp&lt;/code&gt;, etc.), making &lt;code&gt;&amp;lt;ALIAS&amp;gt;&lt;/code&gt; a shorthand for login into &lt;code&gt;&amp;lt;PUT-THE-VM-HOSTNAME-HERE&amp;gt;.srv.sydney.edu.au&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For example, this might be a useful addition to &lt;code&gt;~/.ssh/config&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Host hpc
+    User wxyz1234
+    HostName hpc.sydney.edu.au
+
+Host rds
+    User wxyz1234
+    HostName research-data-int.sydney.edu.au
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Misc"></category><category term="shell"></category><category term="vms"></category><category term="hosting"></category><category term="ssh"></category></entry><entry><title>Add some colour to your shell: cool stuff with themes</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/add-some-colour-to-your-shell-cool-stuff-with-themes.html" rel="alternate"></link><published>2020-10-02T00:00:00+10:00</published><updated>2020-10-02T00:00:00+10:00</updated><author><name>Henry Lydecker</name></author><id>tag:pages.github.sydney.edu.au,2020-10-02:/informatics/tidbits/add-some-colour-to-your-shell-cool-stuff-with-themes.html</id><summary type="html">&lt;p&gt;** Introduction&lt;/p&gt;
+&lt;p&gt;When working with multiple shell windows, some on a local machine and others on remote, wouldn't it be nice if you could instantly tell which was which just by …&lt;/p&gt;</summary><content type="html">&lt;p&gt;** Introduction&lt;/p&gt;
+&lt;p&gt;When working with multiple shell windows, some on a local machine and others on remote, wouldn't it be nice if you could instantly tell which was which just by looking at them?
+You are in luck; there are numerous options for automatic theme switching when you use ssh.&lt;/p&gt;
+&lt;h2&gt;Simple option: MacOS terminal options&lt;/h2&gt;
+&lt;p&gt;It is really easy to make your terminal change theme when you ssh. 
+Go to your terminal preferences, then go to the profiles tab.
+Create a new theme called "ssh", and set it to whatever colours you want.&lt;/p&gt;
+&lt;p&gt;Now that you have an ssh theme, create a new command (shift+command+n) and paste in &lt;code&gt;ssh user1234@your.remote.server.com&lt;/code&gt;.
+Whenever you want to connect to your remote server, you can just hit shift+command+n and hit enter.
+This will open up a new terminal window connected to your remote server, using your ssh theme!&lt;/p&gt;
+&lt;p&gt;This functionality is super easy to set up and can make it a lot easier to work with shell on local and remote at the same time.
+This is particularly useful when working with HPC.&lt;/p&gt;
+&lt;h2&gt;More complex: iTerm and theme switching via scripts&lt;/h2&gt;
+&lt;p&gt;You can also set up automatic theme switching within the same window with some more advanced scripting.
+There are many options out there on stack threads for doing this with iTerm.
+I stick with using the default Terminal, however if you are an iTerm user these may be an even better option!&lt;/p&gt;</content><category term="Misc"></category><category term="shell"></category><category term="terminal"></category><category term="zsh"></category></entry><entry><title>VS Code Plugins: awesome tools to make your life easier</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/vs-code-plugins-awesome-tools-to-make-your-life-easier.html" rel="alternate"></link><published>2020-09-28T00:00:00+10:00</published><updated>2020-09-28T00:00:00+10:00</updated><author><name>Henry Lydecker</name></author><id>tag:pages.github.sydney.edu.au,2020-09-28:/informatics/tidbits/vs-code-plugins-awesome-tools-to-make-your-life-easier.html</id><summary type="html">&lt;h2&gt;Visual Studio Code&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://code.visualstudio.com/"&gt;Visual Studio Code&lt;/a&gt; is an open-source multipurpose code editor. 
+It has many useful built in features, but becomes extremely powerful when you use plugins.
+I believe for …&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Visual Studio Code&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://code.visualstudio.com/"&gt;Visual Studio Code&lt;/a&gt; is an open-source multipurpose code editor. 
+It has many useful built in features, but becomes extremely powerful when you use plugins.
+I believe for many of R users it will the answer for "what Python editor should I use?".
+And you may end up using it for absolutely everything.&lt;/p&gt;
+&lt;h2&gt;VS Code is mostly universal&lt;/h2&gt;
+&lt;p&gt;Many of us end up working in many different languages, whether it is Python/R for our analysis, Java for web apps, or shell scripts for high performance computing.
+VS Code is smart, and knows what a huge range of languages are supposed to look like.&lt;/p&gt;
+&lt;h2&gt;VS Code plugins&lt;/h2&gt;
+&lt;p&gt;Plugins add numerous amazing features to VS Code.&lt;/p&gt;
+&lt;p&gt;My favourite plugin is &lt;em&gt;GitLens&lt;/em&gt;. 
+This plugin provides excellent git integration, but the standout feature is the git blame functionality.
+When you mouseover each line, you can see the author, the age, and the commit associated with it in a tooltip.
+This feature is absolutely amazing, and I find myself going back and forth between RStudio and VS Code just so I can take advantage of this.&lt;/p&gt;
+&lt;p&gt;There are also numerous plugins for code formatting, spell checking, and linting.
+These can be very useful, especially if you are working with a language you are slightly less familiar with and have to deal with yet another weird syntax and new line standard.&lt;/p&gt;
+&lt;p&gt;For the Vim fanatics, there is even a Vim emulator plugin.
+I haven't used it, but it looks promising (&lt;em&gt;editor's note:&lt;/em&gt; I've used it
+and it does a good job of providing the core Vim functionality).&lt;/p&gt;</content><category term="Misc"></category><category term="R"></category><category term="Python"></category><category term="Java"></category><category term="Code"></category></entry><entry><title>tldr: A short, sweet, alternative to man pages</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/tldr-a-short-sweet-alternative-to-man-pages.html" rel="alternate"></link><published>2020-07-13T00:00:00+10:00</published><updated>2020-07-13T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:pages.github.sydney.edu.au,2020-07-13:/informatics/tidbits/tldr-a-short-sweet-alternative-to-man-pages.html</id><summary type="html">&lt;p&gt;If you want to get something done in your shell but don't
+want to scour through a whole &lt;code&gt;man&lt;/code&gt; page looking
+for the right combination of options, &lt;code&gt;tldr&lt;/code&gt; might have …&lt;/p&gt;</summary><content type="html">&lt;p&gt;If you want to get something done in your shell but don't
+want to scour through a whole &lt;code&gt;man&lt;/code&gt; page looking
+for the right combination of options, &lt;code&gt;tldr&lt;/code&gt; might have
+answers for you.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;tldr&lt;/code&gt; is a shell tool (installable via &lt;code&gt;brew install tldr&lt;/code&gt;)
+that gives short, human-readable examples of common shell
+commands, as an alternative to man pages. For example,
+running &lt;code&gt;tldr ls&lt;/code&gt; gives:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="tldr ls output" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/tldr_pages/ls_output.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;tldr&lt;/code&gt; also has specific pages for individual &lt;code&gt;git&lt;/code&gt; commands,
+with examples of how to use it in specific situations.
+e.g. for &lt;code&gt;tldr git rebase&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="tldr git output" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/tldr_pages/git_output.png"&gt;&lt;/p&gt;</content><category term="Misc"></category><category term="shell"></category><category term="terminal"></category><category term="git"></category></entry><entry><title>Add some colour to your shell: modern terminal tools</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/add-some-colour-to-your-shell-modern-terminal-tools.html" rel="alternate"></link><published>2020-06-16T00:00:00+10:00</published><updated>2020-06-16T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:pages.github.sydney.edu.au,2020-06-16:/informatics/tidbits/add-some-colour-to-your-shell-modern-terminal-tools.html</id><summary type="html">&lt;p&gt;While I'm pretty comfortable with basic shell commands, I like
+the convenience of features like syntax highlighting. Lately
+I've discovered a few replacements for common shell commands
+that add an …&lt;/p&gt;</summary><content type="html">&lt;p&gt;While I'm pretty comfortable with basic shell commands, I like
+the convenience of features like syntax highlighting. Lately
+I've discovered a few replacements for common shell commands
+that add an extra bit of colour:&lt;/p&gt;
+&lt;h2&gt;bat: cat with syntax highlighting&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;bat&lt;/code&gt; is a drop-in replacement for &lt;code&gt;cat&lt;/code&gt; that adds syntax highlighting
+and line numbers by default - great for when you want to check
+the contents of a script:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Syntax highlighting with bat" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/colourful_shell/bat_screenshot.png"&gt;&lt;/p&gt;
+&lt;p&gt;On Mac you can install it via Homebrew:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;bat
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;exa: ls with syntax highlighting&lt;/h2&gt;
+&lt;p&gt;On a (very) similar note, &lt;code&gt;exa&lt;/code&gt; is a drop-in replacement for &lt;code&gt;ls&lt;/code&gt; that adds
+a bit more colour. By default, it just adds some colouring for different
+file types:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="exa default output" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/colourful_shell/exa_default.png"&gt;&lt;/p&gt;
+&lt;p&gt;When used with options like &lt;code&gt;-l&lt;/code&gt; it adds some colour to the structured
+information, e.g. the permissions:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="exa with -l" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/colourful_shell/exa_permissions.png"&gt;&lt;/p&gt;
+&lt;p&gt;Again, install with Homebrew:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;exa
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;ripgrep: an easier grep&lt;/h2&gt;
+&lt;p&gt;I'm very bad at using &lt;code&gt;grep&lt;/code&gt; -  I can never remember whether the
+file or the pattern goes first. &lt;a href="https://github.com/BurntSushi/ripgrep"&gt;ripgrep&lt;/a&gt; 
+makes &lt;code&gt;grep&lt;/code&gt; more convenient:
+by default you can just give it a pattern and it will search the
+current folder recursively (automatically skipping hidden files and files
+in your &lt;code&gt;.gitignore&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;You get nice colourful output with the matches highlighted:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="ripgrep output" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/colourful_shell/ripgrep.png"&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;ripgrep
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Lots more&lt;/h2&gt;
+&lt;p&gt;I've only covered tools that I've been using regularly - there
+are plenty more out there if you want to improve your shell.
+There's a long list &lt;a href="https://github.com/alebcay/awesome-shell"&gt;here&lt;/a&gt;,
+and other fun tools like &lt;a href="https://asciinema.org/"&gt;asciinema&lt;/a&gt; which
+lets you record gifs/videos of your shell sessions.&lt;/p&gt;</content><category term="Misc"></category><category term="shell"></category><category term="terminal"></category><category term="zsh"></category></entry><entry><title>Formatting Code in Emails and Presentations</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/formatting-code-in-emails-and-presentations.html" rel="alternate"></link><published>2020-04-17T00:00:00+10:00</published><updated>2020-04-17T00:00:00+10:00</updated><author><name>Sergio Pintaldi</name></author><id>tag:pages.github.sydney.edu.au,2020-04-17:/informatics/tidbits/formatting-code-in-emails-and-presentations.html</id><summary type="html">&lt;h1&gt;The Annoying Bit&lt;/h1&gt;
+&lt;p&gt;Every time I'm trying to communicate about a piece of code in my Outlook email, I can't formatting it using &lt;code&gt;`&lt;/code&gt; or&lt;/p&gt;
+&lt;!-- language: lang-none --&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;```prog lang
+my code in here …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;h1&gt;The Annoying Bit&lt;/h1&gt;
+&lt;p&gt;Every time I'm trying to communicate about a piece of code in my Outlook email, I can't formatting it using &lt;code&gt;`&lt;/code&gt; or&lt;/p&gt;
+&lt;!-- language: lang-none --&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;```prog lang
+my code in here
+```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;It would be great using such shortcuts in Outlook (at least the Outlook web app does not have some code formatting option), like in Microsoft Teams and Slack.&lt;/p&gt;
+&lt;h1&gt;The Solution&lt;/h1&gt;
+&lt;p&gt;Unfortunately the only way is to use this website &lt;a href="https://tohtml.com/"&gt;https://tohtml.com/&lt;/a&gt; and copy paste your bit that you want to format.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/formatted-code-in-email/website.png"&gt;&lt;/p&gt;
+&lt;p&gt;Can handle many languages. The result is this nice email or Powerpoint slide.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/formatted-code-in-email/formatted-code-in-email.png"&gt;&lt;/p&gt;</content><category term="Misc"></category><category term="Email"></category><category term="Code"></category><category term="Formatting"></category></entry><entry><title>Some formulas to make working in Excel easier</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/some-formulas-to-make-working-in-excel-easier.html" rel="alternate"></link><published>2020-04-14T00:00:00+10:00</published><updated>2020-04-14T00:00:00+10:00</updated><author><name>Gordon McDonald</name></author><id>tag:pages.github.sydney.edu.au,2020-04-14:/informatics/tidbits/some-formulas-to-make-working-in-excel-easier.html</id><summary type="html">&lt;p&gt;Various Excel tips&lt;/p&gt;</summary><content type="html">&lt;p&gt;If you're used to programming in R or Python and suddenly have to do everything in Excel due to client requirements or something, you may repeatedly find yourself wondering "How do I do this thing I always do? Shouldn't it be easy?". Well the answer likely is no, it isn't as easy as it should be, but yes, there is a way.&lt;/p&gt;
+&lt;h1&gt;Checking a cell for the presence of one of multiple partial text string matches&lt;/h1&gt;
+&lt;p&gt;Say the data has been entered really non-uniformly. Sometimes it says 'Yes', sometimes it's a 1 etc. like in the following table:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Yes value&lt;/th&gt;
+&lt;th&gt;No value&lt;/th&gt;
+&lt;th&gt;Missing data&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;n/a&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Yes (unneccesary details)&lt;/td&gt;
+&lt;td&gt;No (unneccesary details)&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;&lt;blank&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;I think so&lt;/td&gt;
+&lt;td&gt;Not this time&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Any cell can contain one of these options and the unnecesary details might change. So really you want to search for a list of items and if any appear, mark it as true.&lt;/p&gt;
+&lt;p&gt;Example code to search any of the 'Yes' values and recode them as &lt;code&gt;TRUE&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;= OR( NOT( ISERROR( SEARCH({ "Yes" , "1" , "I think so" } , cell_to_search ) ) ) )&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;How does it work?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;This is feeding a cell array of possible yes values &lt;code&gt;{ "Yes" , "1" , "I think so" }&lt;/code&gt;  into the search function along with the cell to search. This will output a cell array which contains a 1 where it matched the search string, and a #VALUE error where it didn't, for example if the cell contents was "Yes blah", it will return &lt;code&gt;{1, #VALUE, #VALUE}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;ISERROR()&lt;/code&gt; function will turn this into true/false values e.g. &lt;code&gt;{FALSE, TRUE, TRUE}&lt;/code&gt; &lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;NOT()&lt;/code&gt; function negates it to &lt;code&gt;{TRUE, FALSE, FALSE}&lt;/code&gt; &lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;OR()&lt;/code&gt; function concatenates it appropriately to a single &lt;code&gt;TRUE&lt;/code&gt; value output.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1&gt;Finding the unique elements in an array&lt;/h1&gt;
+&lt;p&gt;If you want to find the unique elements in a column and return them sorted, it's easy. Just use &lt;code&gt;=SORT(UNIQUE(cells))&lt;/code&gt;. However if you want to do this for values occuring across multiple columns in an array, it's annoying.&lt;/p&gt;
+&lt;p&gt;First, select your array and give it a name, e.g. &lt;code&gt;MyArray&lt;/code&gt;. Then, use this horrible formula:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;=SORT(UNIQUE(INDEX(MyArray,1+INT((ROW(INDIRECT("1:"&amp;amp;COLUMNS(MyArray)*ROWS(MyArray)))-1)/COLUMNS(MyArray)),MOD(ROW(INDIRECT("1:"&amp;amp;COLUMNS(MyArray)*ROWS(MyArray)))-1+COLUMNS(MyArray),COLUMNS(MyArray))+1)))&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;How does it work? Lets break it into parts:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Array element iterator &lt;code&gt;ROW(INDIRECT("1:"&amp;amp;COLUMNS(MyArray)*ROWS(MyArray)))&lt;/code&gt;. Using the formula &lt;code&gt;=ROW(INDIRECT("1:10"))&lt;/code&gt; will give me a cell array of &lt;code&gt;{1;2;3;4;5;6;7;8;9;10}&lt;/code&gt;. So to get an iterator to go through all the elements in the array, I use &lt;code&gt;ROW(INDIRECT("1:"&amp;amp;COLUMNS(MyArray)*ROWS(MyArray)))&lt;/code&gt;. Let's call this iterator &lt;code&gt;i&lt;/code&gt; now.&lt;/li&gt;
+&lt;li&gt;Indexing the array &lt;code&gt;INDEX(array, row, column)&lt;/code&gt; will pull out an element of the array. so we do appropriate modulo arithmatic on the iterator &lt;code&gt;i&lt;/code&gt; to get the column number - &lt;code&gt;MOD(i-1+COLUMNS(MyArray),COLUMNS(MyArray))+1&lt;/code&gt;, and take the floor of a division (using the &lt;code&gt;INT()&lt;/code&gt; function) to get the row number as row = &lt;code&gt;1+INT((i-1)/COLUMNS(MyArray))&lt;/code&gt;. So we get &lt;code&gt;INDEX(MyArray,1+INT((i-1)/COLUMNS(MyArray)),MOD(i-1+COLUMNS(MyArray),COLUMNS(MyArray))+1)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Now we have a vertical array/column (let's call it &lt;code&gt;col&lt;/code&gt; ) containing all the data which was in the array. We just have to apply &lt;code&gt;SORT(UNIQUE(col))&lt;/code&gt; to get out only the unique elements, and sorted in alphabetical order.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1&gt;Excel gotchas&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;Referencing the contents of a cell will return the contents of the cell, unless it is blank. A blank cell will turn into a zero. Thus missing data can magically turn into non-missing data in the middle of your analysis. Instead of &lt;code&gt;=cell_ref&lt;/code&gt; use &lt;code&gt;=if(isblank(cell_ref),"",cell_ref)&lt;/code&gt; to keep blanks blank.&lt;/li&gt;
+&lt;li&gt;Checking if a cell is blank using &lt;code&gt;isblank(cell_ref)&lt;/code&gt; will return false if the cell contains a formula which returns a blank string as a value. In this case use &lt;code&gt;cell_ref=""&lt;/code&gt; instead.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1&gt;Examples&lt;/h1&gt;
+&lt;p&gt;In the file &lt;a href="https://pages.github.sydney.edu.au/informatics/tidbits/downloads/excel_formulas_example.xlsx"&gt;excel_formulas_example.xlsx&lt;/a&gt; are examples of the things described above.&lt;/p&gt;</content><category term="Misc"></category><category term="Excel"></category><category term="spreadsheets"></category></entry><entry><title>Useful Mac OS tips</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/useful-mac-os-tips.html" rel="alternate"></link><published>2020-03-09T00:00:00+11:00</published><updated>2020-03-09T00:00:00+11:00</updated><author><name>Joel Nothman</name></author><id>tag:pages.github.sydney.edu.au,2020-03-09:/informatics/tidbits/useful-mac-os-tips.html</id><summary type="html">&lt;h1&gt;Some favourite keyboard shortcuts:&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Switch tabs: &lt;code&gt;⌘-shift-[&lt;/code&gt; and &lt;code&gt;⌘-shift-]&lt;/code&gt; ; Close tab: &lt;code&gt;⌘-w&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Open Spotlight to search for things: &lt;code&gt;⌘-space&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Once you’ve found something in Spotlight, use &lt;code&gt;⌘-click&lt;/code&gt; to open …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;h1&gt;Some favourite keyboard shortcuts:&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Switch tabs: &lt;code&gt;⌘-shift-[&lt;/code&gt; and &lt;code&gt;⌘-shift-]&lt;/code&gt; ; Close tab: &lt;code&gt;⌘-w&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Open Spotlight to search for things: &lt;code&gt;⌘-space&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Once you’ve found something in Spotlight, use &lt;code&gt;⌘-click&lt;/code&gt; to open its containing folder&lt;/li&gt;
+&lt;li&gt;Screen capture &lt;code&gt;⌘-ctrl-shift-4&lt;/code&gt;: allows you to select a rectangle, which will then be available in clipboard (paste straight into email or save by opening Preview and &lt;code&gt;⌘-n&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Switch Application: &lt;code&gt;⌘-tab&lt;/code&gt; (hold &lt;code&gt;⌘&lt;/code&gt; to select)&lt;/li&gt;
+&lt;li&gt;Switch Window within application: &lt;code&gt;⌘-~&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Page up/down/home/end: &lt;code&gt;Fn-up/down/left/right&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;Command-line tips&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Use &lt;code&gt;open&lt;/code&gt; to open an app, or to open a file&lt;/li&gt;
+&lt;li&gt;Use &lt;code&gt;pbcopy&lt;/code&gt; to dump the output of a command to the clipboard&lt;/li&gt;
+&lt;li&gt;Use &lt;code&gt;pbpaste&lt;/code&gt; to dump the clipboard to standard output (for piping into a program or a file)&lt;/li&gt;
+&lt;li&gt;Drag files into the command-line to get their path (see below)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;Some other neat things:&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;An icon in the status bar like &lt;img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/mac_tips/word_doc.png"&gt; or &lt;img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/mac_tips/folder.png"&gt; can be dragged (yes, even a file you have open in word).&lt;ul&gt;
+&lt;li&gt;Drag it into your Terminal app to get the path to that file.&lt;/li&gt;
+&lt;li&gt;Drag it into your email to attach it.&lt;/li&gt;
+&lt;li&gt;Drag it into your web browser to upload it (in some contexts).&lt;/li&gt;
+&lt;li&gt;This one’s pretty cool: drag it into a Save As or Open dialog (where you get to select a file) to go to the file’s directory!&lt;/li&gt;
+&lt;li&gt;You may want to use &lt;code&gt;⌘-tab&lt;/code&gt; and &lt;code&gt;⌘-~&lt;/code&gt;to navigate to the destination window while dragging.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The icon next to the URL in your browser – such as the padlock here &lt;img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/mac_tips/padlock.png"&gt; – can also be dragged, so you can insert the web address in your terminal or email.&lt;/li&gt;
+&lt;li&gt;Install &lt;a href="https://www.iterm2.com/"&gt;ITerm2&lt;/a&gt; and install its shell integration. Among other things it gives you a status bar showing you what processes 
+  are running in that shell, the git branch / status, etc.&lt;/li&gt;
+&lt;li&gt;Is Time Machine backup taking too long? Open terminal and enter &lt;code&gt;sudo sysctl debug.lowpri\_throttle_enabled=0&lt;/code&gt; to speed up the process.&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Misc"></category><category term="macos"></category></entry><entry><title>Adobe Acrobat Pro DC for PDF text extraction</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/adobe-acrobat-pro-dc-for-pdf-text-extraction.html" rel="alternate"></link><published>2020-03-05T00:00:00+11:00</published><updated>2020-03-05T00:00:00+11:00</updated><author><name>Henry Lydecker</name></author><id>tag:pages.github.sydney.edu.au,2020-03-05:/informatics/tidbits/adobe-acrobat-pro-dc-for-pdf-text-extraction.html</id><summary type="html">&lt;p&gt;Extract text from PDF files&lt;/p&gt;</summary><content type="html">&lt;p&gt;While there are many options for extracting text from PDFs using R and
+Python, at the end of the day Adobe rightly knows best about how to
+extract text from PDFs. You can very easily do this with individual pdf
+files using the Adobe Acrobat GUI. In order to do this automatically on
+batches of files, you used to be able to call on Acrobat functions using
+the shell/terminal. Unfortunately it seems that Adobe has closed off
+much of this functionality (and in fact it is now agains the terms of
+service).&lt;/p&gt;
+&lt;p&gt;Thankfully all is not lost: there is an Adobe approved way to batch
+process pdfs: &lt;strong&gt;Action Wizard&lt;/strong&gt;. Action Wizard sounds like something out
+of Dungeons and Dragons, but it is actually a somewhat difficult to find
+tool within Adobe Acrobat for performing a wide range of processes.&lt;/p&gt;
+&lt;h1&gt;Finding and using the Action Wizard&lt;/h1&gt;
+&lt;p&gt;By default, you likely will not see the action wizard. Here is how to
+find it:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Open Adobe Acrobat Pro DC. You should see the option to select the
+    “Tools” tab. Click on that.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/pdf2word/Screen Shot 2020-03-05 at 12.11.20 pm.png"&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You should now see tab with a bunch of different tools. Scroll down,
+    or type “action wizard” into the search bar to find the wizard. Add
+    the wizard to your tools.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/pdf2word/Screen Shot 2020-03-05 at 12.12.48 pm.png"&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Now that you have added the wizard to your tools, click on it and
+    check out all of the options that you have. Import options to note:
+    Manage actions lets you…manage the actions that you have available.
+    You can use this to import, enable, edit, and export actions. The
+    more actions button takes to Adobe’s action exchange website.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/pdf2word/Screen Shot 2020-03-05 at 12.13.22 pm.png"&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1&gt;Action Wizard Plugins&lt;/h1&gt;
+&lt;p&gt;Action Wizard has support for building your own plugins, as well as
+importing plugins that have been made by others. You can view available
+plugins on Adobe’s action Exchange:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://acrobatusers.com/actions-exchange/index.html" class="uri"&gt;https://acrobatusers.com/actions-exchange/index.html&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;PDF to Word&lt;/h2&gt;
+&lt;p&gt;Lo and behold, I found a plugin on the actions exchange that lets you
+batch process and save PDF files as Word files.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="&amp;lt;a href=&amp;quot;https://acrobatusers.com/actions-exchange/index.html&amp;quot;&amp;gt; This
+is where you find it on the actions
+exchange&amp;lt;/a&amp;gt;" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/pdf2word/Screen Shot 2020-03-05 at 9.33.43 am.png"&gt;&lt;/p&gt;
+&lt;p&gt;After downloading the action, you need to import it. This is pretty easy
+to figure out by clicking on manage actions. Here’s an image of what to
+do just in case.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/pdf2word/Screen Shot 2020-03-05 at 12.23.14 pm.png"&gt;&lt;/p&gt;
+&lt;p&gt;When run on a folder containing subfolders, the plugin functions
+recursively and will read and convert all pdfs contained within the sub
+folders. I ran this plugin on a set of ~900 PDFs of scientific papers,
+and it took ~50 minutes to process these into .docx.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Ew." src="https://pages.github.sydney.edu.au/informatics/tidbits/images/pdf2word/Screen Shot 2020-03-05 at 12.30.14 pm.png"&gt;&lt;/p&gt;
+&lt;p&gt;When I opened up one of these in Word, I saw that Acrobat has managed to
+perfectly replicate the PDF’s format in Word…which is not particularly
+useful. I got started writing a Visual Basic macro for saving as .txt
+when I stopped and thought: why not try to customize the plugin itself!&lt;/p&gt;
+&lt;h2&gt;PDF to whatever you want&lt;/h2&gt;
+&lt;p&gt;Thankfully, it is very easy to edit plugins in Action Wizard. To do
+this, go back to Manage Actions, select the action you want to edit, and
+then click edit. There are heaps of options here; for now we are just
+interested in adjusting the options for the file saving step of this
+action.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/pdf2word/Screen Shot 2020-03-05 at 11.06.31 am.png"&gt;&lt;/p&gt;
+&lt;p&gt;After clicking save, the plugin is now primed to save PDF files as
+whatever format you want. From experimenting with .txt and .rtf files, I
+found that .rtf does the best job at converting files with multiple
+columns into one sensible column of text. When this is running, it takes
+in between 1 and 3 seconds to process each PDF into .rtf.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Multiple columns have been turned into one sensible column, and the
+footer stuff has been put somewhere
+reasonable." src="https://pages.github.sydney.edu.au/informatics/tidbits/images/pdf2word/Screen Shot 2020-03-05 at 12.33.39 pm.png"&gt;&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Need to do something with PDF files? Actions in Adobe Acrobat may end up
+being the best option for you. There are loads of pre-built actions on
+the actions exchange, and Adobe has loads of built in options for
+building or editing actions. You can also write actions in javascript if
+you feel like it!&lt;/p&gt;</content><category term="Misc"></category><category term="pdf"></category><category term="text"></category><category term="adobe"></category></entry></feed>

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Standardised Python testing with Tox and `tox-conda` | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/standardised-python-testing-with-tox-and-tox-conda.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/python.atom.xml">  
+  <meta name="description" content="Tox is a great too that standardises package building, testing, linting and CI-integration for Python projects. As not everyone builds Python packages, this article will focus on automatic unit tests …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Standardised Python testing with Tox and `tox-conda`
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2023-02-07T00:00:00+11:00">
+          <i class="fas fa-clock"></i>
+          Tue 07 February 2023
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/python.html">Python</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/januar-harianto.html">Januar Harianto</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/automation.html">#automation</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/python.html">#python</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/unit-testing.html">#unit-testing</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/devops.html">#devops</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p><a href="https://github.com/tox-dev/tox">Tox</a> is a great too that standardises package
+building, testing, linting and CI-integration for Python projects. As not
+everyone builds Python packages, this article will focus on automatic <strong>unit
+tests</strong> for any python code.</p>
+<p>Installing tox is as simple as:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>tox
+</code></pre></div>
+
+<p>Or if you use conda/mamba:</p>
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>tox
+</code></pre></div>
+
+<h2>Tox and <code>eeharvest</code></h2>
+<p>The <a href="https://github.com/Sydney-Informatics-Hub/eeharvest"><code>eeharvest</code></a> package
+uses Tox to automate a bunch of things:</p>
+<ol>
+<li>building the package</li>
+<li>running tests using <code>pytest</code> in multiple environments</li>
+<li>checking code coverage</li>
+<li>publishing to PyPI</li>
+</ol>
+<p>If configured properly, the first four actions can be done in a single command:</p>
+<div class="highlight"><pre><span></span><code>tox
+</code></pre></div>
+
+<p>Publishing the package to PyPI is as simple as:</p>
+<div class="highlight"><pre><span></span><code>tox<span class="w"> </span>-e<span class="w"> </span>publish<span class="w"> </span>--<span class="w"> </span>--repository<span class="w"> </span>pypi
+</code></pre></div>
+
+<p>Below is a preview of what happens when using tox for unit testing. If you look
+closely, tox is running unit tests on Python versions 3.8 to 3.11 (6
+environments in total), and then publishing the coverage for each environment:</p>
+<p><img src="https://pages.github.sydney.edu.au/informatics/tidbits/images/tox/tox_action.gif" alt= “” width="600"></p>
+<h3>Configuration</h3>
+<p>Tox works by looking at a <code>tox.ini</code> file in the root of the project. That's it.
+A single file.</p>
+<p>A simple configuartion for two test environments, Python 3.8 and 3.11, can be
+generated with the following configuration settings in the file:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[tox]</span>
+<span class="na">requires</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="na">tox&gt;</span><span class="o">=</span><span class="s">4</span>
+<span class="na">env_list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">py{38,311}</span>
+<span class="na">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">tox-conda</span>
+
+<span class="k">[testenv]</span>
+<span class="na">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Invoke pytest to run automated tests</span>
+<span class="na">setenv</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="na">TOXINIDIR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">{toxinidir}</span>
+<span class="na">extras</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="na">testing</span>
+<span class="na">deps</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="na">pytest&gt;</span><span class="o">=</span><span class="s">7</span>
+<span class="w">    </span><span class="na">pytest-sugar</span>
+<span class="na">conda_deps</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="na">geedim</span>
+<span class="na">conda_channels</span><span class="o">=</span>
+<span class="w">    </span><span class="na">conda-forge</span>
+<span class="na">conda_install_args</span><span class="o">=</span>
+<span class="w">    </span><span class="na">--override-channels</span>
+
+<span class="na">commands</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="na">pytest {posargs</span><span class="o">:</span><span class="s">tests}</span>
+</code></pre></div>
+
+<p>Note that the above config requires use of <code>tox-conda</code>, which can be installed
+via mamba/conda:</p>
+<div class="highlight"><pre><span></span><code><span class="n">mamba</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">tox</span><span class="o">-</span><span class="n">conda</span>
+</code></pre></div>
+
+<p>Tox will automatically configure conda environments, because <code>requires =
+tox-conda</code> is set. For each environment specified in <code>env_list</code>, it will install
+dependencies specified in <code>conda_deps</code> and <code>deps</code> (pip dependencies), and then
+run tests in your tests folder.</p>
+<p>For more information on configuring tox, see the <a href="https://tox.wiki/en/latest/user_guide.html">official
+documentation</a>.</p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

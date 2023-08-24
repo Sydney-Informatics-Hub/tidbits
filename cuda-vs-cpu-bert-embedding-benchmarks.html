@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  CUDA VS CPU: BERT embedding benchmarks | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/cuda-vs-cpu-bert-embedding-benchmarks.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/misc.atom.xml">  
+  <meta name="description" content="cuda-vs-cpu-example CUDA is faster than CPU for deep learning, but how fast are we talking about? Let's find out! Introduction At the core of most of the popular whizbang deep …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  CUDA VS CPU: BERT embedding benchmarks
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2021-07-23T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Fri 23 July 2021
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/misc.html">misc</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/henry-lydecker.html">Henry Lydecker</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/python.html">#python</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/cuda.html">#cuda</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/pytorch.html">#pytorch</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>cuda-vs-cpu-example</h1>
+<p><strong>CUDA is faster than CPU for deep learning, but how fast are we talking about? Let's find out!</strong></p>
+<h2>Introduction</h2>
+<p>At the core of most of the popular whizbang deep learning methods are complex matrix operations.
+These operations are very taxing for CPUs.
+However, the architecture of GPUs, particularly NVIDIA's RTX consumer gaming cards and various enterprise cards is far more ammenable to deep learning.</p>
+<p>Last year, Chao and I developed a pipeline for using Google's BERT (Bidirectional Encoder Representations from Transformers) to classify different portions of text in academic journal articles.
+We used Pytorch and Huggingface's Transformers to implement a pre-trained BERT model that had been trained on scientific texts (SciBERT).
+While this pipeline gave us very impressive results, it was extremely CPU intensive.
+We ended up having to deploy it at scale on a virtual machine, to prevent melting our MacBooks(I honestly wonder if my aggressive use of BERT on my MacBook contributed to its freaky phantom kernal panics...suffice to say you DO NOT want those!).</p>
+<p>All along the way, I kept asking myself: how much faster would this be with CUDA? Without further adieou, let's find out!!!</p>
+<h2>Scenario: Using BERT</h2>
+<p>We built a Python pipeline to generate SciBERT sentence embeddings from full texts of academic journal articles; these embeddings would then be passed to a random forest classifier model to predict whether a particular sentence was conflict of interest, funding statement, or anything else. </p>
+<p>Here's the portion of the pipeline concerned that we are interested in:</p>
+<div class="highlight"><pre><span></span><code><span class="n">device</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">torch</span><span class="p">.</span><span class="n">device</span><span class="p">(</span><span class="ss">&quot;cpu&quot;</span><span class="p">)</span>
+
+<span class="nf">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">()</span>
+<span class="n">logging</span><span class="p">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="k">level</span><span class="o">=</span><span class="n">logging</span><span class="p">.</span><span class="n">INFO</span><span class="p">)</span>
+<span class="n">warnings</span><span class="p">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="ss">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="n">ap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">argparse</span><span class="p">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="n">ap</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="ss">&quot;--text-dir&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">default</span><span class="o">=</span><span class="ss">&quot;./texts&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="n">pathlib</span><span class="p">.</span><span class="k">Path</span><span class="p">)</span>
+<span class="n">ap</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span>
+<span class="w">    </span><span class="ss">&quot;-o&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="ss">&quot;--out-path&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="k">default</span><span class="o">=</span><span class="ss">&quot;./pickles&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">type</span><span class="o">=</span><span class="n">pathlib</span><span class="p">.</span><span class="k">Path</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ap</span><span class="p">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="ss">&quot;&quot;&quot;</span>
+<span class="ss">A function to extract text from Academic pdfs that have been converted into DOCX files.</span>
+<span class="ss">This function excludes content from the references section onwards.</span>
+<span class="ss">To include references and onwards, remove the if statements from this function.</span>
+<span class="ss">&quot;&quot;&quot;</span>
+<span class="err">#</span><span class="w"> </span><span class="nl">TODO</span><span class="p">:</span><span class="w"> </span><span class="n">incorporate</span><span class="w"> </span><span class="n">pdf</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">DOCX</span><span class="w"> </span><span class="n">conversion</span><span class="w"> </span><span class="n">via</span><span class="w"> </span><span class="n">Acrobat</span><span class="w"> </span><span class="n">Pro</span><span class="w"> </span><span class="n">API</span><span class="vm">?</span>
+<span class="err">#</span><span class="w"> </span><span class="nl">TODO</span><span class="p">:</span><span class="w"> </span><span class="n">strip</span><span class="w"> </span><span class="n">images</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="nc">text</span>
+<span class="n">def</span><span class="w"> </span><span class="n">getText</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="ss">&quot;&quot;&quot;</span>
+<span class="ss">    Extract text from a DOCX file, excluding tables.</span>
+<span class="ss">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="n">doc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">docx</span><span class="p">.</span><span class="n">Document</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="w">    </span><span class="n">fullText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">para</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">doc</span><span class="p">.</span><span class="nl">paragraphs</span><span class="p">:</span>
+<span class="w">        </span><span class="n">para</span><span class="p">.</span><span class="nc">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">re</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="n">r</span><span class="ss">&quot;-\n(\w+ *)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="ss">&quot;\1\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">para</span><span class="p">.</span><span class="nc">text</span><span class="p">)</span>
+<span class="w">        </span><span class="n">para</span><span class="p">.</span><span class="nc">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">re</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="n">r</span><span class="ss">&quot;\s\s+&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">para</span><span class="p">.</span><span class="nc">text</span><span class="p">)</span>
+<span class="w">        </span><span class="n">para</span><span class="p">.</span><span class="nc">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">re</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="n">r</span><span class="ss">&quot;-\s(\w+ *)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="ss">&quot;\1\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">para</span><span class="p">.</span><span class="nc">text</span><span class="p">)</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">para</span><span class="p">.</span><span class="n">style</span><span class="p">.</span><span class="n">name</span><span class="p">.</span><span class="n">startswith</span><span class="p">(</span><span class="ss">&quot;Heading&quot;</span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">para</span><span class="p">.</span><span class="nc">text</span><span class="p">.</span><span class="n">startswith</span><span class="p">(</span>
+<span class="w">            </span><span class="p">(</span><span class="ss">&quot;References&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;references&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;REFERENCES&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Bibliography&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Citations&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">)</span><span class="err">:</span>
+<span class="w">            </span><span class="k">break</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">para</span><span class="p">.</span><span class="nc">text</span><span class="p">.</span><span class="n">startswith</span><span class="p">(</span>
+<span class="w">            </span><span class="p">(</span><span class="ss">&quot;References&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;references&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;REFERENCES&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Bibliography&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Citations&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">)</span><span class="err">:</span>
+<span class="w">            </span><span class="k">break</span>
+<span class="w">        </span><span class="n">fullText</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">para</span><span class="p">.</span><span class="nc">text</span><span class="p">.</span><span class="n">strip</span><span class="p">(</span><span class="ss">&quot;\n&quot;</span><span class="p">))</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="ss">&quot; &quot;</span><span class="p">.</span><span class="k">join</span><span class="p">(</span><span class="n">fullText</span><span class="p">)</span>
+
+<span class="n">def</span><span class="w"> </span><span class="n">check_if_file_exists</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">pom_file_path</span><span class="p">,</span><span class="w"> </span><span class="n">extension</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">pom_file_path</span><span class="p">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="n">extension</span><span class="p">).</span><span class="ow">exists</span><span class="p">()</span>
+
+<span class="n">def</span><span class="w"> </span><span class="n">sent_span</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="ss">&quot;&quot;&quot;</span>
+<span class="ss">    Perform sentence segmentation, and then generate spans describing these sentences.</span>
+<span class="ss">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="n">sentences</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nltk</span><span class="p">.</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+<span class="w">    </span><span class="n">spans</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">sent</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">reversed</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span><span class="err">:</span>
+<span class="w">        </span><span class="n">st</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp</span><span class="p">.</span><span class="n">rfind</span><span class="p">(</span><span class="n">sent</span><span class="p">)</span>
+<span class="w">        </span><span class="n">spans</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="n">st</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">len</span><span class="p">(</span><span class="n">sent</span><span class="p">)))</span>
+<span class="w">        </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp</span><span class="o">[</span><span class="n">:st</span><span class="o">]</span>
+<span class="w">    </span><span class="n">spans</span><span class="p">.</span><span class="nf">reverse</span><span class="p">()</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">spans</span>
+
+
+<span class="n">def</span><span class="w"> </span><span class="n">sents</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="ss">&quot;&quot;&quot;</span>
+<span class="ss">    Perform sentence segmentation.</span>
+<span class="ss">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="n">sentences</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nltk</span><span class="p">.</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">sentences</span>
+
+
+<span class="n">def</span><span class="w"> </span><span class="n">flatten_text</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="ss">&quot;&quot;&quot;</span>
+<span class="ss">    Squish the nested sentences.</span>
+<span class="ss">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="k">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">r</span><span class="o">[</span><span class="n">&quot;sent_spans&quot;</span><span class="o">]</span><span class="p">)</span><span class="err">:</span>
+<span class="w">        </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span>
+<span class="w">            </span><span class="ss">&quot;filename&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">r</span><span class="o">[</span><span class="n">&quot;filename&quot;</span><span class="o">]</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="ss">&quot;.docx&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;&quot;</span><span class="p">),</span>
+<span class="w">            </span><span class="ss">&quot;span&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">s</span><span class="p">,</span>
+<span class="w">            </span><span class="ss">&quot;location&quot;</span><span class="err">:</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">((</span><span class="n">s</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">s</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r</span><span class="o">[</span><span class="n">&quot;length&quot;</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span>
+<span class="w">            </span><span class="ss">&quot;sentence&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">r</span><span class="o">[</span><span class="n">&quot;text&quot;</span><span class="o">][</span><span class="n">s[0</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="n">s</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="err">]</span><span class="p">,</span>
+<span class="w">        </span><span class="err">}</span>
+<span class="w">        </span><span class="k">data</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">.</span><span class="n">from_dict</span><span class="p">(</span><span class="k">data</span><span class="p">)</span>
+
+<span class="err">#</span><span class="w"> </span><span class="n">SciBERT</span>
+<span class="n">tokenizer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AutoTokenizer</span><span class="p">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="ss">&quot;allenai/scibert_scivocab_uncased&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AutoModel</span><span class="p">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="ss">&quot;allenai/scibert_scivocab_uncased&quot;</span><span class="p">)</span>
+
+<span class="err">#</span><span class="w"> </span><span class="nl">TODO</span><span class="p">:</span><span class="w"> </span><span class="k">check</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">see</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="k">input</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">already</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="n">turned</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">pickle</span>
+<span class="ss">&quot;&quot;&quot;</span>
+<span class="ss">Loop through files in the text directory:</span>
+<span class="ss">1. read each one in, </span>
+<span class="ss">2. sentence segmentation,</span>
+<span class="ss">3. tokenize using SciBERT,</span>
+<span class="ss">4. generate SciBERT embeddings, and </span>
+<span class="ss">5. export as pickles.</span>
+<span class="ss">&quot;&quot;&quot;</span>
+<span class="n">progress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tqdm</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">text_dir</span><span class="p">.</span><span class="n">glob</span><span class="p">(</span><span class="ss">&quot;*.docx&quot;</span><span class="p">))</span>
+<span class="k">for</span><span class="w"> </span><span class="n">text_path</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nl">progress</span><span class="p">:</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">os</span><span class="p">.</span><span class="k">path</span><span class="p">.</span><span class="n">isfile</span><span class="p">(</span><span class="nf">str</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">out_path</span><span class="p">)</span><span class="o">+</span><span class="ss">&quot;/&quot;</span><span class="o">+</span><span class="n">text_path</span><span class="p">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;.pkl&#39;</span><span class="p">)</span><span class="err">:</span>
+<span class="w">        </span><span class="k">print</span><span class="p">(</span><span class="n">text_path</span><span class="p">.</span><span class="n">name</span><span class="o">+</span><span class="ss">&quot; has already been processed&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="k">continue</span>
+
+<span class="w">    </span><span class="n">progress</span><span class="p">.</span><span class="n">set_description</span><span class="p">(</span><span class="n">text_path</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+
+
+<span class="w">    </span><span class="n">corpus_list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span>
+<span class="w">    </span><span class="k">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span>
+<span class="w">    </span><span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span>
+<span class="w">    </span><span class="n">cur_corpus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getText</span><span class="p">(</span><span class="n">text_path</span><span class="p">)</span>
+<span class="w">    </span><span class="n">corpus_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur_corpus</span><span class="p">)</span>
+<span class="w">    </span><span class="k">index</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">text_path</span><span class="p">)</span>
+<span class="w">    </span><span class="n">filename</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="k">path</span><span class="p">.</span><span class="n">basename</span><span class="p">(</span><span class="n">text_path</span><span class="p">))</span>
+
+<span class="w">    </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="k">index</span><span class="o">=</span><span class="k">index</span><span class="p">,</span><span class="w"> </span><span class="k">data</span><span class="o">=</span><span class="err">{</span><span class="ss">&quot;filename&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;text&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">corpus_list</span><span class="err">}</span><span class="p">)</span>
+<span class="w">    </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="n">doc_words</span><span class="o">=</span><span class="n">df</span><span class="p">.</span><span class="nc">text</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="n">lambda</span><span class="w"> </span><span class="nl">t</span><span class="p">:</span><span class="w"> </span><span class="nf">len</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">split</span><span class="p">())))</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Word</span><span class="w"> </span><span class="n">Counts</span>
+<span class="w">    </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span>
+<span class="w">        </span><span class="n">doc_characters</span><span class="o">=</span><span class="n">df</span><span class="p">.</span><span class="nc">text</span><span class="p">.</span><span class="nf">str</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="ss">&quot;[\s\n\t]&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;&quot;</span><span class="p">).</span><span class="nf">str</span><span class="p">.</span><span class="nf">len</span><span class="p">()</span>
+<span class="w">    </span><span class="p">)</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">Character</span><span class="w"> </span><span class="n">Counts</span>
+<span class="w">    </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="n">sent_spans</span><span class="o">=</span><span class="n">df</span><span class="p">.</span><span class="nc">text</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="n">lambda</span><span class="w"> </span><span class="nc">text</span><span class="err">:</span><span class="w"> </span><span class="n">sent_span</span><span class="p">(</span><span class="nc">text</span><span class="p">)))</span>
+<span class="w">    </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="n">df</span><span class="p">.</span><span class="nc">text</span><span class="p">.</span><span class="nf">str</span><span class="p">.</span><span class="nf">len</span><span class="p">())</span>
+<span class="w">    </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="n">sents</span><span class="o">=</span><span class="n">df</span><span class="p">.</span><span class="nc">text</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="n">lambda</span><span class="w"> </span><span class="nc">text</span><span class="err">:</span><span class="w"> </span><span class="n">sents</span><span class="p">(</span><span class="nc">text</span><span class="p">)))</span>
+
+<span class="w">    </span><span class="n">sent_df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pd</span><span class="p">.</span><span class="nf">concat</span><span class="p">(</span><span class="o">[</span><span class="n">flatten_text(df.loc[idx</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">df</span><span class="p">.</span><span class="k">index</span><span class="err">]</span><span class="p">)</span>
+
+<span class="w">    </span><span class="n">sent_df</span><span class="o">[</span><span class="n">&quot;sentence&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sent_df</span><span class="o">[</span><span class="n">&quot;sentence&quot;</span><span class="o">]</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="ss">&quot;str&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">sent_df</span><span class="o">[</span><span class="n">&quot;sentence&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sent_df</span><span class="o">[</span><span class="n">&quot;sentence&quot;</span><span class="o">]</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span>
+<span class="w">        </span><span class="n">lambda</span><span class="w"> </span><span class="nl">x</span><span class="p">:</span><span class="w"> </span><span class="n">x</span><span class="o">[</span><span class="n">:512</span><span class="o">]</span>
+<span class="w">    </span><span class="p">)</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Cut</span><span class="w"> </span><span class="ow">all</span><span class="w"> </span><span class="k">character</span><span class="w"> </span><span class="n">strings</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="nf">max</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">512</span><span class="w"> </span><span class="n">characters</span><span class="p">.</span>
+<span class="w">    </span><span class="n">sent_df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sent_df</span><span class="o">[</span>
+<span class="n">        sent_df[&quot;sentence&quot;</span><span class="o">]</span><span class="p">.</span><span class="nf">str</span><span class="p">.</span><span class="k">contains</span><span class="p">(</span><span class="ss">&quot;[A-Za-z]&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">na</span><span class="o">=</span><span class="k">False</span><span class="p">)</span>
+<span class="w">    </span><span class="err">]</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Remove</span><span class="w"> </span><span class="ow">any</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="k">contains</span><span class="w"> </span><span class="k">only</span><span class="w"> </span><span class="n">non</span><span class="o">-</span><span class="n">alphanumeric</span><span class="w"> </span><span class="n">characters</span><span class="p">.</span>
+<span class="w">    </span><span class="n">sent_df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sent_df</span><span class="p">.</span><span class="n">dropna</span><span class="p">()</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Remove</span><span class="w"> </span><span class="ow">any</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="k">are</span><span class="w"> </span><span class="n">NA</span><span class="p">.</span>
+<span class="w">    </span><span class="n">sent_df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sent_df</span><span class="p">.</span><span class="n">reset_index</span><span class="p">(</span><span class="k">drop</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+<span class="w">    </span><span class="n">idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sent_df</span><span class="p">.</span><span class="k">index</span>
+
+<span class="w">    </span><span class="n">tokenized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sent_df</span><span class="o">[</span><span class="n">&quot;sentence&quot;</span><span class="o">]</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span>
+<span class="w">        </span><span class="p">(</span><span class="n">lambda</span><span class="w"> </span><span class="nl">x</span><span class="p">:</span><span class="w"> </span><span class="n">tokenizer</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">add_special_tokens</span><span class="o">=</span><span class="k">True</span><span class="p">))</span>
+<span class="w">    </span><span class="p">)</span>
+
+<span class="w">    </span><span class="n">max_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">tokenized</span><span class="p">.</span><span class="k">values</span><span class="err">:</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nf">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nl">max_len</span><span class="p">:</span>
+<span class="w">            </span><span class="n">max_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="w">    </span><span class="n">padded</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="k">array</span><span class="p">(</span><span class="o">[</span><span class="n">i + [0</span><span class="o">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">max_len</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">len</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">tokenized</span><span class="p">.</span><span class="k">values</span><span class="err">]</span><span class="p">)</span>
+
+<span class="w">    </span><span class="n">attention_mask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="k">where</span><span class="p">(</span><span class="n">padded</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+
+<span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="n">input_ids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">padded</span><span class="p">)</span>
+<span class="w">    </span><span class="n">input_ids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">padded</span><span class="p">).</span><span class="k">to</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">int64</span><span class="p">)</span>
+<span class="w">    </span><span class="n">attention_mask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">attention_mask</span><span class="p">)</span>
+
+<span class="w">    </span><span class="k">with</span><span class="w"> </span><span class="n">torch</span><span class="p">.</span><span class="n">no_grad</span><span class="p">()</span><span class="err">:</span>
+<span class="w">        </span><span class="n">last_hidden_states</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">(</span><span class="n">input_ids</span><span class="p">,</span><span class="w"> </span><span class="n">attention_mask</span><span class="o">=</span><span class="n">attention_mask</span><span class="p">)</span>
+
+<span class="w">    </span><span class="n">features</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last_hidden_states</span><span class="o">[</span><span class="n">0</span><span class="o">][</span><span class="n">:, 0, :</span><span class="o">]</span><span class="p">.</span><span class="n">numpy</span><span class="p">()</span>
+
+<span class="w">    </span><span class="n">features</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sent_df</span><span class="p">.</span><span class="k">join</span><span class="p">(</span><span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">features</span><span class="p">,</span><span class="w"> </span><span class="k">index</span><span class="o">=</span><span class="n">idx</span><span class="p">),</span><span class="w"> </span><span class="n">rsuffix</span><span class="o">=</span><span class="ss">&quot;_&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="n">output_str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">out_path</span><span class="p">)</span>
+<span class="w">    </span><span class="n">base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">os</span><span class="p">.</span><span class="k">path</span><span class="p">.</span><span class="n">basename</span><span class="p">(</span><span class="n">text_path</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+<span class="w">    </span><span class="n">text_str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">base</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="ss">&quot;.docx&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;.pickle&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">output_str</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="ss">&quot;/&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">output</span>
+<span class="w">    </span><span class="k">with</span><span class="w"> </span><span class="k">open</span><span class="p">(</span><span class="k">output</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;wb&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nl">output_file</span><span class="p">:</span>
+<span class="w">        </span><span class="n">pickle</span><span class="p">.</span><span class="k">dump</span><span class="p">(</span><span class="n">features</span><span class="p">,</span><span class="w"> </span><span class="n">output_file</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Ok, that's a lot of stuff to look at. 
+Lets just look at the parts that are involved with running PyTorch on either CPU or GPU:</p>
+<div class="highlight"><pre><span></span><code>    device = torch.device(&quot;cpu&quot;)
+
+    # SciBERT
+    tokenizer = AutoTokenizer.from_pretrained(&quot;allenai/scibert_scivocab_uncased&quot;)
+    model = AutoModel.from_pretrained(&quot;allenai/scibert_scivocab_uncased&quot;)
+
+    # input_ids = torch.tensor(padded)
+    input_ids = torch.tensor(padded).to(torch.int64)
+    attention_mask = torch.tensor(attention_mask)
+
+    with torch.no_grad():
+        last_hidden_states = model(input_ids, attention_mask=attention_mask)
+
+    features = last_hidden_states[0][:, 0, :].numpy()
+</code></pre></div>
+
+<p>With a few simple changes, we can tell our install of PyTorch to use CUDA.</p>
+<p>NOTE: on MacOS your PyTorch install will by default be the CPU only version.
+To work with CUDA and GPUs, you should use a computer with a compatible GPU and OS (Linux or Windows are the best for now).</p>
+<div class="highlight"><pre><span></span><code><span class="gh">#</span> Check if you have CUDA available
+    if torch.cuda.is_available():
+        device = torch.device(&#39;cuda:0&#39;)
+    else:
+        device = torch.device(&#39;cpu&#39;)
+        print(&quot;You have to use this script on a computer with CUDA&quot;)
+        exit()
+
+    # SciBERT
+    tokenizer = AutoTokenizer.from_pretrained(&quot;allenai/scibert_scivocab_uncased&quot;)
+    model = AutoModel.from_pretrained(&quot;allenai/scibert_scivocab_uncased&quot;).to(device)
+
+    input_ids = torch.tensor(padded).to(device)
+    attention_mask = torch.tensor(attention_mask).to(device)
+
+
+    with torch.no_grad():
+        last_hidden_states = model(input_ids, attention_mask=attention_mask)
+
+    # Pass tensors back to the cpu for numpy
+    features = last_hidden_states[0][:, 0, :].cpu().numpy()
+</code></pre></div>
+
+<h2>Setup</h2>
+<p>For this simple comparison, we will be running our example pipeline on two very different computers.
+NOTE: these names were invented fo this article.</p>
+<p><strong>1. Computer 1 "Ol'Steevie" - 16 inch Macbook Pro</strong></p>
+<ul>
+<li>OS: macOS Big Sur</li>
+<li>Processor: 2.3 Ghz 8-Core Intel Core i9</li>
+<li>Memory: 64 GB 2667 MHz DDR4</li>
+<li>GPU: AMD Radeon Pro 5500M 4 GB (0 CUDA cores)</li>
+</ul>
+<p><strong>2. Computer 2 "Clippy's Revenge" - Henry's home built PC</strong></p>
+<ul>
+<li>OS: Windows 10 Home</li>
+<li>Processor: 3.7 GHz 8-Core AMD Ryzen 7 2700x</li>
+<li>Memory: 16 GB 3000 MHz DDR4</li>
+<li>GPU: NVIDIA GeForce RTX 2070 Super 8 GB (2560 CUDA cores)</li>
+</ul>
+<p>Clever readers will want to ask: why didn't you just run it once with cuda and once without on your desktop?
+That makes a lot of sense, and I will do that as well.
+However, I think this comparison of my SIH-issued ultra MacBook vs my medium-high end gaming PC is still interesting and relevant to many of us.</p>
+<h2>Results</h2>
+<p>Ol'Steevie: 188 seconds, 9.42 iterations / second
+<img alt="https://github.sydney.edu.au/hlyd4326/cuda-vs-cpu-example/blob/master/images/Screen%20Shot%202021-07-27%20at%209.33.21%20pm.png" src="https://github.sydney.edu.au/hlyd4326/cuda-vs-cpu-example/blob/master/images/Screen%20Shot%202021-07-27%20at%209.33.21%20pm.png"></p>
+<p>Clippy's Revenge (CUDA): 12 seconds, 1.54 iterations / second
+<img alt="https://github.sydney.edu.au/hlyd4326/cuda-vs-cpu-example/blob/master/images/bert_cuda_test.PNG" src="https://github.sydney.edu.au/hlyd4326/cuda-vs-cpu-example/blob/master/images/bert_cuda_test.PNG"></p>
+<p>Clippy's Revenge (CPU): 481 seconds, 24.09 iterations / second
+<img alt="https://github.sydney.edu.au/hlyd4326/cuda-vs-cpu-example/blob/master/images/bert_cpu_test.PNG" src="https://github.sydney.edu.au/hlyd4326/cuda-vs-cpu-example/blob/master/images/bert_cpu_test.PNG"></p>
+<h2>Discussion</h2>
+<p>What did we learn? </p>
+<p>In this case, using CUDA was <strong>15x faster</strong> than the MacBook, and <strong>40x</strong> faster than using my desktop's CPU!!! </p>
+<p>It is also interesting to see how different CPU performance was between my MacBook and my desktop. 
+It appears that the higher speed of my CPU was not sufficient to make up for the huge difference in RAM. 
+This also suggests that performance on more typical laptops or desktops will be absolutely atrocious. </p>
+<p>If you use PyTorch already, it is super easy to make the switch to using it with CUDA. 
+If you have access to a device with CUDA, it is a no brainer to run your deep learning pipelines on CUDA instead of CPU.</p>
+<h2>Further Reading</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/1810.04805">The original paper</a></li>
+<li><a href="https://jalammar.github.io/illustrated-bert/">An explanation with pictures</a></li>
+<li><a href="https://huggingface.co/">Hugging Face Transformers</a>: lots of great pre trained models to choose from!</li>
+</ul>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

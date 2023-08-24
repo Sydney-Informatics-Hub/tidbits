@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  CLI transfer to OneDrive | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/cli-transfer-to-onedrive.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/unix.atom.xml">  
+  <meta name="description" content="Since the death of Cloudstor (RIP), we've had to rely on OneDrive to share data with external collaborators who cannot gain access to USyd supported compute platforms. When working with …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  CLI transfer to OneDrive
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2023-07-27T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Thu 27 July 2023
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/unix.html">unix</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/georgie-samaha.html">Georgie Samaha</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/rclone.html">#rclone</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/onedrive.html">#onedrive</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/sharepoint.html">#sharepoint</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>Since the death of Cloudstor (RIP), we've had to rely on OneDrive to share data with external collaborators who cannot gain access to USyd supported compute platforms. When working with large datasets, up/downloading data to OneDrive requires a CLI solution that can be automated and sped up. </p>
+<p>While OneDrive has its own user interface for accessing the OneDrive API from the command-line its functionality is limited. <a href="https://rclone.org/onedrive/">Rclone</a> is also capable of interacting with the OneDrive API, support other cloud services beyond OneDrive, and offers advanced features like synchronising directories and data verification using checksums.</p>
+<h3>Configuration when you don't have sudo permissions (i.e. on Artemis/RDS)</h3>
+<p>NOTE: on Artemis/rds you will not be able to open the provided link. To avoid this you'll have to configure rclone on your local machine. So ensure it is installed on a machine with external network access before you start this process. See section below for installation instructions. </p>
+<p>If on Artemis/RDS, load the module: </p>
+<div class="highlight"><pre><span></span><code><span class="n">module</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">rclone</span><span class="o">/</span><span class="mf">1.62</span><span class="o">.</span><span class="mi">2</span>
+</code></pre></div>
+
+<p>Then start an interactive session to configure your installation and follow the steps below to configure for OneDrive: </p>
+<div class="highlight"><pre><span></span><code>rclone config
+</code></pre></div>
+
+<ol>
+<li>Select new remote (n)</li>
+<li>Name your remote (e.g. Georgie-OneDrive)</li>
+<li>Select 'onedrive' as storage type</li>
+<li>Leave client ID and secret empty (hit enter a few times)</li>
+<li>Do not edit advanced config (n), use auto config (y)</li>
+<li>When asked whether or not to use a web bowser to authenticate rclone, select no (n)</li>
+<li>On your local machine (requires rclone is installed) run <code>rclone authorize "onedrive"</code></li>
+<li>Copy the provided secret token and paste it in Artemis/rds terminal </li>
+<li>Select 'onedrive' as config type </li>
+<li>Specify which drive to use</li>
+<li>Accept configuration (y)</li>
+<li>Quit config (q)</li>
+</ol>
+<h3>Configuration when you do have sudo permissions</h3>
+<p>Start by installing and configuring rclone if on a VM or local machine: </p>
+<div class="highlight"><pre><span></span><code>sudo apt install rclone
+</code></pre></div>
+
+<p>Then start an interactive session to configure your installation and follow the steps below to configure for OneDrive: </p>
+<div class="highlight"><pre><span></span><code>rclone config
+</code></pre></div>
+
+<ol>
+<li>Select new remote (n)</li>
+<li>Name your remote (e.g. Georgie-OneDrive)</li>
+<li>Select 'onedrive' as storage type</li>
+<li>Leave client ID and secret empty (hit enter a few times)</li>
+<li>Do not edit advanced config (n), use auto config (y)</li>
+<li>Open link in your browser, accept permission request </li>
+<li>Back on CLI, select onedrive</li>
+<li>Specify which drive to use</li>
+<li>Accept configuration (y)</li>
+<li>Quit config (q)</li>
+</ol>
+<h3>Transfer data</h3>
+<p>Once configuration is set you can view your rclone configuration with: </p>
+<div class="highlight"><pre><span></span><code><span class="nv">rclone</span><span class="w"> </span><span class="nv">config</span><span class="w"> </span><span class="k">show</span>
+</code></pre></div>
+
+<p>To transfer data to your configured OneDrive account, simply run: </p>
+<div class="highlight"><pre><span></span><code>rclone copy &lt;source&gt;:&lt;path&gt; &lt;dest&gt;:&lt;path&gt; 
+</code></pre></div>
+
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code>rclone copy ./genome-1.bam Georgie-OneDrive:Documents/Genome-1
+</code></pre></div>
+
+<p>Where I am transfering the file <code>genome-1.bam</code> to my pre-configured OneDrive remote named <code>Georgie-OneDrive</code> at the path <code>Documents/Genome-1</code></p>
+<p>To transfer data from rds or Artemis to OneDrive via a PBS job using the dtq queue: </p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="c1">#PBS -P SIHsandbox</span>
+<span class="c1">#PBS -N transfer</span>
+<span class="c1">#PBS -q dtq</span>
+<span class="c1">#PBS -l select=1:ncpus=1:mem=20gb</span>
+<span class="c1">#PBS -l walltime=05:00:00</span>
+<span class="c1">#PBS -W umask=022</span>
+<span class="c1">#PBS -j oe</span>
+<span class="c1">#PBS -m e</span>
+<span class="c1">#PBS -M georgina.samaha@sydney.edu.au</span>
+
+module<span class="w"> </span>load<span class="w"> </span>rclone<span class="w"> </span>
+
+<span class="nv">source</span><span class="o">=</span><span class="w"> </span><span class="c1"># file/directory to transfer</span>
+<span class="nv">destination</span><span class="o">=</span><span class="w"> </span><span class="c1"># name of configured onedrive drive</span>
+<span class="nv">path</span><span class="o">=</span><span class="w"> </span><span class="c1"># onedrive path </span>
+
+rclone<span class="w"> </span>copy<span class="w"> </span><span class="si">${</span><span class="nv">source</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">destination</span><span class="si">}</span>:<span class="si">${</span><span class="nv">path</span><span class="si">}</span>
+</code></pre></div>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

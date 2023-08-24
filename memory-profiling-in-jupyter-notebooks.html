@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Memory profiling in Jupyter notebooks | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/memory-profiling-in-jupyter-notebooks.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/python.atom.xml">  
+  <meta name="description" content="Issues with memory use can be hard to pin down, as your program may only show issues after carrying out multiple memory intensive steps. Using the memory_profiler package in Jupyter …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Memory profiling in Jupyter notebooks
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2021-03-31T00:00:00+11:00">
+          <i class="fas fa-clock"></i>
+          Wed 31 March 2021
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/python.html">Python</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/marius-mather.html">Marius Mather</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/python.html">#python</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/jupyter.html">#jupyter</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/profiling.html">#profiling</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>Issues with memory use can be hard to pin down,
+as your program may only show issues after
+carrying out multiple memory intensive steps.
+Using the <code>memory_profiler</code> package in Jupyter
+notebooks allows you to generate a quick
+summary of which steps consume the most memory.</p>
+<p>First, you need to install the package through pip (or conda):</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>memory_profiler
+</code></pre></div>
+
+<p>Then, in your Jupyter notebook, load it as an extension:</p>
+<div class="highlight"><pre><span></span><code>%load_ext<span class="w"> </span>memory_profiler
+</code></pre></div>
+
+<p>In order to profile functions, they have to be imported
+from a module outside the notebook. Here, I profiled
+a text classification model that involved loading a
+fairly large text vectorization model, using it to
+convert around 100 messages to vectors, and
+then running a classification model on them:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">classify_messages</span><span class="p">(</span><span class="n">messages</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+    <span class="n">bert_vectorizer</span> <span class="o">=</span> <span class="n">BertVectorizer</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;distilbert&#39;</span><span class="p">)</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">load_trained_classifier</span><span class="p">()</span>
+
+    <span class="n">message_vectors</span> <span class="o">=</span> <span class="n">bert_vectorizer</span><span class="o">.</span><span class="n">make_bert_hidden_states</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+    <span class="c1"># Classifier needs a dummy value for group in the input</span>
+    <span class="n">message_vectors</span> <span class="o">=</span> <span class="n">message_vectors</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">predicted</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">message_vectors</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">predicted</span>
+</code></pre></div>
+
+<p>To profile this function, you need to call it using
+<code>%mprun</code>, specifying each individual function that
+you want to profile with a <code>-f</code> argument:</p>
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">mprun</span> <span class="o">-</span><span class="n">f</span> <span class="n">classify_messages</span> <span class="n">classify_messages</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="gh">Line #    Mem usage    Increment  Occurences   Line Contents</span>
+<span class="gh">============================================================</span>
+    68    154.7 MiB    154.7 MiB           1   def classify_messages(messages: Sequence[str]) -&gt; np.array:
+    69    680.1 MiB    525.4 MiB           1       bert_vectorizer = BertVectorizer(model=&#39;distilbert&#39;)
+    70    727.0 MiB     46.9 MiB           1       classifier = load_trained_classifier()
+    71                                         
+    72   2087.8 MiB   1360.8 MiB           1       message_vectors = bert_vectorizer.make_bert_hidden_states(messages)
+    73                                             # Classifier needs a dummy value for group in the input
+    74   2088.1 MiB      0.3 MiB           1       message_vectors = message_vectors.assign(group=0)
+    75                                         
+    76   2089.6 MiB      1.4 MiB           1       predicted = classifier.predict(message_vectors)
+    77   2089.6 MiB      0.0 MiB           1       return predicted
+</code></pre></div>
+
+<p>Creating the vectors turned out to be particularly memory intensive,
+so I was able to reduce memory use by processing the messages
+in chunks:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">classify_messages_chunked</span><span class="p">(</span><span class="n">messages</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+    <span class="n">bert_vectorizer</span> <span class="o">=</span> <span class="n">BertVectorizer</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;distilbert&#39;</span><span class="p">)</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">load_trained_classifier</span><span class="p">()</span>
+
+    <span class="n">all_preds</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">split_into_chunks</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">):</span>
+        <span class="n">current_vectors</span> <span class="o">=</span> <span class="n">bert_vectorizer</span><span class="o">.</span><span class="n">make_bert_hidden_states</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+        <span class="n">current_vectors</span> <span class="o">=</span> <span class="n">current_vectors</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">predicted</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">current_vectors</span><span class="p">)</span>
+        <span class="n">all_preds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">predicted</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">all_preds</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">mprun</span> <span class="o">-</span><span class="n">f</span> <span class="n">classify_messages_chunked</span> <span class="n">classify_messages_chunked</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="gh">Line #    Mem usage    Increment  Occurences   Line Contents</span>
+<span class="gh">============================================================</span>
+    80    153.8 MiB    153.8 MiB           1   def classify_messages_chunked(messages: Sequence[str], chunk_size: int = 10) -&gt; np.array:
+    88    687.5 MiB    533.7 MiB           1       bert_vectorizer = BertVectorizer(model=&#39;distilbert&#39;)
+    89    762.8 MiB     75.3 MiB           1       classifier = load_trained_classifier()
+    90                                         
+    91    762.8 MiB      0.0 MiB           1       all_preds = []
+    92    976.8 MiB      0.0 MiB           6       for chunk in split_into_chunks(messages, chunk_size):
+    93    976.8 MiB    213.5 MiB           5           current_vectors = bert_vectorizer.make_bert_hidden_states(chunk)
+    95                                                 # Classifier needs a dummy value for group in the input
+    96    976.8 MiB      0.1 MiB           5           current_vectors = current_vectors.assign(group=0)
+    98    976.8 MiB      0.5 MiB           5           predicted = classifier.predict(current_vectors)
+    99    976.8 MiB      0.0 MiB           5           all_preds.append(predicted)
+   100    976.8 MiB      0.0 MiB           1       result = np.concatenate(all_preds)
+   101    976.8 MiB      0.0 MiB           1       return result
+</code></pre></div>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

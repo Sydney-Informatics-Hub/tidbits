@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Using external packages in your R package | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/using-external-packages-in-your-r-package.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/r.atom.xml">  
+  <meta name="description" content="If you're building a package in R it's highly likely that you'll have to eventually rely on functions from external packages (unless you enjoy rebuilding the wheel, or can't/don't …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Using external packages in your R package
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2020-08-07T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Fri 07 August 2020
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/r.html">R</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/sydney-informatics-hub.html">Sydney Informatics Hub</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/r.html">#R</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/packages.html">#packages</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/roxygen2.html">#roxygen2</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>If you're building a package in R it's highly likely that you'll have to eventually rely on functions from external packages (unless you enjoy rebuilding the wheel, or can't/don't need to). This tidbit is a quick summary of my experiences with using external R packages within my own (or clients') packages. </p>
+<p>So, let's say you've set up an R package, have some code, and want to use functions from external packages to write your code.</p>
+<h2>DESCRIPTION</h2>
+<blockquote>
+<p>"To depend, or not to depend, that is the question."</p>
+</blockquote>
+<p>The first thing you need to do is consider how heavily your code relies on external functions. You will need to state the type of dependency in the <code>DESCRIPTION</code> file in the root directory of your package. This will dictate whether or not external packages are installed/loaded/attached at the same time as your package is installed/loaded.</p>
+<p><strong>Depends:</strong> if your package extensively relies on another package, it is appropriate to list that package under this category. Packages listed here will be loaded and attached with <code>library()</code> when your package is loaded. It's a good idea to state what version of the package is required, as you may not want just any version of these packages installed.</p>
+<p><strong>Imports:</strong> if your package relies on a number of functions from a package throughout the code, then list it under Imports. These packages will be installed and loaded along with your package but aren't attached with <code>library()</code>. Adding a package to Imports is like a courtesy to your end users so that the installation is done for them.</p>
+<p><strong>Suggests:</strong> if you use other functions/packages sporadically throughout your code  - perhaps in one or two places or in a function that will not be commonly used - then pop them into Suggests. These packages will require manual installation by the end user.</p>
+<p><em>The difference between attaching and loading a package is that loading a package makes the package available to the R session but its functions won't be available to the global environment, whereas attaching a package means its functions are available to the global environment.</em></p>
+<p>Want to add a package to <code>DESCRIPTION?</code> No worries. Rather than adding it by hand and potentially making a mistake, use:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">library</span><span class="p">(</span><span class="nx">usethis</span><span class="p">)</span>
+<span class="nx">usethis</span><span class="o">::</span><span class="nx">use_package</span><span class="p">(</span><span class="s">&quot;package&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;dependency type&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h2>NAMESPACE and specifying imports</h2>
+<blockquote>
+<p>"A function by any other name would (not) smell as sweet."</p>
+</blockquote>
+<p>Now that we understand the point of <code>DESCRIPTION</code>, let's talk about how to actually import functions and how this relates to <code>NAMESPACE</code>. <code>NAMESPACE</code> is also located in the root directory and tells us which functions are being exported or imported for a particular package. You shouldn't have to write anything into <code>NAMESPACE</code> manually because <code>roxygen2</code> will basically handle things for you so long as you've written your function with the appropriate tags.</p>
+<p><strong>Depends:</strong> when you're using a function from a package in Depends, you generally don't need to specify anything other than the function in your code (this is because the package is attached along with your package). I have had a handful of instances where this didn't hold true though, oddly enough, in which case you can call it via the methods for Imports (below).</p>
+<p><strong>Imports:</strong> you should load functions from packages from these groups with <code>@importFrom package function</code> or using <code>package::function</code>. <code>@importFrom</code> is incredibly useful as it allows you to load specific functions rather than the entirety of a package. It will write an importFrom() line into your Namespace specifying the function/package that is loaded and accessible to the functions of your package. It is also slightly (5 us) faster than using <code>::</code>. That being said, if you have a case where two functions from different packages have the same name, <code>@importFrom</code> won't save you, so you should use <code>::</code> to explicitly state which packages the functions are from.</p>
+<p><strong>Suggests</strong>: since these packages aren't actually installed, it is best practice to include <code>ifrequireNamespace()</code> within your function to alert the user that they need to install these packages before they can use your function, as below:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_fun</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="nf">requireNamespace</span><span class="p">(</span><span class="s">&quot;package&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">quietly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nf">stop</span><span class="p">(</span><span class="s">&quot;Package \&quot;package\&quot; needed for this function to work. Please install it.&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>It's then good to call the external function from the package with <code>::</code> to be sure it loads correctly after the package in question has been installed and loaded.</p>
+<h2>Summary table</h2>
+<blockquote>
+<p>"I wasted time and now doth time waste me."</p>
+</blockquote>
+<p>For an even more TL;DR version of this tidbit.</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>When to use?</th>
+<th>Installs with your package?</th>
+<th>Loads with your package?</th>
+<th>Function use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Depends</td>
+<td>If your package uses a package A LOT</td>
+<td>Yes</td>
+<td>Loaded and attached with <code>library()</code></td>
+<td>Can use as is, but if that doesn't work then use<code>@importFrom</code> or <code>::</code></td>
+</tr>
+<tr>
+<td>Imports</td>
+<td>For packages that are used less then A LOT but more than sporadically</td>
+<td>Yes</td>
+<td>Loaded but not attached</td>
+<td><code>@importFrom</code> or <code>::</code></td>
+</tr>
+<tr>
+<td>Suggests</td>
+<td>For sporadically used packages</td>
+<td>No</td>
+<td>No</td>
+<td><code>::</code> but only after added <code>!ifrequireNamespace</code></td>
+</tr>
+</tbody>
+</table>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

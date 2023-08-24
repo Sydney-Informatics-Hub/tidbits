@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Getting data.table to work with the tidyverse | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/getting-datatable-to-work-with-the-tidyverse.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/r.atom.xml">  
+  <meta name="description" content="data.table data.table is a fast, efficient data format built upon data frames/tibbles designed to work with large data sets. It comes with its own set of syntax …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Getting data.table to work with the tidyverse
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2021-05-24T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Mon 24 May 2021
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/r.html">R</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/jazmin-ozsvar.html">Jazmin Ozsvar</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/r.html">#R</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/tidyverse.html">#tidyverse</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/datatable.html">#data.table</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/dtplyr.html">#dtplyr</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/tidytable.html">#tidytable</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h3>data.table</h3>
+<p><strong>data.table</strong> is a fast, efficient data format built upon data frames/tibbles designed to work with large data sets. It comes with its own set of syntax and chaining commands which are similar to those of Python. However, if you simply can't bear to code without the pipe operator (%&gt;%) then here's are some workaround options for you!</p>
+<h3>dtplyr</h3>
+<p><strong>dtplyr</strong> is a Hadleyverse package that allows you to apply dplyr syntax to data.tables. This is done by converting a data.table into a lazy data frame in a single simple step:</p>
+<div class="highlight"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="nx">Load</span><span class="w"> </span><span class="nx">packages</span>
+<span class="kn">library</span><span class="p">(</span><span class="nx">dtplyr</span><span class="p">)</span>
+
+<span class="err">#</span><span class="w"> </span><span class="nx">Turn</span><span class="w"> </span><span class="nx">your</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">table</span><span class="w"> </span><span class="nx">into</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">lazy</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="nx">frame</span>
+<span class="nx">a_lazy_df</span><span class="w"> </span><span class="p">&lt;</span><span class="o">-</span><span class="w"> </span><span class="nx">dtplyr</span><span class="o">::</span><span class="nx">lazy_df</span><span class="p">(</span><span class="nx">a_data_table</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Voila! Applying lazy_df() will allow you to use tidyverse verbs with your data.table. However, there is one more step required to actually view the results. This is because dtplyr saves the steps to obtain the result rather than writing out the result itself (i.e. lazy evaluation). This is so that when the lazy data frame operations are called they are executed only when required. </p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Apply some verbs and create a tibble</span>
+<span class="n">a_tibble</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">a_lazy_df</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">    </span><span class="nf">filter</span><span class="p">(</span><span class="n">favourite_syntax</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;tidyverse&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">    </span><span class="nf">as_tibble</span><span class="p">()</span>
+
+<span class="c1"># We can also use as.data.table() or as.tibble()</span>
+</code></pre></div>
+
+<p>There is a small performance tax according to Hadley, however, it is almost on par with data.table itself. So if you need to use data.table but don't want to use its syntax, dtplyr is the package for you! For more information, check out: <a href="https://www.tidyverse.org/blog/2019/11/dtplyr-1-0-0/">https://www.tidyverse.org/blog/2019/11/dtplyr-1-0-0/</a> </p>
+<h3>tidytable</h3>
+<p><strong>tidytable</strong> allows for the use of other useful tidyverse functions, not just those from dplyr, but allowing mapping with purrr and extra tidying using tidyr. Tidytable takes the tidyverse functions and puts a dot within their name to indicate they are for use with data.table, e.g. mutate() becomes mutate.(). This makes application very simple:</p>
+<div class="highlight"><pre><span></span><code>mtcars_dt %&gt;%
+  tidytable::summarise.(
+    mean_disp = mean(disp),
+    mean_hp = mean(hp),
+    count = n(),
+    .by = cyl
+  ) %&gt;%
+  tidytable::arrange.(count)
+</code></pre></div>
+
+<p>To look at the full list of functions, have a look at: <a href="https://markfairbanks.github.io/tidytable/reference/index.html">https://markfairbanks.github.io/tidytable/reference/index.html</a></p>
+<h3>Microbenchmarking</h3>
+<p>Don't believe the above packages are speedy? Here's a comparison of the following codes using the mtcars dataset:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create the objects required</span>
+<span class="n">mtcars_dt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.data.table</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">mtcars_lazy_dt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lazy_dt</span><span class="p">(</span><span class="n">mtcars_dt</span><span class="p">)</span>
+
+<span class="c1"># data.table</span>
+<span class="n">mtcars_dt</span><span class="p">[,</span><span class="w"> </span><span class="nf">.</span><span class="p">(</span><span class="n">mean_disp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">disp</span><span class="p">),</span>
+<span class="w">             </span><span class="n">mean_hp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">hp</span><span class="p">),</span>
+<span class="w">             </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">.N</span><span class="p">),</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cyl</span><span class="p">][</span><span class="nf">order</span><span class="p">(</span><span class="n">count</span><span class="p">)]</span>
+
+<span class="c1"># data.frame</span>
+<span class="n">mtcars</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">   </span><span class="n">dplyr</span><span class="o">::</span><span class="nf">group_by</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">   </span><span class="n">dplyr</span><span class="o">::</span><span class="nf">summarise</span><span class="p">(</span>
+<span class="w">     </span><span class="n">mean_disp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">disp</span><span class="p">),</span>
+<span class="w">     </span><span class="n">mean_hp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">hp</span><span class="p">),</span>
+<span class="w">     </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">n</span><span class="p">()</span>
+<span class="w">   </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">   </span><span class="n">dplyr</span><span class="o">::</span><span class="nf">arrange</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+
+<span class="c1"># dtplyr</span>
+<span class="n">mtcars_lazy_dt</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">    </span><span class="n">dplyr</span><span class="o">::</span><span class="nf">group_by</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">    </span><span class="n">dplyr</span><span class="o">::</span><span class="nf">summarise</span><span class="p">(</span>
+<span class="w">      </span><span class="n">mean_disp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">disp</span><span class="p">),</span>
+<span class="w">      </span><span class="n">mean_hp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">hp</span><span class="p">),</span>
+<span class="w">      </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">n</span><span class="p">()</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">    </span><span class="n">dplyr</span><span class="o">::</span><span class="nf">arrange</span><span class="p">(</span><span class="n">count</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">    </span><span class="n">data.table</span><span class="o">::</span><span class="nf">as.data.table</span><span class="p">()</span>
+
+<span class="c1"># tidytable</span>
+<span class="n">mtcars_dt</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">    </span><span class="n">tidytable</span><span class="o">::</span><span class="nf">summarise.</span><span class="p">(</span>
+<span class="w">      </span><span class="n">mean_disp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">disp</span><span class="p">),</span>
+<span class="w">      </span><span class="n">mean_hp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">hp</span><span class="p">),</span>
+<span class="w">      </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">n</span><span class="p">(),</span>
+<span class="w">      </span><span class="n">.by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cyl</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">    </span><span class="n">tidytable</span><span class="o">::</span><span class="nf">arrange.</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+</code></pre></div>
+
+<p>We can see that data.table is the fastest, as expected, and the data.frame operations are the slowest. tidytable lags a little behind dtplyr in terms of performance, but is still considerably faster than data.frame.</p>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Mean time (ms)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data.table</td>
+<td>0.6823924</td>
+</tr>
+<tr>
+<td>data.frame</td>
+<td>4.1101719</td>
+</tr>
+<tr>
+<td>dtplyr</td>
+<td>1.9016071</td>
+</tr>
+<tr>
+<td>tidytable</td>
+<td>2.5038907</td>
+</tr>
+</tbody>
+</table>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

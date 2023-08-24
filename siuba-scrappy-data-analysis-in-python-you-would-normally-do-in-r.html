@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Siuba - Scrappy data analysis in Python you would normally do in R | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/siuba-scrappy-data-analysis-in-python-you-would-normally-do-in-r.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/python.atom.xml">  
+  <meta name="description" content="Suiba https://siuba.readthedocs.io/en/latest/ Siuba is a python package that replicates R dplyr language in python. Provides concise, flexible data-analysis over multiple data sources currently including pandas …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Siuba - Scrappy data analysis in Python you would normally do in R
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2022-08-11T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Thu 11 August 2022
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/python.html">Python</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/kristian-maras.html">Kristian Maras</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/r.html">#R</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/tidyverse.html">#tidyverse</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/python.html">#Python</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h3>Suiba</h3>
+<p><a href="https://siuba.readthedocs.io/en/latest/">https://siuba.readthedocs.io/en/latest/</a> </p>
+<p><strong>Siuba</strong> is a python package that replicates R dplyr language in python. Provides concise, flexible data-analysis over multiple data sources currently including pandas DataFrames and SQL tables. Siuba is build on top of pandas, hence data methods refrence pandas operations you will know already if you use pandas often.</p>
+<div class="highlight"><pre><span></span><code>select() - keep certain columns of data.
+filter() - keep certain rows of data.
+mutate() - create or modify an existing column of data.
+summarize() - reduce one or more columns down to a single number.
+arrange() - reorder the rows of data.
+</code></pre></div>
+
+<p>Basic example below. Notice:</p>
+<ul>
+<li>
+<p>lazy expression _ avoids duplicating name of dataframe in operations</p>
+</li>
+<li>
+<p>the _. when referencing columns</p>
+</li>
+<li>
+<p>'&gt;&gt;' is the new pipe as opposed to %&gt;% in R</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1"># Load packages</span>
+
+<span class="kn">from</span> <span class="nn">siuba</span> <span class="kn">import</span> <span class="n">_</span><span class="p">,</span> <span class="n">group_by</span><span class="p">,</span> <span class="n">summarize</span><span class="p">,</span> <span class="n">mutate</span><span class="p">,</span>  <span class="n">arrange</span>
+<span class="kn">from</span> <span class="nn">siuba.data</span> <span class="kn">import</span> <span class="n">mtcars</span>
+
+<span class="p">(</span><span class="n">mtcars</span>
+  <span class="o">&gt;&gt;</span> <span class="n">group_by</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">cyl</span><span class="p">)</span>
+  <span class="o">&gt;&gt;</span> <span class="n">summarize</span><span class="p">(</span><span class="n">avg_hp</span> <span class="o">=</span> <span class="n">_</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+  <span class="p">)</span>
+
+<span class="p">(</span><span class="n">mtcars</span> <span class="o">&gt;&gt;</span> <span class="n">group_by</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">cyl</span><span class="p">)</span> <span class="o">&gt;&gt;</span> 
+    <span class="n">mutate</span><span class="p">(</span><span class="n">var</span> <span class="o">=</span> <span class="n">_</span><span class="o">.</span><span class="n">hp</span> <span class="o">-</span> <span class="n">_</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">&gt;&gt;</span> 
+    <span class="n">arrange</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">cyl</span><span class="p">))</span>
+</code></pre></div>
+
+<p>Lazy expression provides concise syntax which also reduces the need for many lambda expressions.</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># old approach: repeat name</span>
+<span class="n">mtcars</span><span class="p">[</span><span class="n">mtcars</span><span class="p">.</span><span class="n">cyl</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span>
+
+<span class="cp"># old approach: lambda</span>
+<span class="n">mtcars</span><span class="p">[</span><span class="n">lambda</span><span class="w"> </span><span class="n">_</span><span class="o">:</span><span class="w"> </span><span class="n">_</span><span class="p">.</span><span class="n">cyl</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span>
+
+<span class="cp"># siu approach</span>
+<span class="n">mtcars</span><span class="p">[</span><span class="n">_</span><span class="p">.</span><span class="n">cyl</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span>
+
+<span class="cp">#Less lambdas</span>
+
+<span class="cp"># pandas</span>
+<span class="n">mtcars</span><span class="p">.</span><span class="k">assign</span><span class="p">(</span><span class="n">avg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lambda</span><span class="w"> </span><span class="n">d</span><span class="o">:</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">mpg</span><span class="p">.</span><span class="n">mean</span><span class="p">())</span>
+
+<span class="cp"># siuba</span>
+<span class="n">mutate</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="n">avg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_</span><span class="p">.</span><span class="n">mpg</span><span class="p">.</span><span class="n">mean</span><span class="p">())</span>
+</code></pre></div>
+
+<p>Suiba works with plotnine (the ggplot equivalent for python) to make python feel alot like R in data manipulation and plotting.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">siuba</span> <span class="kn">import</span> <span class="n">mutate</span><span class="p">,</span> <span class="n">_</span>
+<span class="kn">from</span> <span class="nn">plotnine</span> <span class="kn">import</span> <span class="n">ggplot</span><span class="p">,</span> <span class="n">aes</span><span class="p">,</span> <span class="n">geom_point</span>
+
+<span class="p">(</span><span class="n">mtcars</span>
+  <span class="o">&gt;&gt;</span> <span class="n">mutate</span><span class="p">(</span><span class="n">hp_per_cyl</span> <span class="o">=</span> <span class="n">_</span><span class="o">.</span><span class="n">hp</span> <span class="o">/</span> <span class="n">_</span><span class="o">.</span><span class="n">cyl</span><span class="p">)</span>
+  <span class="o">&gt;&gt;</span> <span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="s2">&quot;cyl&quot;</span><span class="p">,</span> <span class="s2">&quot;hp_per_cyl&quot;</span><span class="p">))</span>
+   <span class="o">+</span> <span class="n">geom_point</span><span class="p">()</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Nest and Unnest operations available.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">siuba</span> <span class="kn">import</span> <span class="n">_</span><span class="p">,</span> <span class="n">mutate</span><span class="p">,</span> <span class="n">unnest</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">tagged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span>
+    <span class="s1">&#39;tags&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a,b,c&#39;</span><span class="p">,</span> <span class="s1">&#39;d,e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="p">(</span><span class="n">tagged</span>
+    <span class="o">&gt;&gt;</span> <span class="n">mutate</span><span class="p">(</span><span class="n">split_tags</span> <span class="o">=</span> <span class="n">_</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
+    <span class="o">&gt;&gt;</span> <span class="n">unnest</span><span class="p">(</span><span class="s2">&quot;split_tags&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<h2>Using databases:</h2>
+<p>Interaction is the same if data is remote data such as sql table, rather than datframe. Generating the SQL query that corresponds to the data manipulation is also available with show_query().</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">siuba.sql</span> <span class="kn">import</span> <span class="n">LazyTbl</span>
+<span class="kn">from</span> <span class="nn">siuba</span> <span class="kn">import</span> <span class="n">show_query</span>
+
+<span class="c1"># copy in to sqlite</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;sqlite:///:memory:&quot;</span><span class="p">)</span>
+<span class="n">mtcars</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s2">&quot;mtcars&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span> <span class="o">=</span> <span class="s2">&quot;replace&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># connect with siuba</span>
+<span class="n">tbl_mtcars</span> <span class="o">=</span> <span class="n">LazyTbl</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;mtcars&quot;</span><span class="p">)</span>
+
+<span class="n">query_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">tbl_mtcars</span>
+  <span class="o">&gt;&gt;</span> <span class="n">group_by</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">cyl</span><span class="p">)</span>
+  <span class="o">&gt;&gt;</span> <span class="n">summarize</span><span class="p">(</span><span class="n">avg_hp</span> <span class="o">=</span> <span class="n">_</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+  <span class="p">)</span>
+<span class="c1">#Under the hood siuba’s summarize function is converting the lazy expression show in the code below to SQL</span>
+
+<span class="n">query_data</span> <span class="o">&gt;&gt;</span> <span class="n">show_query</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Comparison with other similar packages are available here:</p>
+<p><a href="https://siuba.readthedocs.io/en/latest/key_features.html#Key-features">https://siuba.readthedocs.io/en/latest/key_features.html#Key-features</a></p>
+<p>Other notable points include fast group by operations and abstract syntax trees for transforming operations.</p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

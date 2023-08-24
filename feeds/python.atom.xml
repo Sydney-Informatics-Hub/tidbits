@@ -1,0 +1,1192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits - Python</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/" rel="alternate"></link><link href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/python.atom.xml" rel="self"></link><id>https://pages.github.sydney.edu.au/informatics/tidbits/</id><updated>2023-05-24T00:00:00+10:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Structure your data quickly and easily with Python dataclasses</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/structure-your-data-quickly-and-easily-with-python-dataclasses.html" rel="alternate"></link><published>2023-05-24T00:00:00+10:00</published><updated>2023-05-24T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:pages.github.sydney.edu.au,2023-05-24:/informatics/tidbits/structure-your-data-quickly-and-easily-with-python-dataclasses.html</id><summary type="html">&lt;p&gt;It can be a bit clunky to create a class in Python to store
+data, as you need to define an &lt;code&gt;__init__&lt;/code&gt; method and write some repetitive
+code to assign …&lt;/p&gt;</summary><content type="html">&lt;p&gt;It can be a bit clunky to create a class in Python to store
+data, as you need to define an &lt;code&gt;__init__&lt;/code&gt; method and write some repetitive
+code to assign all the attributes:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Animal&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;age&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Python's new &lt;code&gt;dataclass&lt;/code&gt; (in the standard library from Python 3.7 onward) 
+makes this a lot quicker and more efficient,
+as it creates the &lt;code&gt;__init__&lt;/code&gt; method for you automatically, all you
+do is specify the types for the data:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;dataclasses&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;dataclass&lt;/span&gt;
+
+&lt;span class="nd"&gt;@dataclass&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Animal&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;
+    &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;
+
+&lt;span class="n"&gt;dog&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Animal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Fido&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;One of the big benefits of this is that your IDE/editor should
+automatically pick up on the types of your data and warn you
+when you're using it incorrectly. Using dataclasses can be
+a good alternative to returning multiple results in a dictionary
+or tuple, as it's easier to keep track of the different results.&lt;/p&gt;
+&lt;p&gt;If you want something a bit more advanced than &lt;code&gt;dataclasses&lt;/code&gt;,
+you can look at &lt;a href="https://docs.pydantic.dev/latest/"&gt;Pydantic&lt;/a&gt;,
+which allows you to define data types in a similar way,
+but also helps you convert data to and from other formats
+like JSON.&lt;/p&gt;</content><category term="Python"></category><category term="python"></category><category term="types"></category><category term="code"></category></entry><entry><title>Standardised Python testing with Tox and `tox-conda`</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/standardised-python-testing-with-tox-and-tox-conda.html" rel="alternate"></link><published>2023-02-07T00:00:00+11:00</published><updated>2023-02-07T00:00:00+11:00</updated><author><name>Januar Harianto</name></author><id>tag:pages.github.sydney.edu.au,2023-02-07:/informatics/tidbits/standardised-python-testing-with-tox-and-tox-conda.html</id><summary type="html">&lt;p&gt;&lt;a href="https://github.com/tox-dev/tox"&gt;Tox&lt;/a&gt; is a great too that standardises package
+building, testing, linting and CI-integration for Python projects. As not
+everyone builds Python packages, this article will focus on automatic &lt;strong&gt;unit
+tests …&lt;/strong&gt;&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://github.com/tox-dev/tox"&gt;Tox&lt;/a&gt; is a great too that standardises package
+building, testing, linting and CI-integration for Python projects. As not
+everyone builds Python packages, this article will focus on automatic &lt;strong&gt;unit
+tests&lt;/strong&gt; for any python code.&lt;/p&gt;
+&lt;p&gt;Installing tox is as simple as:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;tox
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Or if you use conda/mamba:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;conda&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;conda-forge&lt;span class="w"&gt; &lt;/span&gt;tox
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Tox and &lt;code&gt;eeharvest&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;The &lt;a href="https://github.com/Sydney-Informatics-Hub/eeharvest"&gt;&lt;code&gt;eeharvest&lt;/code&gt;&lt;/a&gt; package
+uses Tox to automate a bunch of things:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;building the package&lt;/li&gt;
+&lt;li&gt;running tests using &lt;code&gt;pytest&lt;/code&gt; in multiple environments&lt;/li&gt;
+&lt;li&gt;checking code coverage&lt;/li&gt;
+&lt;li&gt;publishing to PyPI&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;If configured properly, the first four actions can be done in a single command:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;tox
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Publishing the package to PyPI is as simple as:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;tox&lt;span class="w"&gt; &lt;/span&gt;-e&lt;span class="w"&gt; &lt;/span&gt;publish&lt;span class="w"&gt; &lt;/span&gt;--&lt;span class="w"&gt; &lt;/span&gt;--repository&lt;span class="w"&gt; &lt;/span&gt;pypi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Below is a preview of what happens when using tox for unit testing. If you look
+closely, tox is running unit tests on Python versions 3.8 to 3.11 (6
+environments in total), and then publishing the coverage for each environment:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://pages.github.sydney.edu.au/informatics/tidbits/images/tox/tox_action.gif" alt= “” width="600"&gt;&lt;/p&gt;
+&lt;h3&gt;Configuration&lt;/h3&gt;
+&lt;p&gt;Tox works by looking at a &lt;code&gt;tox.ini&lt;/code&gt; file in the root of the project. That's it.
+A single file.&lt;/p&gt;
+&lt;p&gt;A simple configuartion for two test environments, Python 3.8 and 3.11, can be
+generated with the following configuration settings in the file:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;[tox]&lt;/span&gt;
+&lt;span class="na"&gt;requires&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;tox&amp;gt;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;4&lt;/span&gt;
+&lt;span class="na"&gt;env_list&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;py{38,311}&lt;/span&gt;
+&lt;span class="na"&gt;requires&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;tox-conda&lt;/span&gt;
+
+&lt;span class="k"&gt;[testenv]&lt;/span&gt;
+&lt;span class="na"&gt;description&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;Invoke pytest to run automated tests&lt;/span&gt;
+&lt;span class="na"&gt;setenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;TOXINIDIR&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;{toxinidir}&lt;/span&gt;
+&lt;span class="na"&gt;extras&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;testing&lt;/span&gt;
+&lt;span class="na"&gt;deps&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;pytest&amp;gt;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;7&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;pytest-sugar&lt;/span&gt;
+&lt;span class="na"&gt;conda_deps&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;geedim&lt;/span&gt;
+&lt;span class="na"&gt;conda_channels&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;conda-forge&lt;/span&gt;
+&lt;span class="na"&gt;conda_install_args&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;--override-channels&lt;/span&gt;
+
+&lt;span class="na"&gt;commands&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;pytest {posargs&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;tests}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that the above config requires use of &lt;code&gt;tox-conda&lt;/code&gt;, which can be installed
+via mamba/conda:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;mamba&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="n"&gt;conda&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;forge&lt;/span&gt; &lt;span class="n"&gt;tox&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;conda&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Tox will automatically configure conda environments, because &lt;code&gt;requires =
+tox-conda&lt;/code&gt; is set. For each environment specified in &lt;code&gt;env_list&lt;/code&gt;, it will install
+dependencies specified in &lt;code&gt;conda_deps&lt;/code&gt; and &lt;code&gt;deps&lt;/code&gt; (pip dependencies), and then
+run tests in your tests folder.&lt;/p&gt;
+&lt;p&gt;For more information on configuring tox, see the &lt;a href="https://tox.wiki/en/latest/user_guide.html"&gt;official
+documentation&lt;/a&gt;.&lt;/p&gt;</content><category term="Python"></category><category term="automation"></category><category term="python"></category><category term="unit-testing"></category><category term="devops"></category></entry><entry><title>Siuba - Scrappy data analysis in Python you would normally do in R</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/siuba-scrappy-data-analysis-in-python-you-would-normally-do-in-r.html" rel="alternate"></link><published>2022-08-11T00:00:00+10:00</published><updated>2022-08-11T00:00:00+10:00</updated><author><name>Kristian Maras</name></author><id>tag:pages.github.sydney.edu.au,2022-08-11:/informatics/tidbits/siuba-scrappy-data-analysis-in-python-you-would-normally-do-in-r.html</id><summary type="html">&lt;h3&gt;Suiba&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://siuba.readthedocs.io/en/latest/"&gt;https://siuba.readthedocs.io/en/latest/&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Siuba&lt;/strong&gt; is a python package that replicates R dplyr language in python. Provides concise, flexible data-analysis over multiple data sources currently including pandas …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;Suiba&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://siuba.readthedocs.io/en/latest/"&gt;https://siuba.readthedocs.io/en/latest/&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Siuba&lt;/strong&gt; is a python package that replicates R dplyr language in python. Provides concise, flexible data-analysis over multiple data sources currently including pandas DataFrames and SQL tables. Siuba is build on top of pandas, hence data methods refrence pandas operations you will know already if you use pandas often.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;select() - keep certain columns of data.
+filter() - keep certain rows of data.
+mutate() - create or modify an existing column of data.
+summarize() - reduce one or more columns down to a single number.
+arrange() - reorder the rows of data.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Basic example below. Notice:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;lazy expression _ avoids duplicating name of dataframe in operations&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;the _. when referencing columns&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;'&amp;gt;&amp;gt;' is the new pipe as opposed to %&amp;gt;% in R&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Load packages&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;siuba&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;group_by&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;summarize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;mutate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="n"&gt;arrange&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;siuba.data&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;mtcars&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mtcars&lt;/span&gt;
+  &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;group_by&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cyl&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;summarize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;avg_hp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+  &lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mtcars&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;group_by&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cyl&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; 
+    &lt;span class="n"&gt;mutate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hp&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; 
+    &lt;span class="n"&gt;arrange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cyl&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Lazy expression provides concise syntax which also reduces the need for many lambda expressions.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cp"&gt;# old approach: repeat name&lt;/span&gt;
+&lt;span class="n"&gt;mtcars&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;mtcars&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cyl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="cp"&gt;# old approach: lambda&lt;/span&gt;
+&lt;span class="n"&gt;mtcars&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;lambda&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cyl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="cp"&gt;# siu approach&lt;/span&gt;
+&lt;span class="n"&gt;mtcars&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cyl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="cp"&gt;#Less lambdas&lt;/span&gt;
+
+&lt;span class="cp"&gt;# pandas&lt;/span&gt;
+&lt;span class="n"&gt;mtcars&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;assign&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;avg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;lambda&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mpg&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+
+&lt;span class="cp"&gt;# siuba&lt;/span&gt;
+&lt;span class="n"&gt;mutate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mtcars&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;avg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mpg&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Suiba works with plotnine (the ggplot equivalent for python) to make python feel alot like R in data manipulation and plotting.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;siuba&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;mutate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;plotnine&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;ggplot&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;aes&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;geom_point&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mtcars&lt;/span&gt;
+  &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;mutate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hp_per_cyl&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hp&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cyl&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;ggplot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;aes&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;cyl&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;hp_per_cyl&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+   &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;geom_point&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Nest and Unnest operations available.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;siuba&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;mutate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;unnest&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
+
+&lt;span class="n"&gt;tagged&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DataFrame&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;tags&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;a,b,c&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;d,e&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;f&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;})&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tagged&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;mutate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;split_tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;,&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;unnest&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;split_tags&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Using databases:&lt;/h2&gt;
+&lt;p&gt;Interaction is the same if data is remote data such as sql table, rather than datframe. Generating the SQL query that corresponds to the data manipulation is also available with show_query().&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sqlalchemy&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;create_engine&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;siuba.sql&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;LazyTbl&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;siuba&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;show_query&lt;/span&gt;
+
+&lt;span class="c1"&gt;# copy in to sqlite&lt;/span&gt;
+&lt;span class="n"&gt;engine&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;create_engine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sqlite:///:memory:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;mtcars&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_sql&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;mtcars&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;engine&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;if_exists&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;replace&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="c1"&gt;# connect with siuba&lt;/span&gt;
+&lt;span class="n"&gt;tbl_mtcars&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;LazyTbl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;engine&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;mtcars&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;query_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tbl_mtcars&lt;/span&gt;
+  &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;group_by&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cyl&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;summarize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;avg_hp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+  &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;#Under the hood siuba’s summarize function is converting the lazy expression show in the code below to SQL&lt;/span&gt;
+
+&lt;span class="n"&gt;query_data&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;show_query&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Comparison with other similar packages are available here:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://siuba.readthedocs.io/en/latest/key_features.html#Key-features"&gt;https://siuba.readthedocs.io/en/latest/key_features.html#Key-features&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Other notable points include fast group by operations and abstract syntax trees for transforming operations.&lt;/p&gt;</content><category term="Python"></category><category term="R"></category><category term="tidyverse"></category><category term="Python"></category></entry><entry><title>Use logging instead of print</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/use-logging-instead-of-print.html" rel="alternate"></link><published>2022-06-06T00:00:00+10:00</published><updated>2022-06-06T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:pages.github.sydney.edu.au,2022-06-06:/informatics/tidbits/use-logging-instead-of-print.html</id><summary type="html">&lt;p&gt;Like a lot of people, I'm guilty of using &lt;code&gt;print()&lt;/code&gt; to debug
+my code. While it's a good idea to use a proper debugger,
+it can also be good to …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Like a lot of people, I'm guilty of using &lt;code&gt;print()&lt;/code&gt; to debug
+my code. While it's a good idea to use a proper debugger,
+it can also be good to have your programs log useful
+information as they run, particularly if they're going
+to run on a server relatively unsupervised. That's where
+Python's &lt;a href="https://docs.python.org/3/library/logging.html"&gt;logging&lt;/a&gt;
+module comes in. It's best to use &lt;code&gt;logging&lt;/code&gt; instead
+of &lt;code&gt;print&lt;/code&gt; right from the start of a project, so keep
+it in mind for your next one!&lt;/p&gt;
+&lt;p&gt;At the most basic level, &lt;code&gt;logging&lt;/code&gt; lets you set the importance
+level of each message you're sending. The levels (in order of importance) are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;DEBUG&lt;/li&gt;
+&lt;li&gt;INFO&lt;/li&gt;
+&lt;li&gt;WARNING&lt;/li&gt;
+&lt;li&gt;ERROR&lt;/li&gt;
+&lt;li&gt;CRITICAL&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To log each kind of message, just use the equivalent function from &lt;code&gt;logging&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Log a debug message&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;warning&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Log a warning&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;# etc.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;When running your code, you can set the log level (using a command line
+argument, environment variable, config file, etc.), and only messages
+of that importance or higher will be shown:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;basicConfig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;This won&amp;#39;t be shown&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Anything at info level or higher will be logged&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The benefit of this is you can have your programs show a lot of information
+on what they're doing through &lt;code&gt;debug&lt;/code&gt; messages, without making
+the output too noisy for regular use. If you find yourself going
+back through your code removing &lt;code&gt;print()&lt;/code&gt; statements once it's finished,
+consider using &lt;code&gt;logging&lt;/code&gt; instead.&lt;/p&gt;
+&lt;p&gt;Going further, the &lt;code&gt;logging&lt;/code&gt; module has lots of useful functionality like:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Logging to a file instead of/as well as the console - and easily switching
+  between these&lt;/li&gt;
+&lt;li&gt;Automatically including context like the current Python module and line number in messages&lt;/li&gt;
+&lt;li&gt;Running multiple loggers with different settings.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;See &lt;a href="https://realpython.com/python-logging/"&gt;this RealPython tutorial&lt;/a&gt; for info
+on some of these.&lt;/p&gt;
+&lt;p&gt;The closest equivalent in R seems to be the &lt;a href="https://github.com/daroczig/logger/"&gt;logger&lt;/a&gt;
+package, which is inspired by Python's logging.&lt;/p&gt;</content><category term="python"></category><category term="python"></category><category term="development"></category></entry><entry><title>Modernize your Python code with type annotations</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/modernize-your-python-code-with-type-annotations.html" rel="alternate"></link><published>2021-11-24T00:00:00+11:00</published><updated>2021-11-24T00:00:00+11:00</updated><author><name>Marius Mather</name></author><id>tag:pages.github.sydney.edu.au,2021-11-24:/informatics/tidbits/modernize-your-python-code-with-type-annotations.html</id><summary type="html">&lt;p&gt;Python has supported optional type annotations since
+Python 3.6, like:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Specify argument and return types&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;All currently supported Python …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Python has supported optional type annotations since
+Python 3.6, like:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Specify argument and return types&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;All currently supported Python versions support them
+now, so you can start adding them to your code
+without breaking anything.&lt;/p&gt;
+&lt;p&gt;Type annotations are entirely optional and are basically
+ignored by the Python compiler, so you won't break
+your code by including them. However, once you start adding
+them to your code you should find that your editor/IDE
+can give you better autocompletion for object methods (because it
+can determine their type), and can catch errors in how you're
+using your functions:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Type error checking in VS Code" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/python_type_annotations/type_error.png"&gt;&lt;/p&gt;
+&lt;p&gt;For more detailed and rigorous checking of your code-base,
+you can use tools like &lt;a href="http://mypy-lang.org/"&gt;mypy&lt;/a&gt;, which scans your code-base to
+ensure all types are consistent.&lt;/p&gt;
+&lt;p&gt;Annotation tools can be found in the &lt;code&gt;typing&lt;/code&gt; module in the standard library.
+Some of the most common useful type annotations include using the &lt;code&gt;Optional&lt;/code&gt; annotation
+to document when an argument can be &lt;code&gt;None&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;typing&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Optional&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;append_data&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;current_data&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Optional&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;current_data&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;current_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+    &lt;span class="n"&gt;current_data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Or specifying the types for your nested data structures:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# In newer versions of Python (&amp;gt;= 3.9), you can just use&lt;/span&gt;
+&lt;span class="c1"&gt;# list or tuple directly&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;collections&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;defaultdict&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;typing&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Dict&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Tuple&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get_total_scores&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;scores&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Tuple&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;Dict&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+    &lt;span class="n"&gt;totals&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;defaultdict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;person&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;score&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;scores&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;totals&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;person&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;score&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;totals&lt;/span&gt;
+
+&lt;span class="n"&gt;get_total_scores&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Alice&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Bob&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Alice&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="python"></category><category term="python"></category><category term="types"></category><category term="development"></category></entry><entry><title>The world's shortest tidbit: use #%% in Python scripts</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/the-worlds-shortest-tidbit-use-in-python-scripts.html" rel="alternate"></link><published>2021-11-15T00:00:00+11:00</published><updated>2021-11-15T00:00:00+11:00</updated><author><name>Darya Vanichkina</name></author><id>tag:pages.github.sydney.edu.au,2021-11-15:/informatics/tidbits/the-worlds-shortest-tidbit-use-in-python-scripts.html</id><summary type="html">&lt;h1&gt;The world's shortest tidbit&lt;/h1&gt;
+&lt;p&gt;I don't think this is really worthwhile as a tidbit, as it's (1) very short, and (2) very obvious - once you know about it. &lt;/p&gt;
+&lt;p&gt;But this …&lt;/p&gt;</summary><content type="html">&lt;h1&gt;The world's shortest tidbit&lt;/h1&gt;
+&lt;p&gt;I don't think this is really worthwhile as a tidbit, as it's (1) very short, and (2) very obvious - once you know about it. &lt;/p&gt;
+&lt;p&gt;But this is a productivity lifehack that makes it much easier to use Python for data science, through both VSCode and PyCharm, kind of how easy R is to use via RStudio. &lt;/p&gt;
+&lt;p&gt;The tidbit is:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;If you break up the code in your &lt;code&gt;.py&lt;/code&gt; script with comments of the format &lt;code&gt;#%%&lt;/code&gt; this will get both VSCode and PyCharm to recognise the code below them, until the next &lt;code&gt;#%%&lt;/code&gt;, as a code cell (what R calls a "code chunk").&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This has the benefits:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You can execute code cell-by-cell (and not just line by line) using keyboard shortcuts. For example, in the image below, I used &lt;code&gt;shift-Return&lt;/code&gt; to execute all of the imports at once.&lt;/li&gt;
+&lt;li&gt;When live-debugging and working on your code you can get a jupyter-notebook-like interface (aka console, for the R users) on the right, where you can type extra commands that you want to use to develop and prototype your code as you go along. &lt;/li&gt;
+&lt;li&gt;Because your actual code is stored in a &lt;code&gt;.py&lt;/code&gt; file, it is nicely amenable to version control with git - making it like &lt;code&gt;Rmd&lt;/code&gt; files in this regard. Conversely, jupyter notebook output is also stored with the notebook, so can look like a binary mess with git - although GitHub does try to ameliorate this problem somewhat.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So there really are heaps of benefits - and no drawbacks I've been able to see - for using &lt;code&gt;# %%&lt;/code&gt; in your Python code.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/20211115_pythoncomments.jpeg"&gt;&lt;/p&gt;</content><category term="Python"></category><category term="Code"></category><category term="git"></category></entry><entry><title>Design patterns (Part 1)</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/design-patterns-part-1.html" rel="alternate"></link><published>2021-09-28T00:00:00+10:00</published><updated>2021-09-28T00:00:00+10:00</updated><author><name>Sergio Pintaldi</name></author><id>tag:pages.github.sydney.edu.au,2021-09-28:/informatics/tidbits/design-patterns-part-1.html</id><summary type="html">&lt;h1&gt;Design Patterns (Part 1): What? Why?&lt;/h1&gt;
+&lt;h2&gt;What is a Design Pattern&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In software engineering, a software design pattern is a general, reusable solution to a commonly occurring problem within a …&lt;/p&gt;&lt;/blockquote&gt;</summary><content type="html">&lt;h1&gt;Design Patterns (Part 1): What? Why?&lt;/h1&gt;
+&lt;h2&gt;What is a Design Pattern&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In software engineering, a software design pattern is a general, reusable solution to a commonly occurring problem within a given context in software design.
+source: &lt;a href="https://en.wikipedia.org/wiki/Software_design_pattern"&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;Why use Design Patterns&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Tested and adopted by the wider software community&lt;/li&gt;
+&lt;li&gt;Re-usable pieces of code&lt;/li&gt;
+&lt;li&gt;Common language to solve problems in software design and development&lt;/li&gt;
+&lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Sources:
+* &lt;a href="https://en.wikipedia.org/wiki/Software_design_pattern"&gt;Wikipedia - Software Design Pattern&lt;/a&gt;
+* &lt;a href="https://refactoring.guru/design-patterns"&gt;Refactoring - Design Patterns&lt;/a&gt;&lt;/p&gt;
+&lt;h1&gt;Design Patterns in &lt;code&gt;Python&lt;/code&gt;: an example that I used in my projects&lt;/h1&gt;
+&lt;h2&gt;The &lt;code&gt;Singleton&lt;/code&gt; Design Pattern&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Ensure a class has only one instance, and provide a global point of access to it.
+source: &lt;a href="https://en.wikipedia.org/wiki/Singleton_pattern"&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;Code&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MySingletonClass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;__instance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__new__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__instance&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__instance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MySingletonClass&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="fm"&gt;__new__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__instance&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;some_argument&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_argument&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;some_argument&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;or another variant:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MySingletonClass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__new__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="nb"&gt;hasattr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;__instance&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__instance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MySingletonClass&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="fm"&gt;__new__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__instance&lt;/span&gt;
+
+    &lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Singleton to inherit from (multiple classes can inherit without getting confused):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Singleton&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;_instances&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__call__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_instances&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_instances&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+                &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Singleton&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="fm"&gt;__call__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_instances&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MySingletonClass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Singleton&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;docstring for MySingletonClass&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;arg&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;there are many more definitions if you &lt;a href="https://www.google.com/search?channel=fs&amp;amp;client=ubuntu&amp;amp;q=python+singleton"&gt;Google it&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;Usage: How do I know that is really a Singleton?&lt;/h3&gt;
+&lt;p&gt;Here below I demonstrate how to check if you did it right.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyClassSingleton&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;__instance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__new__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__instance&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__instance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MyClassSingleton&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="fm"&gt;__new__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__instance&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;arg2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arg1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;arg1&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arg2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;arg2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;MyClassSingleton&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&amp;lt;__main__.MyClassSingleton at 0x7feac43f2c40&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;class1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MyClassSingleton&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;this&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;that&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;class2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MyClassSingleton&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;this&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;that&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;class1&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;class2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;True
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;hex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;class1&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt; &lt;span class="nb"&gt;hex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;class2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;(&amp;#39;0x7feac43f2c40&amp;#39;, &amp;#39;0x7feac43f2c40&amp;#39;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyClassNotSingleton&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;arg2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arg1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;arg1&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arg2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;arg2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;class1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MyClassNotSingleton&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;this&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;that&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;class2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MyClassNotSingleton&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;this&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;that&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;class1&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;class2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;False
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;hex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;class1&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt; &lt;span class="nb"&gt;hex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;class2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;(&amp;#39;0x7feac440cf40&amp;#39;, &amp;#39;0x7feac440cb50&amp;#39;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;How did I use it?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;creating connection to database&lt;/li&gt;
+&lt;li&gt;creating connection Dask cluster: no need to pass it through functions, but just create an instance of it to return always the same object&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;But can be used also for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;get some data from something only once and save it as attribute in a class&lt;/li&gt;
+&lt;li&gt;... (google for more examples)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Coming soon ...&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Design Patterns Part 2: more design patterns that I used&lt;/li&gt;
+&lt;li&gt;Design Patterns in R&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;More Reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://medium.com/educative/the-7-most-important-software-design-patterns-d60e546afb0e"&gt;Medium - The 7 Most Important Software Design Patterns&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;google "Design Patterns in ..."&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Python"></category><category term="Python"></category><category term="Software Engineering"></category><category term="Design"></category><category term="Architecture"></category></entry><entry><title>A comparison of piping dataframe operations in R Tidyverse vs Python Pandas</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/a-comparison-of-piping-dataframe-operations-in-r-tidyverse-vs-python-pandas.html" rel="alternate"></link><published>2021-05-10T00:00:00+10:00</published><updated>2021-05-10T00:00:00+10:00</updated><author><name>Sergio Pintaldi</name></author><id>tag:pages.github.sydney.edu.au,2021-05-10:/informatics/tidbits/a-comparison-of-piping-dataframe-operations-in-r-tidyverse-vs-python-pandas.html</id><summary type="html">&lt;h1&gt;Getting the dataset&lt;/h1&gt;
+&lt;p&gt;Flight data downloaded from https://raw.githubusercontent.com/apache-superset/examples-data/master/tutorial_flights.csv:&lt;/p&gt;
+&lt;h2&gt;R&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dplyr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;readr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;read_csv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;https://raw.githubusercontent.com/apache-superset/examples-data/master …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;h1&gt;Getting the dataset&lt;/h1&gt;
+&lt;p&gt;Flight data downloaded from https://raw.githubusercontent.com/apache-superset/examples-data/master/tutorial_flights.csv:&lt;/p&gt;
+&lt;h2&gt;R&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dplyr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;readr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;read_csv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;https://raw.githubusercontent.com/apache-superset/examples-data/master/tutorial_flights.csv&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;data&lt;span class="w"&gt; &lt;/span&gt;%&amp;gt;%&lt;span class="w"&gt; &lt;/span&gt;glimpse&lt;span class="o"&gt;()&lt;/span&gt;
+Rows:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;,954
+Columns:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;20&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;Department&lt;span class="w"&gt;                &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Orange Department&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Yellow Department&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Yell…&lt;/span&gt;
+$&lt;span class="s2"&gt; Cost                      &amp;lt;dbl&amp;gt; 81.52, 343.98, 25.98, 12.99, 32.97, 61.48, 159.…&lt;/span&gt;
+$&lt;span class="s2"&gt; `Travel Class`            &amp;lt;chr&amp;gt; &amp;quot;&lt;/span&gt;Economy&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Economy&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Economy&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Economy&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Ec…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Ticket&lt;span class="w"&gt; &lt;/span&gt;Single&lt;span class="w"&gt; &lt;/span&gt;or&lt;span class="w"&gt; &lt;/span&gt;Return&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Return&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Return&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Return&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Return&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Return…&lt;/span&gt;
+$&lt;span class="s2"&gt; Airline                   &amp;lt;chr&amp;gt; &amp;quot;&lt;/span&gt;Flybe&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Flybe&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Flybe&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Flybe&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Flybe&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;F…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Travel&lt;span class="w"&gt; &lt;/span&gt;Date&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt;             &lt;/span&gt;&amp;lt;date&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2011&lt;/span&gt;-02-10,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2011&lt;/span&gt;-02-11,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2011&lt;/span&gt;-03-02,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2011&lt;/span&gt;-03-09…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Origin&lt;span class="w"&gt; &lt;/span&gt;ICAO&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt;             &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;EGPF&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;EGPF&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;EGHI&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;EGHI&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;EGPE&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;EGPE&amp;quot;&lt;/span&gt;,…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Origin&lt;span class="w"&gt; &lt;/span&gt;Name&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt;             &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Glasgow International Airport&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Glasgow Inter…&lt;/span&gt;
+$&lt;span class="s2"&gt; `Origin Municipality`     &amp;lt;chr&amp;gt; &amp;quot;&lt;/span&gt;Glasgow&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Glasgow&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Southampton&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Southampt…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Origin&lt;span class="w"&gt; &lt;/span&gt;Region&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt;           &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Scotland&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Scotland&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;England&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;England&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;…&lt;/span&gt;
+$&lt;span class="s2"&gt; `Origin Country`          &amp;lt;chr&amp;gt; &amp;quot;&lt;/span&gt;United&lt;span class="w"&gt; &lt;/span&gt;Kingdom&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;United&lt;span class="w"&gt; &lt;/span&gt;Kingdom&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;United&lt;span class="w"&gt; &lt;/span&gt;Kin…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Origin&lt;span class="w"&gt; &lt;/span&gt;Latitude&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&amp;lt;dbl&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;55&lt;/span&gt;.8719,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;55&lt;/span&gt;.8719,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;50&lt;/span&gt;.9503,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;50&lt;/span&gt;.9503,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;57&lt;/span&gt;.5425,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;57&lt;/span&gt;…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Origin&lt;span class="w"&gt; &lt;/span&gt;Longitude&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt;        &lt;/span&gt;&amp;lt;dbl&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;-4.433060,&lt;span class="w"&gt; &lt;/span&gt;-4.433060,&lt;span class="w"&gt; &lt;/span&gt;-1.356800,&lt;span class="w"&gt; &lt;/span&gt;-1.356800,&lt;span class="w"&gt; &lt;/span&gt;-4.…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Destination&lt;span class="w"&gt; &lt;/span&gt;ICAO&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt;        &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;EGKK&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;EGHI&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;EGPB&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;EPKK&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;EGKK&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;EGBB&amp;quot;&lt;/span&gt;,…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Destination&lt;span class="w"&gt; &lt;/span&gt;Name&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt;        &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;London Gatwick Airport&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Southampton Airport&amp;quot;&lt;/span&gt;…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Destination&lt;span class="w"&gt; &lt;/span&gt;Region&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;England&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;England&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Scotland&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Lesser Polan…&lt;/span&gt;
+$&lt;span class="s2"&gt; `Destination Country`     &amp;lt;chr&amp;gt; &amp;quot;&lt;/span&gt;United&lt;span class="w"&gt; &lt;/span&gt;Kingdom&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;United&lt;span class="w"&gt; &lt;/span&gt;Kingdom&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;United&lt;span class="w"&gt; &lt;/span&gt;Kin…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Destination&lt;span class="w"&gt; &lt;/span&gt;Latitude&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;51.148102&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;50.9502983093262&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;59.8788986206…&lt;/span&gt;
+$&lt;span class="s2"&gt; `Destination Longitude`   &amp;lt;chr&amp;gt; &amp;quot;&lt;/span&gt;-0.190278&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;-1.35679996013641&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;-1.295560002…
+$&lt;span class="w"&gt; &lt;/span&gt;Distance&lt;span class="w"&gt;                  &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;595&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;584&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;993&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;1493&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;753&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;584&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;508…&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Python&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
+
+&lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_csv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;https://raw.githubusercontent.com/apache-superset/examples-data/master/tutorial_flights.csv&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;
+&lt;span class="n"&gt;Index&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Department&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Cost&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Travel Class&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Ticket Single or Return&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+       &lt;span class="s1"&gt;&amp;#39;Airline&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Travel Date&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Origin ICAO&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Origin Name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+       &lt;span class="s1"&gt;&amp;#39;Origin Municipality&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Origin Region&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Origin Country&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+       &lt;span class="s1"&gt;&amp;#39;Origin Latitude&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Origin Longitude&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Destination ICAO&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+       &lt;span class="s1"&gt;&amp;#39;Destination Name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Destination Region&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Destination Country&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+       &lt;span class="s1"&gt;&amp;#39;Destination Latitude&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Destination Longitude&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Distance&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+      &lt;span class="n"&gt;dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;object&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h1&gt;Creating New columns from old ones&lt;/h1&gt;
+&lt;h2&gt;R&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;data&lt;span class="w"&gt; &lt;/span&gt;%&amp;gt;%
+&lt;span class="w"&gt;  &lt;/span&gt;group_by&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Destination&lt;span class="w"&gt; &lt;/span&gt;Country&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;%&amp;gt;%
+&lt;span class="w"&gt;  &lt;/span&gt;mutate&lt;span class="o"&gt;(&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;total_cost_per_country&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sum&lt;span class="o"&gt;(&lt;/span&gt;Cost&lt;span class="o"&gt;)&lt;/span&gt;,
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;tot_cost_country_euro&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;total_cost_per_country&lt;span class="w"&gt; &lt;/span&gt;*&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;.3
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;%&amp;gt;%
+&lt;span class="w"&gt;  &lt;/span&gt;glimpse&lt;span class="o"&gt;()&lt;/span&gt;
+Rows:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;,954
+Columns:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;22&lt;/span&gt;
+Groups:&lt;span class="w"&gt; &lt;/span&gt;Destination&lt;span class="w"&gt; &lt;/span&gt;Country&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;65&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;Department&lt;span class="w"&gt;                &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Orange Department&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Yellow Department&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Yello…&lt;/span&gt;
+$&lt;span class="s2"&gt; Cost                      &amp;lt;dbl&amp;gt; 81.52, 343.98, 25.98, 12.99, 32.97, 61.48, 159.8…&lt;/span&gt;
+$&lt;span class="s2"&gt; `Travel Class`            &amp;lt;chr&amp;gt; &amp;quot;&lt;/span&gt;Economy&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Economy&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Economy&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Economy&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Eco…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Ticket&lt;span class="w"&gt; &lt;/span&gt;Single&lt;span class="w"&gt; &lt;/span&gt;or&lt;span class="w"&gt; &lt;/span&gt;Return&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Return&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Return&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Return&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Return&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Return&amp;quot;&lt;/span&gt;…
+$&lt;span class="w"&gt; &lt;/span&gt;Airline&lt;span class="w"&gt;                   &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Flybe&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Flybe&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Flybe&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Flybe&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Flybe&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Fl…&lt;/span&gt;
+$&lt;span class="s2"&gt; `Travel Date`             &amp;lt;date&amp;gt; 2011-02-10, 2011-02-11, 2011-03-02, 2011-03-09,…&lt;/span&gt;
+$&lt;span class="s2"&gt; `Origin ICAO`             &amp;lt;chr&amp;gt; &amp;quot;&lt;/span&gt;EGPF&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;EGPF&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;EGHI&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;EGHI&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;EGPE&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;EGPE&lt;span class="s2"&gt;&amp;quot;, …&lt;/span&gt;
+$&lt;span class="s2"&gt; `Origin Name`             &amp;lt;chr&amp;gt; &amp;quot;&lt;/span&gt;Glasgow&lt;span class="w"&gt; &lt;/span&gt;International&lt;span class="w"&gt; &lt;/span&gt;Airport&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Glasgow&lt;span class="w"&gt; &lt;/span&gt;Intern…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Origin&lt;span class="w"&gt; &lt;/span&gt;Municipality&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Glasgow&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Glasgow&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Southampton&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Southampto…&lt;/span&gt;
+$&lt;span class="s2"&gt; `Origin Region`           &amp;lt;chr&amp;gt; &amp;quot;&lt;/span&gt;Scotland&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Scotland&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;England&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;England&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;S…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Origin&lt;span class="w"&gt; &lt;/span&gt;Country&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt;          &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;United Kingdom&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;United Kingdom&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;United King…&lt;/span&gt;
+$&lt;span class="s2"&gt; `Origin Latitude`         &amp;lt;dbl&amp;gt; 55.8719, 55.8719, 50.9503, 50.9503, 57.5425, 57.…&lt;/span&gt;
+$&lt;span class="s2"&gt; `Origin Longitude`        &amp;lt;dbl&amp;gt; -4.433060, -4.433060, -1.356800, -1.356800, -4.0…&lt;/span&gt;
+$&lt;span class="s2"&gt; `Destination ICAO`        &amp;lt;chr&amp;gt; &amp;quot;&lt;/span&gt;EGKK&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;EGHI&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;EGPB&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;EPKK&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;EGKK&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;EGBB&lt;span class="s2"&gt;&amp;quot;, …&lt;/span&gt;
+$&lt;span class="s2"&gt; `Destination Name`        &amp;lt;chr&amp;gt; &amp;quot;&lt;/span&gt;London&lt;span class="w"&gt; &lt;/span&gt;Gatwick&lt;span class="w"&gt; &lt;/span&gt;Airport&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Southampton&lt;span class="w"&gt; &lt;/span&gt;Airport&lt;span class="s2"&gt;&amp;quot;,…&lt;/span&gt;
+$&lt;span class="s2"&gt; `Destination Region`      &amp;lt;chr&amp;gt; &amp;quot;&lt;/span&gt;England&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;England&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Scotland&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;Lesser&lt;span class="w"&gt; &lt;/span&gt;Poland…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Destination&lt;span class="w"&gt; &lt;/span&gt;Country&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;United Kingdom&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;United Kingdom&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;United King…&lt;/span&gt;
+$&lt;span class="s2"&gt; `Destination Latitude`    &amp;lt;chr&amp;gt; &amp;quot;&lt;/span&gt;&lt;span class="m"&gt;51&lt;/span&gt;.148102&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;&lt;span class="m"&gt;50&lt;/span&gt;.9502983093262&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;&lt;span class="m"&gt;59&lt;/span&gt;.87889862060…
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;Destination&lt;span class="w"&gt; &lt;/span&gt;Longitude&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&amp;lt;chr&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-0.190278&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-1.35679996013641&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-1.2955600023…&lt;/span&gt;
+$&lt;span class="s2"&gt; Distance                  &amp;lt;chr&amp;gt; &amp;quot;&lt;/span&gt;&lt;span class="m"&gt;595&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;&lt;span class="m"&gt;584&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;&lt;span class="m"&gt;993&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;&lt;span class="m"&gt;1493&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;&lt;span class="m"&gt;753&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;&lt;span class="m"&gt;584&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;&lt;span class="m"&gt;508&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;…&lt;/span&gt;
+$&lt;span class="s2"&gt; total_cost_per_country    &amp;lt;dbl&amp;gt; 376846.33, 376846.33, 376846.33, 4968.51, 376846…&lt;/span&gt;
+$&lt;span class="s2"&gt; tot_cost_country_euro     &amp;lt;dbl&amp;gt; 489900.229, 489900.229, 489900.229, 6459.063, 48…&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Python&lt;/h2&gt;
+&lt;p&gt;Same as above, and printing out the first 5 rows of the last 5 columns:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assign&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="n"&gt;total_cost_per_country&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+            &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Destination Country&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Cost&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;groupby&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Destination Country&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Cost&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+            &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sum&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="p"&gt;),&lt;/span&gt;
+        &lt;span class="n"&gt;tot_cost_country_euro&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;total_cost_per_country&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mf"&gt;1.3&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iloc&lt;/span&gt;&lt;span class="p"&gt;[:&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;:]&lt;/span&gt;
+    &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_markdown&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Code output:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: right;"&gt;&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Destination Latitude&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Destination Longitude&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Distance&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;total_cost_per_country&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;tot_cost_country_euro&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: right;"&gt;0&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;51.1481&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-0.190278&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;595&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;376846.33&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;489900.23&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: right;"&gt;1&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;50.9503&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-1.3568&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;584&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;376846.33&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;489900.23&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: right;"&gt;2&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;59.8789&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-1.29556&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;993&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;376846.33&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;489900.23&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: right;"&gt;3&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;50.0777&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;19.7848&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1493&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;4968.51&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;6459.06&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: right;"&gt;4&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;51.1481&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-0.190278&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;753&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;376846.33&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;489900.23&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1&gt;Data viz example&lt;/h1&gt;
+&lt;p&gt;A classic groupby, apply aggregation and filtering and plot stuffs&lt;/p&gt;
+&lt;h2&gt;R&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nf"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;`Origin Country`&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Germany&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;# glimpse()&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nf"&gt;select&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;`Origin Municipality`&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Cost&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Department&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nf"&gt;group_by&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;`Origin Municipality`&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nf"&gt;mutate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;total_cost&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Cost&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nf"&gt;ggplot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;mapping&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;aes&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;`Origin Municipality`&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;total_cost&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;fill&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Department&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nf"&gt;geom_bar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stat&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;identity&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/dataframe-pipe-r-vs-pandas/r_plot.png"&gt;&lt;/p&gt;
+&lt;h2&gt;Python&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Origin Country&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Germany&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;groupby&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Origin Municipality&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Department&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;agg&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="n"&gt;total_cost&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;NamedAgg&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;column&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Cost&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;aggfunc&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sum&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;reset_index&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pivot_table&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Origin Municipality&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+        &lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Department&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+        &lt;span class="n"&gt;values&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;total_cost&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stacked&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_figure&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/dataframe-pipe-r-vs-pandas/python_plot.png"&gt;&lt;/p&gt;
+&lt;h1&gt;Data pipelines&lt;/h1&gt;
+&lt;p&gt;A classic data pipeline with loading, processing, writing steps:&lt;/p&gt;
+&lt;h2&gt;R&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;read_data&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;read_csv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;...&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nf"&gt;return&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;process_data&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;df_out&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;group_by&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;group_col&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;mutate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;new_col1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;max&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;col1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;new_col2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;col2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kc"&gt;...&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nf"&gt;return&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df_out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;write_data&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;outfilename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;df_out&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;select&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;col1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;col2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nf"&gt;write_csv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df_out&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;outfilename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nf"&gt;return&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df_out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;read_data&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;path/to/input/file&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nf"&gt;process_data&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;.&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nf"&gt;write_data&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;outfilename&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;path/to/output/file&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Python&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;read_data&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;Dataframe&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_csv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;colums&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;process_data&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Dataframe&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;df_out&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;
+    &lt;span class="n"&gt;df_out&lt;/span&gt;&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;new_col1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;new_col2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group_col&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;col1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;col2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;groupby&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group_col&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;agg&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;col1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;max&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;col2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;sum&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="p"&gt;})&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;df_out&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;write_data&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Dataframe&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;outfilename&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;df_out&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;drop&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;col1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;col2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;axis&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;df_out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;outfilename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;df_out&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;read_data&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;path/to/input/file&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pipe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;process_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pipe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;write_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;outfilename&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;path/to/output/file&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Python"></category><category term="Python"></category><category term="Pandas"></category><category term="R"></category><category term="pipe"></category><category term="Tidy"></category><category term="dplyr"></category></entry><entry><title>Set up your Jupyter environment in Docker</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/set-up-your-jupyter-environment-in-docker.html" rel="alternate"></link><published>2021-05-03T00:00:00+10:00</published><updated>2021-05-03T00:00:00+10:00</updated><author><name>Sergio Pintaldi</name></author><id>tag:pages.github.sydney.edu.au,2021-05-03:/informatics/tidbits/set-up-your-jupyter-environment-in-docker.html</id><summary type="html">&lt;h1&gt;The Problem&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;Python&lt;/code&gt; lets you have multiple virtual environments and that's cool for running scripts but when you need to install &lt;code&gt;Jupyter&lt;/code&gt; and run a notebook in &lt;code&gt;Jupyter Lab&lt;/code&gt; (the …&lt;/p&gt;</summary><content type="html">&lt;h1&gt;The Problem&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;Python&lt;/code&gt; lets you have multiple virtual environments and that's cool for running scripts but when you need to install &lt;code&gt;Jupyter&lt;/code&gt; and run a notebook in &lt;code&gt;Jupyter Lab&lt;/code&gt; (the old &lt;code&gt;Jupyter Notebook&lt;/code&gt; or &lt;code&gt;IPython notebook&lt;/code&gt; will be &lt;a href="https://github.com/jupyter/docker-stacks#jupyter-notebook-deprecation-notice"&gt;deprecated soon&lt;/a&gt;), different environment might install different version of Jupyter and Lab with different plugins, ending up in a big mess. In fact there will be conflicting Jupyter configuration located under &lt;code&gt;$HOME/.ipython&lt;/code&gt;.&lt;/p&gt;
+&lt;h1&gt;Proposed solution&lt;/h1&gt;
+&lt;p&gt;Using docker to install your containerised Jupyter enviroment seems appealing. It can be integrated in your project folder in this way:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;.
+├──&lt;span class="w"&gt; &lt;/span&gt;...
+├──&lt;span class="w"&gt; &lt;/span&gt;requirements
+│&lt;span class="w"&gt;   &lt;/span&gt;├──&lt;span class="w"&gt; &lt;/span&gt;build.sh
+│&lt;span class="w"&gt;   &lt;/span&gt;├──&lt;span class="w"&gt; &lt;/span&gt;Dockerfile
+│&lt;span class="w"&gt;   &lt;/span&gt;├──&lt;span class="w"&gt; &lt;/span&gt;pip-requirements.txt
+│&lt;span class="w"&gt;   &lt;/span&gt;├──&lt;span class="w"&gt; &lt;/span&gt;run.sh
+│&lt;span class="w"&gt;   &lt;/span&gt;└──&lt;span class="w"&gt; &lt;/span&gt;start.sh
+├──&lt;span class="w"&gt; &lt;/span&gt;...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;In which the &lt;code&gt;Dockerfile&lt;/code&gt; looks like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c"&gt;# inherit from Python image&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;python:3.8&lt;/span&gt;
+
+&lt;span class="c"&gt;# set your user in the container&lt;/span&gt;
+&lt;span class="k"&gt;ARG&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;NB_USER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;myuser&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;ARG&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;NB_UID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;1000&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;ARG&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;NB_GID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;1000&amp;quot;&lt;/span&gt;
+
+&lt;span class="c"&gt;# install OS dependencies and perform OS operations (e.g. set your user with passwordless sudo)&lt;/span&gt;
+&lt;span class="k"&gt;RUN&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;apt-get&lt;span class="w"&gt; &lt;/span&gt;update&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;apt-get&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;apt-get&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;python3-dev&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;useradd&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;-s&lt;span class="w"&gt; &lt;/span&gt;/bin/bash&lt;span class="w"&gt; &lt;/span&gt;-N&lt;span class="w"&gt; &lt;/span&gt;-u&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$NB_UID&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$NB_USER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;chmod&lt;span class="w"&gt; &lt;/span&gt;g+w&lt;span class="w"&gt; &lt;/span&gt;/etc/passwd&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;#&lt;span class="w"&gt; &lt;/span&gt;give&lt;span class="w"&gt; &lt;/span&gt;NB_USER&lt;span class="w"&gt; &lt;/span&gt;passwordless&lt;span class="w"&gt; &lt;/span&gt;sudo
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;NB_USER&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;    ALL=(ALL)    NOPASSWD:    ALL&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;/etc/sudoers&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;#&lt;span class="w"&gt; &lt;/span&gt;Prevent&lt;span class="w"&gt; &lt;/span&gt;apt-get&lt;span class="w"&gt; &lt;/span&gt;cache&lt;span class="w"&gt; &lt;/span&gt;from&lt;span class="w"&gt; &lt;/span&gt;being&lt;span class="w"&gt; &lt;/span&gt;persisted&lt;span class="w"&gt; &lt;/span&gt;to&lt;span class="w"&gt; &lt;/span&gt;this&lt;span class="w"&gt; &lt;/span&gt;layer.
+&lt;span class="w"&gt;  &lt;/span&gt;rm&lt;span class="w"&gt; &lt;/span&gt;-rf&lt;span class="w"&gt; &lt;/span&gt;/var/lib/apt/lists/*
+
+
+&lt;span class="c"&gt;# Copy requirements, install and configure the kernel.&lt;/span&gt;
+&lt;span class="k"&gt;COPY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;--chown&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;NB_UID&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;:&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;NB_GID&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;pip-requirements.txt&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/tmp/&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;RUN&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-r&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/tmp/pip-requirements.txt&amp;quot;&lt;/span&gt;
+
+&lt;span class="c"&gt;# set default shell, user, working directory and default command when executing the container&lt;/span&gt;
+&lt;span class="k"&gt;ENV&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;SHELL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/bin/bash
+
+&lt;span class="k"&gt;USER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;$NB_UID&lt;/span&gt;
+
+&lt;span class="k"&gt;WORKDIR&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/home/${NB_USER}&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;CMD&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;jupyter&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;lab&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;--no-browser&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;--ip=0.0.0.0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then you can build this into an image with &lt;code&gt;build.sh&lt;/code&gt; (remember to assign executable permission to the user aka &lt;code&gt;chmod u+x build.sh&lt;/code&gt;):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-z&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$IMAGETAG&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;IMAGETAG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;latest&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+
+docker&lt;span class="w"&gt; &lt;/span&gt;build&lt;span class="w"&gt; &lt;/span&gt;--force-rm&lt;span class="w"&gt; &lt;/span&gt;-t&lt;span class="w"&gt; &lt;/span&gt;my_image:&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;IMAGETAG&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;you can pass different arguments for setting your user (see &lt;a href="https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg"&gt;build-time variables&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;Then you can create your container for the &lt;strong&gt;first time&lt;/strong&gt; with this script in &lt;code&gt;run.sh&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-z&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$IMAGETAG&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;IMAGETAG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;latest&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-z&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$DOCKERPORT&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;DOCKERPORT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;8888&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+
+docker&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;-it&lt;span class="w"&gt; &lt;/span&gt;-p&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;127&lt;/span&gt;.0.0.1:&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;DOCKERPORT&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;:8888&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;-v&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;dirname&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;PWD&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;:/home/&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;USER&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/work&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;--name&lt;span class="w"&gt; &lt;/span&gt;my_container_name&lt;span class="w"&gt; &lt;/span&gt;my_image:&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;IMAGETAG&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;and subsequently run it interactively the next times using &lt;code&gt;start.sh&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+
+docker&lt;span class="w"&gt; &lt;/span&gt;start&lt;span class="w"&gt; &lt;/span&gt;-i&lt;span class="w"&gt; &lt;/span&gt;my_container_name
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The output is:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/jupyterlab-docker/jupyter-docker-start.png"&gt;&lt;/p&gt;
+&lt;p&gt;and you can &lt;code&gt;CTRL + click&lt;/code&gt; in the link to open your &lt;code&gt;Jupyter Lab&lt;/code&gt; session in your browser. &lt;code&gt;CTRL + C&lt;/code&gt; to stop the execution. For MAC user use the &lt;code&gt;Command&lt;/code&gt; key instead of &lt;code&gt;CTRL&lt;/code&gt;.&lt;/p&gt;
+&lt;h1&gt;Discussion Points&lt;/h1&gt;
+&lt;h2&gt;Why we need a specific user in your image&lt;/h2&gt;
+&lt;p&gt;By default, all containers are run as &lt;code&gt;root&lt;/code&gt; user, so when you mount your working folder, you might modify some files and/or create new ones with different perissions, and will not be able to modify them outside the container, unless you change them with &lt;code&gt;chown&lt;/code&gt; command.&lt;/p&gt;
+&lt;h2&gt;How big is my image is going to be?&lt;/h2&gt;
+&lt;p&gt;A basic &lt;code&gt;python 3.8&lt;/code&gt; image with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pandas
+numpy
+matplotlib
+jupyterlab
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;is about 1.3 GB.&lt;/p&gt;
+&lt;h2&gt;Jupyter Lab versions&lt;/h2&gt;
+&lt;p&gt;From Jupyter Lab 3.0 the installation of the plugins changed. In summary you can install extension such as &lt;a href="https://github.com/matplotlib/ipympl#with-pip"&gt;interactive matplotlib&lt;/a&gt; without executing &lt;code&gt;jupyter labextension install ...&lt;/code&gt; but like a normal python package &lt;code&gt;pip install myextension&lt;/code&gt; as documented in the &lt;a href="https://jupyterlab.readthedocs.io/en/stable/getting_started/changelog.html#user-facing-changes"&gt;changelog&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Python vs miniconda vs community stacks&lt;/h2&gt;
+&lt;p&gt;I prefer generally to install packages with pip when are for "production" stacks, or stacks that are sort of compartmentalised, but in general you can use the miniconda image, as a base for your &lt;code&gt;Dockerfile&lt;/code&gt; or the &lt;a href="https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#selecting-an-image"&gt;community stacks&lt;/a&gt;. Both the latter and miniconda images are a bit bigger than standard python images and you can pull them down and use them without building your own dockerfile.&lt;/p&gt;
+&lt;h2&gt;Install the plugins&lt;/h2&gt;
+&lt;p&gt;With Jupyter Lab &amp;gt; 3.0 you can install widgets and plugins with &lt;code&gt;pip&lt;/code&gt;. As example here the instructions to install the &lt;a href="https://github.com/matplotlib/ipympl#with-pip"&gt;interactive matplotlib widget&lt;/a&gt;.&lt;/p&gt;</content><category term="Python"></category><category term="Python"></category><category term="Jupyter"></category></entry><entry><title>mamba: a fast replacement for conda</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/mamba-a-fast-replacement-for-conda.html" rel="alternate"></link><published>2021-04-22T00:00:00+10:00</published><updated>2021-04-22T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:pages.github.sydney.edu.au,2021-04-22:/informatics/tidbits/mamba-a-fast-replacement-for-conda.html</id><summary type="html">&lt;p&gt;If your &lt;code&gt;conda&lt;/code&gt; environment is taking a long time to solve (or
+failing to solve altogether), you might want to try &lt;a href="https://github.com/mamba-org/mamba"&gt;mamba&lt;/a&gt;,
+which reimplements &lt;code&gt;conda&lt;/code&gt; in C++ with an improved …&lt;/p&gt;</summary><content type="html">&lt;p&gt;If your &lt;code&gt;conda&lt;/code&gt; environment is taking a long time to solve (or
+failing to solve altogether), you might want to try &lt;a href="https://github.com/mamba-org/mamba"&gt;mamba&lt;/a&gt;,
+which reimplements &lt;code&gt;conda&lt;/code&gt; in C++ with an improved dependency
+solving algorithm.&lt;/p&gt;
+&lt;p&gt;To install in your existing conda setup (from their instructions &lt;a href="https://github.com/mamba-org/mamba"&gt;on Github&lt;/a&gt;)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;conda&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;mamba&lt;span class="w"&gt; &lt;/span&gt;-n&lt;span class="w"&gt; &lt;/span&gt;base&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;conda-forge
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then you should be able to run &lt;code&gt;mamba&lt;/code&gt; instead of &lt;code&gt;conda&lt;/code&gt; for
+commands like creating environments:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mamba&lt;span class="w"&gt; &lt;/span&gt;env&lt;span class="w"&gt; &lt;/span&gt;create&lt;span class="w"&gt; &lt;/span&gt;-n&lt;span class="w"&gt; &lt;/span&gt;my_project&lt;span class="w"&gt; &lt;/span&gt;--file&lt;span class="w"&gt; &lt;/span&gt;environment.yml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;It's not a complete replacement for &lt;code&gt;conda&lt;/code&gt; (yet), you still have to use
+&lt;code&gt;conda activate&lt;/code&gt; to activate your environments, but it seems
+to greatly speed up installing packages and creating environments.&lt;/p&gt;
+&lt;p&gt;The same developers have also created &lt;a href="https://github.com/mamba-org/rhumba"&gt;rhumba&lt;/a&gt;,
+a similar package manager for R - this might also be worth looking
+at for creating reproducible R environments.&lt;/p&gt;</content><category term="Python"></category><category term="python"></category><category term="conda"></category><category term="package-management"></category></entry><entry><title>Memory profiling in Jupyter notebooks</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/memory-profiling-in-jupyter-notebooks.html" rel="alternate"></link><published>2021-03-31T00:00:00+11:00</published><updated>2021-03-31T00:00:00+11:00</updated><author><name>Marius Mather</name></author><id>tag:pages.github.sydney.edu.au,2021-03-31:/informatics/tidbits/memory-profiling-in-jupyter-notebooks.html</id><summary type="html">&lt;p&gt;Issues with memory use can be hard to pin down,
+as your program may only show issues after
+carrying out multiple memory intensive steps.
+Using the &lt;code&gt;memory_profiler&lt;/code&gt; package in Jupyter …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Issues with memory use can be hard to pin down,
+as your program may only show issues after
+carrying out multiple memory intensive steps.
+Using the &lt;code&gt;memory_profiler&lt;/code&gt; package in Jupyter
+notebooks allows you to generate a quick
+summary of which steps consume the most memory.&lt;/p&gt;
+&lt;p&gt;First, you need to install the package through pip (or conda):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;memory_profiler
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, in your Jupyter notebook, load it as an extension:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;%load_ext&lt;span class="w"&gt; &lt;/span&gt;memory_profiler
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;In order to profile functions, they have to be imported
+from a module outside the notebook. Here, I profiled
+a text classification model that involved loading a
+fairly large text vectorization model, using it to
+convert around 100 messages to vectors, and
+then running a classification model on them:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;classify_messages&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;messages&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Sequence&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;bert_vectorizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;BertVectorizer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;distilbert&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;classifier&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;load_trained_classifier&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="n"&gt;message_vectors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bert_vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;make_bert_hidden_states&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;messages&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="c1"&gt;# Classifier needs a dummy value for group in the input&lt;/span&gt;
+    &lt;span class="n"&gt;message_vectors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;message_vectors&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assign&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;group&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;predicted&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;classifier&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;predict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message_vectors&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;predicted&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;To profile this function, you need to call it using
+&lt;code&gt;%mprun&lt;/code&gt;, specifying each individual function that
+you want to profile with a &lt;code&gt;-f&lt;/code&gt; argument:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;mprun&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;classify_messages&lt;/span&gt; &lt;span class="n"&gt;classify_messages&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;messages&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gh"&gt;Line #    Mem usage    Increment  Occurences   Line Contents&lt;/span&gt;
+&lt;span class="gh"&gt;============================================================&lt;/span&gt;
+    68    154.7 MiB    154.7 MiB           1   def classify_messages(messages: Sequence[str]) -&amp;gt; np.array:
+    69    680.1 MiB    525.4 MiB           1       bert_vectorizer = BertVectorizer(model=&amp;#39;distilbert&amp;#39;)
+    70    727.0 MiB     46.9 MiB           1       classifier = load_trained_classifier()
+    71                                         
+    72   2087.8 MiB   1360.8 MiB           1       message_vectors = bert_vectorizer.make_bert_hidden_states(messages)
+    73                                             # Classifier needs a dummy value for group in the input
+    74   2088.1 MiB      0.3 MiB           1       message_vectors = message_vectors.assign(group=0)
+    75                                         
+    76   2089.6 MiB      1.4 MiB           1       predicted = classifier.predict(message_vectors)
+    77   2089.6 MiB      0.0 MiB           1       return predicted
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Creating the vectors turned out to be particularly memory intensive,
+so I was able to reduce memory use by processing the messages
+in chunks:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;classify_messages_chunked&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;messages&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Sequence&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;chunk_size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;bert_vectorizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;BertVectorizer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;distilbert&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;classifier&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;load_trained_classifier&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="n"&gt;all_preds&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;chunk&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;split_into_chunks&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;messages&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;chunk_size&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;current_vectors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bert_vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;make_bert_hidden_states&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;chunk&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;current_vectors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;current_vectors&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assign&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;group&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;predicted&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;classifier&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;predict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;current_vectors&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;all_preds&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;predicted&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;concatenate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;all_preds&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;mprun&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;classify_messages_chunked&lt;/span&gt; &lt;span class="n"&gt;classify_messages_chunked&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;messages&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;chunk_size&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gh"&gt;Line #    Mem usage    Increment  Occurences   Line Contents&lt;/span&gt;
+&lt;span class="gh"&gt;============================================================&lt;/span&gt;
+    80    153.8 MiB    153.8 MiB           1   def classify_messages_chunked(messages: Sequence[str], chunk_size: int = 10) -&amp;gt; np.array:
+    88    687.5 MiB    533.7 MiB           1       bert_vectorizer = BertVectorizer(model=&amp;#39;distilbert&amp;#39;)
+    89    762.8 MiB     75.3 MiB           1       classifier = load_trained_classifier()
+    90                                         
+    91    762.8 MiB      0.0 MiB           1       all_preds = []
+    92    976.8 MiB      0.0 MiB           6       for chunk in split_into_chunks(messages, chunk_size):
+    93    976.8 MiB    213.5 MiB           5           current_vectors = bert_vectorizer.make_bert_hidden_states(chunk)
+    95                                                 # Classifier needs a dummy value for group in the input
+    96    976.8 MiB      0.1 MiB           5           current_vectors = current_vectors.assign(group=0)
+    98    976.8 MiB      0.5 MiB           5           predicted = classifier.predict(current_vectors)
+    99    976.8 MiB      0.0 MiB           5           all_preds.append(predicted)
+   100    976.8 MiB      0.0 MiB           1       result = np.concatenate(all_preds)
+   101    976.8 MiB      0.0 MiB           1       return result
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Python"></category><category term="python"></category><category term="jupyter"></category><category term="profiling"></category></entry><entry><title>Better autocompletion in Jupyter Lab</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/better-autocompletion-in-jupyter-lab.html" rel="alternate"></link><published>2021-02-12T00:00:00+11:00</published><updated>2021-02-12T00:00:00+11:00</updated><author><name>Marius Mather</name></author><id>tag:pages.github.sydney.edu.au,2021-02-12:/informatics/tidbits/better-autocompletion-in-jupyter-lab.html</id><summary type="html">&lt;p&gt;Autocompletion of variable names in Jupyter Lab (or Notebook)
+can be frustratingly inconsistent. For a smoother development
+experience, the &lt;a href="https://github.com/krassowski/jupyterlab-lsp"&gt;&lt;code&gt;jupyterlab-lsp&lt;/code&gt;&lt;/a&gt;
+extension provides better completions using the same
+language servers as …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Autocompletion of variable names in Jupyter Lab (or Notebook)
+can be frustratingly inconsistent. For a smoother development
+experience, the &lt;a href="https://github.com/krassowski/jupyterlab-lsp"&gt;&lt;code&gt;jupyterlab-lsp&lt;/code&gt;&lt;/a&gt;
+extension provides better completions using the same
+language servers as Visual Studio Code.&lt;/p&gt;
+&lt;p&gt;Note that this is only available in Jupyter Lab 3+, not Jupyter Notebook.&lt;/p&gt;
+&lt;p&gt;To install it in your conda environement, run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;conda&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;conda-forge&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;jupyterlab&amp;gt;=3.0.0,&amp;lt;4.0.0a0&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;jupyterlab-lsp&lt;span class="w"&gt; &lt;/span&gt;python-language-server
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;(or add the packages to your &lt;code&gt;environment.yml&lt;/code&gt; file).&lt;/p&gt;
+&lt;h2&gt;Autocompletion&lt;/h2&gt;
+&lt;p&gt;To use regular Tab-completion, start typing in a code cell, hit &lt;code&gt;Tab&lt;/code&gt;, and
+you should get a list of possible completions, including type
+information and documentation:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Autocompletion" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/better_jupyter_autocompletion/tab_completion.png"&gt;&lt;/p&gt;
+&lt;p&gt;To access documentation once the code's been written, you can hover
+your mouse over a function/class call and hit &lt;code&gt;Ctrl&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Documentation" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/better_jupyter_autocompletion/quick_docs.png"&gt;&lt;/p&gt;
+&lt;h2&gt;Style tips&lt;/h2&gt;
+&lt;p&gt;The extension also offers some features similar to Visual Studio Code
+or Python IDEs, like highlighting poor style or possible errors
+in your code (these can be disabled):&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Error highlighting" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/better_jupyter_autocompletion/errors.png"&gt;&lt;/p&gt;
+&lt;p&gt;(code examples from &lt;a href="https://nbviewer.jupyter.org/url/norvig.com/ipython/Probability.ipynb"&gt;https://nbviewer.jupyter.org/url/norvig.com/ipython/Probability.ipynb&lt;/a&gt;)&lt;/p&gt;</content><category term="Python"></category><category term="python"></category><category term="jupyter"></category><category term="tools"></category></entry><entry><title>How to turn MS Word DOCX into JSON</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/how-to-turn-ms-word-docx-into-json.html" rel="alternate"></link><published>2020-07-14T00:00:00+10:00</published><updated>2020-07-14T00:00:00+10:00</updated><author><name>Henry Lydecker</name></author><id>tag:pages.github.sydney.edu.au,2020-07-14:/informatics/tidbits/how-to-turn-ms-word-docx-into-json.html</id><summary type="html">&lt;h1&gt;Turn DOCX files into JSON&lt;/h1&gt;
+&lt;p&gt;Do you have some Microsoft Word documents in DOCX format, but for some reason you'd like to work with JSON files? Well you are in …&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Turn DOCX files into JSON&lt;/h1&gt;
+&lt;p&gt;Do you have some Microsoft Word documents in DOCX format, but for some reason you'd like to work with JSON files? Well you are in luck! You can fairly easily convert a DOCX file into JSON.&lt;/p&gt;
+&lt;h2&gt;DOCX, aka Office Open XML&lt;/h2&gt;
+&lt;p&gt;When people think of DOCX files, they usually just imagine files that look like formatted text files. However, this processed and formatted text document is actually the result of a recipe for constructing and formatting the document that is stored within DOCX. A DOCX is actually a zipped XML file: the XML file contains all of the actual text content as well as all the information needed for formatting and structuring the documents that we look at in Microsoft Word.&lt;/p&gt;
+&lt;p&gt;If you are familiar with XML and/or JSON, it should then come as no surprise that there are numerous options for converting back and forth between these two formats.&lt;/p&gt;
+&lt;h2&gt;Conversion workflow&lt;/h2&gt;
+&lt;p&gt;Converting from DOCX to JSON is simple. The Python utility simplify-docx provides this functionality through the simplify function.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Setup&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;docx&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;simplify_docx&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;simplify&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt;  &lt;span class="nn"&gt;collections&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;OrderedDict&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Load source DOCX file&lt;/span&gt;
+&lt;span class="n"&gt;doc_test&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;docx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Document&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;insert_docx_file_here&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;doc_test_json&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;simplify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;doc_test&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;doc_test_json.json&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;encoding&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;utf-8&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;doc_test_json&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ensure_ascii&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;indent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And that's it! Easy right?&lt;/p&gt;
+&lt;p&gt;What does this export look like? We can loop through the objects and print it out to have a look.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;for key, value in doc_test_clean.items():
+    print(key, value)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;TYPE document
+VALUE [{&amp;#39;TYPE&amp;#39;: &amp;#39;body&amp;#39;, &amp;#39;VALUE&amp;#39;: [{&amp;#39;TYPE&amp;#39;: &amp;#39;paragraph&amp;#39;, &amp;#39;VALUE&amp;#39;: [{&amp;#39;TYPE&amp;#39;: &amp;#39;text&amp;#39;, &amp;#39;VALUE&amp;#39;: &amp;#39;JBRA Assisted Reproduction 2016;20(1):08-12 doi: 10.5935/1518-0557.20160003&amp;#39;}], &amp;#39;style&amp;#39;: {&amp;#39;indent&amp;#39;: {&amp;#39;TYPE&amp;#39;: &amp;#39;CT_Ind&amp;#39;, &amp;#39;left&amp;#39;: 127, &amp;#39;right&amp;#39;: 17, &amp;#39;firstLine&amp;#39;: 0}}}, {&amp;#39;TYPE&amp;#39;: &amp;#39;paragraph&amp;#39;, &amp;#39;VALUE&amp;#39;: [{&amp;#39;TYPE&amp;#39;: &amp;#39;text&amp;#39;, &amp;#39;VALUE&amp;#39;: &amp;#39;Original Article&amp;#39;}], &amp;#39;style&amp;#39;: {&amp;#39;indent&amp;#39;: {&amp;#39;TYPE&amp;#39;: &amp;#39;CT_Ind&amp;#39;, &amp;#39;left&amp;#39;: 127, &amp;#39;right&amp;#39;: 0, &amp;#39;firstLine&amp;#39;: 0}}}, {&amp;#39;TYPE&amp;#39;: &amp;#39;paragraph&amp;#39;, &amp;#39;VALUE&amp;#39;: [{&amp;#39;TYPE&amp;#39;: &amp;#39;text&amp;#39;, &amp;#39;VALUE&amp;#39;: &amp;#39;Strategies for the management of OHSS: Results from freezing-all cycles&amp;#39;}],
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;That doesn't look particularly easy to read. But we can see here that we have a JSON with numerous objects that contain text information and style information.&lt;/p&gt;
+&lt;h2&gt;Manipulating your DOCX JSON&lt;/h2&gt;
+&lt;p&gt;Ok so you have a JSON now, but what if you want to remove certain parts of it? For example, what if you want to remove all tables from your document? You can loop through the objects in your JSON and make changes based on the identity of the objects.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;Open&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;JSON&lt;/span&gt;
+&lt;span class="n"&gt;doc_test_clean&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;load&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;doc_test_json.json&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;object_pairs_hook&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;OrderedDict&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Prune&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;those&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tables&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;doc_test_clean&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;doc_test_clean&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;][&lt;/span&gt;&lt;span class="n"&gt;&amp;quot;TYPE&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;table&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;doc_test_clean&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;Save&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;output&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;JSON&lt;/span&gt;
+&lt;span class="k"&gt;with&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;doc_test_clean.json&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;encoding&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;utf-8&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;f&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;doc_test_clean&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ensure_ascii&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;indent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Results&lt;/h2&gt;
+&lt;p&gt;Here is what you get once you've converted your DOCX into a JSON. We can see that our DOCX-JSON is a "document" built from multiple different sections (e.g. "body"), that are composed of numerous paragraph/style pairs. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;{
+    &amp;quot;TYPE&amp;quot;: &amp;quot;document&amp;quot;,
+    &amp;quot;VALUE&amp;quot;: [
+        {
+            &amp;quot;TYPE&amp;quot;: &amp;quot;body&amp;quot;,
+            &amp;quot;VALUE&amp;quot;: [
+                {
+                    &amp;quot;TYPE&amp;quot;: &amp;quot;paragraph&amp;quot;,
+                    &amp;quot;VALUE&amp;quot;: [
+                        {
+                            &amp;quot;TYPE&amp;quot;: &amp;quot;text&amp;quot;,
+                            &amp;quot;VALUE&amp;quot;: &amp;quot;JBRA Assisted Reproduction 2016;20(1):08-12 doi: 10.5935/1518-0557.20160003&amp;quot;
+                        }
+                    ],
+                    &amp;quot;style&amp;quot;: {
+                        &amp;quot;indent&amp;quot;: {
+                            &amp;quot;TYPE&amp;quot;: &amp;quot;CT_Ind&amp;quot;,
+                            &amp;quot;left&amp;quot;: 127,
+                            &amp;quot;right&amp;quot;: 17,
+                            &amp;quot;firstLine&amp;quot;: 0
+                        }
+                    }
+                },
+                {
+                    &amp;quot;TYPE&amp;quot;: &amp;quot;paragraph&amp;quot;,
+                    &amp;quot;VALUE&amp;quot;: [
+                        {
+                            &amp;quot;TYPE&amp;quot;: &amp;quot;text&amp;quot;,
+                            &amp;quot;VALUE&amp;quot;: &amp;quot;Original Article&amp;quot;
+                        }
+                    ],
+                    &amp;quot;style&amp;quot;: {
+                        &amp;quot;indent&amp;quot;: {
+                            &amp;quot;TYPE&amp;quot;: &amp;quot;CT_Ind&amp;quot;,
+                            &amp;quot;left&amp;quot;: 127,
+                            &amp;quot;right&amp;quot;: 0,
+                            &amp;quot;firstLine&amp;quot;: 0
+                        }
+                    }
+                },
+                {
+                    &amp;quot;TYPE&amp;quot;: &amp;quot;paragraph&amp;quot;,
+                    &amp;quot;VALUE&amp;quot;: [
+                        {
+                            &amp;quot;TYPE&amp;quot;: &amp;quot;text&amp;quot;,
+                            &amp;quot;VALUE&amp;quot;: &amp;quot;Strategies for the management of OHSS: Results from freezing-all cycles&amp;quot;
+                        }
+                    ],
+                    &amp;quot;style&amp;quot;: {
+                        &amp;quot;indent&amp;quot;: {
+                            &amp;quot;TYPE&amp;quot;: &amp;quot;CT_Ind&amp;quot;,
+                            &amp;quot;left&amp;quot;: 123,
+                            &amp;quot;right&amp;quot;: 30,
+                            &amp;quot;firstLine&amp;quot;: 0
+                        }
+                    }
+                }
+                ]}]}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h1&gt;"Uh, why would I want to do this?"&lt;/h1&gt;
+&lt;p&gt;That is a good question that I don't have a good answer for. I originally found this method when I was trying to do some cleaning of DOCX XML files. It is pretty easy to work with the XML files inside of DOCX files, but I guess there are cases where you might prefer to work with JSON files. In that case, you now know how to turn your DOCX into JSON!&lt;/p&gt;</content><category term="Python"></category><category term="Python"></category><category term="Word"></category><category term="JSON"></category></entry><entry><title>Generating an automatic index for Github Pages</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/generating-an-automatic-index-for-github-pages.html" rel="alternate"></link><published>2020-05-14T00:00:00+10:00</published><updated>2020-05-14T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:pages.github.sydney.edu.au,2020-05-14:/informatics/tidbits/generating-an-automatic-index-for-github-pages.html</id><summary type="html">&lt;p&gt;The output you deliver to clients might include
+multiple reports, e.g. HTML files generated from
+RMarkdown. In order to display these using Github
+Pages, it's useful to create an …&lt;/p&gt;</summary><content type="html">&lt;p&gt;The output you deliver to clients might include
+multiple reports, e.g. HTML files generated from
+RMarkdown. In order to display these using Github
+Pages, it's useful to create an index that links
+to them, so clients can easily access all reports
+via a landing page.&lt;/p&gt;
+&lt;p&gt;I found this Python script &lt;a href="https://stackoverflow.com/a/39402604/1222578"&gt;on Stack Overflow&lt;/a&gt;
+(written by user Matthew Brett)
+which scans a directory (e.g. the &lt;code&gt;docs/&lt;/code&gt; directory that Github Pages
+uses), and generates the index:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; Build index from directory listing&lt;/span&gt;
+
+&lt;span class="sd"&gt;make_index.py &amp;lt;/path/to/directory&amp;gt; [--header &amp;lt;header text&amp;gt;]&lt;/span&gt;
+&lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;INDEX_TEMPLATE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sa"&gt;r&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;lt;h2&amp;gt;$&lt;/span&gt;&lt;span class="si"&gt;{header}&lt;/span&gt;&lt;span class="s2"&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
+&lt;span class="si"&gt;% f&lt;/span&gt;&lt;span class="s2"&gt;or name in names:&lt;/span&gt;
+&lt;span class="s2"&gt;    &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;$&lt;/span&gt;&lt;span class="si"&gt;{name}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;gt;$&lt;/span&gt;&lt;span class="si"&gt;{name}&lt;/span&gt;&lt;span class="s2"&gt;&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class="si"&gt;% e&lt;/span&gt;&lt;span class="s2"&gt;ndfor&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;EXCLUDED&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;index.html&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;argparse&lt;/span&gt;
+
+&lt;span class="c1"&gt;# May need to do &amp;quot;pip install mako&amp;quot;&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;mako.template&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Template&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;parser&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;argparse&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ArgumentParser&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;parser&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_argument&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;directory&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;parser&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_argument&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;--header&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;args&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;parser&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;parse_args&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;fnames&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;fname&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;fname&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;sorted&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;listdir&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;directory&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+              &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;fname&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;EXCLUDED&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;header&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;header&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;header&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;basename&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;directory&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Template&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;INDEX_TEMPLATE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;names&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;fnames&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;header&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;header&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If you have Github Pages set up to use the &lt;code&gt;docs/&lt;/code&gt; directory,
+then you should be able to generate an index for your project
+with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;make_index.py&lt;span class="w"&gt; &lt;/span&gt;docs/&lt;span class="w"&gt; &lt;/span&gt;--header&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;My Project Name&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;docs/index.html
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Python"></category><category term="python"></category><category term="github"></category><category term="github-pages"></category></entry><entry><title>Pandas dataframe to Markdown</title><link href="https://pages.github.sydney.edu.au/informatics/tidbits/pandas-dataframe-to-markdown.html" rel="alternate"></link><published>2020-04-17T00:00:00+10:00</published><updated>2020-04-17T00:00:00+10:00</updated><author><name>Sergio Pintaldi</name></author><id>tag:pages.github.sydney.edu.au,2020-04-17:/informatics/tidbits/pandas-dataframe-to-markdown.html</id><summary type="html">&lt;h1&gt;The Problem&lt;/h1&gt;
+&lt;p&gt;In building up code and tracking the bugs, it is extremely useful posting the &lt;code&gt;traceback&lt;/code&gt; in a GitHub issue. The problem is that when we are dealing with …&lt;/p&gt;</summary><content type="html">&lt;h1&gt;The Problem&lt;/h1&gt;
+&lt;p&gt;In building up code and tracking the bugs, it is extremely useful posting the &lt;code&gt;traceback&lt;/code&gt; in a GitHub issue. The problem is that when we are dealing with pandas dataframes, it is not easy to convert the df into a markdown. Given the following df:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
+
+&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DataFrame&lt;/span&gt;&lt;span class="p"&gt;([[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;b&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;],[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]],&lt;/span&gt; &lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;letters&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;numbers&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You need to incorporate it into something like this:&lt;/p&gt;
+&lt;!-- language: lang-none --&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;```python
+  letters  numbers
+0       a        1
+1       b        2
+2       c        3
+```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;to have the following output:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;  &lt;span class="n"&gt;letters&lt;/span&gt;  &lt;span class="n"&gt;numbers&lt;/span&gt;
+&lt;span class="mi"&gt;0&lt;/span&gt;       &lt;span class="n"&gt;a&lt;/span&gt;        &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="mi"&gt;1&lt;/span&gt;       &lt;span class="n"&gt;b&lt;/span&gt;        &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="mi"&gt;2&lt;/span&gt;       &lt;span class="n"&gt;c&lt;/span&gt;        &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h1&gt;The solution&lt;/h1&gt;
+&lt;p&gt;Starting from version &lt;code&gt;1.0&lt;/code&gt; Pandas now inlude a &lt;code&gt;to_markdown()&lt;/code&gt; method that would make the things easier for us. See below:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_markdown&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt;    &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;letters&lt;/span&gt;   &lt;span class="o"&gt;|&lt;/span&gt;   &lt;span class="n"&gt;numbers&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|---&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;----------|----------&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt;  &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;         &lt;span class="o"&gt;|&lt;/span&gt;         &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt;  &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;         &lt;span class="o"&gt;|&lt;/span&gt;         &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;         &lt;span class="o"&gt;|&lt;/span&gt;         &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then copy and paste it in a GitHub Issue:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://pages.github.sydney.edu.au/informatics/tidbits/images/pandas-to-markdown/pandas-df-to-markdown.png"&gt;&lt;/p&gt;</content><category term="Python"></category><category term="Python"></category><category term="Pandas"></category><category term="GitHub"></category><category term="Markdown"></category></entry></feed>

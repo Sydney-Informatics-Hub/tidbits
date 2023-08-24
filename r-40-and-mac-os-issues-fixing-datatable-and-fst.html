@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  R 4.0 and Mac OS Issues - fixing data.table and fst | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/r-40-and-mac-os-issues-fixing-datatable-and-fst.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/r.atom.xml">  
+  <meta name="description" content="The R maintainers have made some changes to how R is built on Mac OS for R 4.0+: this should make some packages like Stan easier to use, however …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  R 4.0 and Mac OS Issues - fixing data.table and fst
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2020-05-25T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Mon 25 May 2020
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/r.html">R</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/marius-mather.html">Marius Mather</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/r.html">#r</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/macos.html">#macos</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>The R maintainers have made some changes to how R is built
+on Mac OS for R 4.0+: this should make some packages
+like Stan easier to use, however it also seems to cause
+issues with packages like <code>data.table</code> and <code>fst</code> that
+use multi-threading. When loading these packages you may
+see a warning about how they're only using single threads.</p>
+<p>After checking multiple setup guides (e.g. 
+<a href="https://ryanhomer.github.io/posts/build-openmp-macos-catalina-complete">here</a>
+and <a href="https://github.com/Rdatatable/data.table/wiki/Installation">here</a>),
+I was able to fix these issues using the following steps:</p>
+<ul>
+<li>Install the XCode command line tools:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>xcode-select<span class="w"> </span>--install
+</code></pre></div>
+
+<ul>
+<li>Install <code>llvm</code>, <code>gcc</code> and <code>libomp</code> through Homebrew:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>llvm<span class="w"> </span>gcc<span class="w"> </span>libomp
+</code></pre></div>
+
+<ul>
+<li>Add the following to <code>~/.R/Makevars</code>:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nv">XCBASE</span><span class="o">:=</span><span class="k">$(</span>shell<span class="w"> </span>xcrun<span class="w"> </span>--show-sdk-path<span class="k">)</span>
+<span class="nv">LLVMBASE</span><span class="o">:=</span><span class="k">$(</span>shell<span class="w"> </span>brew<span class="w"> </span>--prefix<span class="w"> </span>llvm<span class="k">)</span>
+<span class="nv">GCCBASE</span><span class="o">:=</span><span class="k">$(</span>shell<span class="w"> </span>brew<span class="w"> </span>--prefix<span class="w"> </span>gcc<span class="k">)</span>
+<span class="nv">GETTEXT</span><span class="o">:=</span><span class="k">$(</span>shell<span class="w"> </span>brew<span class="w"> </span>--prefix<span class="w"> </span>gettext<span class="k">)</span>
+
+<span class="nv">CC</span><span class="o">=</span><span class="k">$(</span>LLVMBASE<span class="k">)</span>/bin/clang<span class="w"> </span>-fopenmp
+<span class="nv">CXX</span><span class="o">=</span><span class="k">$(</span>LLVMBASE<span class="k">)</span>/bin/clang++<span class="w"> </span>-fopenmp
+<span class="nv">CXX11</span><span class="o">=</span><span class="k">$(</span>LLVMBASE<span class="k">)</span>/bin/clang++
+<span class="nv">CXX14</span><span class="o">=</span><span class="k">$(</span>LLVMBASE<span class="k">)</span>/bin/clang++
+<span class="nv">CXX17</span><span class="o">=</span><span class="k">$(</span>LLVMBASE<span class="k">)</span>/bin/clang++
+<span class="nv">CXX1X</span><span class="o">=</span><span class="k">$(</span>LLVMBASE<span class="k">)</span>/bin/clang++
+
+<span class="nv">CFLAGS</span><span class="o">=</span>-g<span class="w"> </span>-O3<span class="w"> </span>-Wall<span class="w"> </span>-pedantic<span class="w"> </span>-std<span class="o">=</span>gnu99<span class="w"> </span>-mtune<span class="o">=</span>native<span class="w"> </span>-pipe
+<span class="nv">CXXFLAGS</span><span class="o">=</span>-g<span class="w"> </span>-O3<span class="w"> </span>-Wall<span class="w"> </span>-pedantic<span class="w"> </span>-std<span class="o">=</span>c++11<span class="w"> </span>-mtune<span class="o">=</span>native<span class="w"> </span>-pipe
+<span class="nv">CPPFLAGS</span><span class="o">=</span>-isystem<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>LLVMBASE<span class="k">)</span><span class="s2">/include&quot;</span><span class="w"> </span>-isysroot<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>XCBASE<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>
+<span class="nv">LDFLAGS</span><span class="o">=</span>-L<span class="s2">&quot;</span><span class="k">$(</span>LLVMBASE<span class="k">)</span><span class="s2">/lib&quot;</span><span class="w"> </span>-L<span class="s2">&quot;</span><span class="k">$(</span>GETTEXT<span class="k">)</span><span class="s2">/lib&quot;</span><span class="w"> </span>--sysroot<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>XCBASE<span class="k">)</span><span class="s2">&quot;</span>
+
+<span class="nv">SHLIB_OPENMP_CFLAGS</span><span class="o">=</span><span class="w"> </span>-fopenmp
+<span class="nv">SHLIB_OPENMP_CXXFLAGS</span><span class="o">=</span><span class="w"> </span>-fopenmp
+<span class="nv">SHLIB_OPENMP_FCFLAGS</span><span class="o">=</span><span class="w"> </span>-fopenmp
+<span class="nv">SHLIB_OPENMP_FFLAGS</span><span class="o">=</span><span class="w"> </span>-fopenmp
+
+<span class="nv">FC</span><span class="o">=</span><span class="k">$(</span>GCCBASE<span class="k">)</span>/bin/gfortran
+<span class="nv">F77</span><span class="o">=</span><span class="k">$(</span>GCCBASE<span class="k">)</span>/bin/gfortran
+<span class="nv">FLIBS</span><span class="o">=</span>-L<span class="k">$(</span>GCCBASE<span class="k">)</span>/lib/gcc/9/<span class="w"> </span>-lm
+</code></pre></div>
+
+<p>After this, you should be able to successfully compile packages like
+<code>data.table</code> with multi-threading support:</p>
+<div class="highlight"><pre><span></span><code><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;data.table&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;source&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>If your setup is working, loading <code>data.table</code> (or <code>fst</code>) should print
+a message about how multiple threads are being used:</p>
+<div class="highlight"><pre><span></span><code>data.table 1.12.8 using 8 threads (see ?getDTthreads).
+</code></pre></div>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Cleaning a git diff | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://pages.github.sydney.edu.au/informatics/tidbits/cleaning-a-git-diff.html">
+
+
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tag_cloud.css">
+  <link rel="stylesheet" href="https://pages.github.sydney.edu.au/informatics/tidbits/static/css/tipuesearch.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://pages.github.sydney.edu.au/informatics/tidbits/feeds/git.atom.xml">  
+  <meta name="description" content="Code review is easiest when the changes offered by a head branch onto a base branch are focussed on a single purpose of change. When they are not, the diff …">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Cleaning a git diff
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2020-07-02T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Thu 02 July 2020
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://pages.github.sydney.edu.au/informatics/tidbits/category/git.html">git</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/author/sydney-informatics-hub.html">Sydney Informatics Hub</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/git.html">#git</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/shell.html">#shell</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/github.html">#github</a>,               <a href="https://pages.github.sydney.edu.au/informatics/tidbits/tag/code-review.html">#code review</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>Code review is easiest when the changes offered by a <em>head branch</em> onto a <em>base
+branch</em> are focussed on a single purpose of change.  When they are not, the
+diff shown in GitHub can be long and hard to read, and the pull request is more
+susceptible to merge conflicts.</p>
+<p>Here we use "diff" (elsewhere "patch") to refer to what's seen on the Files
+Changed tab in GitHub.</p>
+<p>This tidbit proposes to give some hints about how you can use git to isolate
+the changes relevant to a specific pull request, i.e. to "clean the diff",
+using git shell commands.</p>
+<h2>Case study</h2>
+<p>We have been supporting the maintainers of the Hydromad R package to adopt
+contemporary best practices around open-source software maintenance.</p>
+<p>Pull Request <a href="https://github.com/josephguillaume/hydromad/pull/112">#112</a>
+proposed to resolve
+<a href="https://github.com/josephguillaume/hydromad/issues/61$">#61</a>: making the
+pacakge conform with the CRAN requirement that package code does not use
+<code>library</code> or <code>require</code>.</p>
+<p>Two things made this contribution difficult to process:</p>
+<ol>
+<li>The contributor made changes beyond the scope of the PR, additionally
+   resolving linter complaints of long lines, etc, by reformatting those lines.</li>
+<li>A new commit had been added to master in the meantime, performing wholesale
+   stylistic changes across the codebase, but not identical to the changes made
+   by the contributor.</li>
+</ol>
+<p>This post covers some of the questions and ideas raised there.
+"Splitting one branch into multiple patches" below is the main solution.</p>
+<h2>Preface: What does the diff in GitHub show?</h2>
+<p>The diff in GitHub compares each file in the HEAD commit of the head branch to
+each file in the base branch... But not always the latest ("HEAD") commit of
+the base branch.</p>
+<p>GitHub will firstly try to merge the latest base branch into the head branch.
+This will be successful if one of the following conditions can be met:
+* There are no new commits on the base branch (i.e. the head is built by
+  appending commits to the latest base commit). This is called a "fast forward
+  merge".
+* Any new commits on the base branch modify only different files, or different
+  parts of the same file, such that Git can perform an "automatic merge". Note
+  that an automatic merge <em>can</em> be incorrect, which is one reason that
+  automated testing (e.g. with GitHub workflows) is invaluable.</p>
+<p>If successful, GitHub's diff <strong>will compare the head branch to the base
+branch</strong> through the merge commit, thus showing only those changes introduced
+in the head branch.</p>
+<p>If unsuccessful, GitHub's diff <strong>will compare the head branch to the </strong>nearest
+common ancestor commit** shared by the head branch and the base branch.  This
+might be the point in the base branch that the contributor started building on,
+or it might be the latest time the contributor merged in commits from the base
+branch.</p>
+<h2>Preface: Starting from the right point</h2>
+<p>Prevention first! <em>Before you make any changes</em>, you can reduce the chance of
+merge conflicts by making sure you're building on the latest version of the
+base branch. Assuming the base branch is on the remote called <code>origin</code> in the
+branch called <code>master</code>, the following will create a new branch in your working
+copy based on the latest master, and check it out (i.e. get in to the branch to
+work on it):</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>fetch<span class="w"> </span>origin
+git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>my-new-branch<span class="w"> </span>origin/master
+</code></pre></div>
+
+<h3>Aside: working with a fork</h3>
+<p>If you're developing a pull request from a fork of some central repo, you might
+want to branch from that "upstream" master instead. Do so by adding the
+upstream as a remote:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>origin<span class="w"> </span>https://github.com/my-username/some-repo
+git<span class="w"> </span>add<span class="w"> </span>upstream<span class="w"> </span>https://github.com/central-username/some-repo
+git<span class="w"> </span>fetch<span class="w"> </span>upstream
+git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>my-new-branch<span class="w"> </span>upstream/master<span class="w">  </span><span class="c1"># like above</span>
+git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>my-new-branch
+</code></pre></div>
+
+<p>This branches from <code>upstream</code>, but pushes to <code>origin</code>.</p>
+<h2>Preface: Making a backup of your work</h2>
+<p>If you've already made changes, you shouldn't have to worry about losing your
+current work before trying risky Git operations. Some people use <code>git stash</code>
+for this, but I recommend just creating a commit.</p>
+<p>Commit all changes (NB: staged and unstaged changes included):</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>status<span class="w">                  </span><span class="c1"># Check for any files you&#39;ve forgotten to add</span>
+git<span class="w"> </span>add<span class="w"> </span>path/to/new/files<span class="w">   </span><span class="c1"># Add any files you&#39;ve forgotten to add</span>
+git<span class="w"> </span>commit<span class="w"> </span>-a<span class="w"> </span>-m<span class="w"> </span>WIP<span class="w">        </span><span class="c1"># Commit all changes, but leave a message for</span>
+<span class="w">                            </span><span class="c1"># myself that this commit is a work-in-progress</span>
+</code></pre></div>
+
+<p>The name (SHA ref) of the new commit should be shown after committing, or you
+can get it from <code>git log</code>. Note it somewhere if you might want to refer to it
+later.
+Or, give a name to your latest commit by copying it into another branch:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>branch<span class="w"> </span>-b<span class="w"> </span>new-backup-branch-name
+</code></pre></div>
+
+<p>Once you've safely made a backup, you can undo your commit and keep working on
+your changes:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>reset<span class="w"> </span>HEAD^<span class="w">             </span><span class="c1"># Undo the commit, but leave the files changed</span>
+</code></pre></div>
+
+<p>Note that this doesn't <em>delete</em> the commit, it just removes it from your
+current branch.  You can still reference the old commit using that SHA ref
+you noted down, or the name of that backup branch.</p>
+<h2>Should I worry about cleaning up the list of commits?</h2>
+<p>Below we talk about cleaning up the diff: the set of changes to files.
+You might also want a neat commit history, but IMO it's not usually worth
+neatening up the commit history shown in a pull request.</p>
+<p>Why? One neat feature of GitHub is the option to "Squash and Merge" a pull
+request onto the base branch when it is merged. This means that all of the mess
+of commits made along the way will be turned into a single commit.</p>
+<p>This means that you can focus on the diff and make as many messy commits as you
+like to get to the right place.</p>
+<h2>Not committing all your changes</h2>
+<p>If you've made changes in your working copy, some of which you want to commit
+because they're related to the pull request you are building, and some of which
+you don't want to commit (because they're only for your local use, or because
+you want to stash them for a different pull request), there are several useful
+tools. Most important, perhaps, is <code>git add --patch</code> (or <code>git add -p</code>).</p>
+<p>First, some tools to check what would be committed if you did <code>git commit</code> at
+any point:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>status<span class="w">         </span><span class="c1"># show an overview of what&#39;s staged to be committed and what&#39;s not</span>
+git<span class="w"> </span>diff<span class="w"> </span>--cached<span class="w">  </span><span class="c1"># show lines you&#39;ve already staged to be committed</span>
+git<span class="w"> </span>diff<span class="w">           </span><span class="c1"># show lines you&#39;ve not already staged to committed</span>
+</code></pre></div>
+
+<p>To add only selected parts of files, use:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>--patch<span class="w">           </span><span class="c1"># select all the lines to add</span>
+git<span class="w"> </span>commit<span class="w">                </span><span class="c1"># when you&#39;re ready...</span>
+</code></pre></div>
+
+<p>This is an interactive process, in which you type <code>y</code> for chunks you want to
+keep, and <code>n</code> for chunks you don't. Try it! Press <code>?</code> for other commands.</p>
+<p>If you have a new file in your repo directory that's not known to git, the
+following tells git about that path (adds it to the index) without staging its
+lines:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>-N<span class="w"> </span>path/to/file<span class="w">   </span><span class="c1"># repeat for each new file</span>
+git<span class="w"> </span>add<span class="w"> </span>--patch<span class="w">           </span><span class="c1"># select which lines to add, from all your uncommited files</span>
+git<span class="w"> </span>commit<span class="w">                </span><span class="c1"># when you&#39;re ready...</span>
+</code></pre></div>
+
+<p>Removing files from the commit: If you've staged something and decide you don't
+want to commit that (whole) file:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>reset<span class="w"> </span>path/to/file
+</code></pre></div>
+
+<h2>Undoing a commit but keeping the changes</h2>
+<p>This will undo the latest commit, but keep the changes to the files in your
+working copy, allowing you to do a patch commit or similar.</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>reset<span class="w"> </span>HEAD^
+</code></pre></div>
+
+<p>Again, you can follow this with <code>git add --patch</code> and <code>git commit</code>.</p>
+<h2>Selecting only some commits</h2>
+<p>Sometimes there are good things localised in past commits... or bad things you
+want to remove from a diff.</p>
+<p>NB: You might want to make a backup of your work first.</p>
+<p>You can show what was in a specific commit with:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>show<span class="w"> </span>some-commit-ref
+</code></pre></div>
+
+<p>If you want to select only some commits, you have a few options:</p>
+<ul>
+<li>interactive rebase: this is really powerful, but may take a bit of practice
+  to get used to. Identify a good commit you've built on, then use <code>git rebase
+  -i that-good-commit-ref</code>, and edit the file shown to pick or skip commits
+  since then that you want. You will need to force-push any changes to GitHub
+  <code>git push -f</code>.</li>
+<li>adopt only selected commits with <code>cherry-pick</code>: Start a clean branch <code>git
+  checkout -b new-branch-name that-good-commit-ref</code> and use <code>git cherry-pick</code>
+  to adopt individual commits from your changes. Make sure to do it in order.</li>
+<li>undo selected commits with <code>git revert</code>.</li>
+</ul>
+<h2>Undoing changes to some files</h2>
+<p>Often you're happy with the diff you've got on some files, but not with others.
+You can use <code>git checkout</code> to adopt the state of a selected file from a
+selected commit/branch.</p>
+<p>NB: You might want to make a backup of your work first.</p>
+<p>Let's say you've changed some file called <code>path/to/file</code> and committed those
+changes, but now want to adopt whatever is in the base branch (because the
+change was irrelevant to the current pull request, or because there were
+conflicting changes in the base which you prefer).
+Let's assume the base branch is called <code>master</code> on a remote called <code>origin</code>.</p>
+<p>Then you can adopt the version from <code>origin/master</code> with:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>fetch<span class="w"> </span>origin<span class="w">      </span><span class="c1"># Make sure we have the latest origin/master branch</span>
+git<span class="w"> </span>checkout<span class="w"> </span>origin/master<span class="w"> </span>path/to/file
+</code></pre></div>
+
+<p>If you want to try before you buy, you can <em>look</em> at the version from
+origin/master with:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>show<span class="w"> </span>origin/master:path/to/file
+</code></pre></div>
+
+<p>or save it to some other path with:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>show<span class="w"> </span>origin/master:path/to/file<span class="w"> </span>&gt;<span class="w"> </span>/tmp/put-it-here-please
+</code></pre></div>
+
+<h2>Splitting one branch into multiple patches</h2>
+<p>Back to the case study: In a complicated situation like this, we may have a
+long history of commits composing the current messy diff.  One approach to
+resolving this is to create several separate branches (and corresponding pull
+requests) with more focussed diffs.</p>
+<ol>
+<li>Create a copy of the current branch where we will commit the first patch
+   <code>git checkout -b patch1</code>.</li>
+<li>Find a common place to start, the nearest common ancestor with origin's
+   master: <code>base=$(git merge-base HEAD origin/master)</code>. Here we are using
+   a bash feature to store the merge base ref in a variable called <code>$base</code>.
+   View it with <code>echo $base</code>.</li>
+<li>Reset <code>patch1</code> back to <code>$base</code>, keeping all changes, but not adding them.
+   <code>git reset $base</code>.</li>
+<li>Add parts of files that you want <code>git add --patch</code>.</li>
+<li>Add any whole files that are missing from the patch with <code>git status</code> then
+   <code>git add path/to/file</code>.</li>
+<li>Commit <code>git commit -m "blah blah blah"</code>, then push this branch if
+   appropriate.</li>
+<li>If you look at <code>git diff</code>, the remainder should be changes you want in
+   another patch commit. Let's open a new branch like <code>patch2</code> at <code>$base</code>
+   keeping those changes in our working copy: <code>git checkout -b patch2 $base</code>.</li>
+<li>Repeat from step 4. until all the changes have been committed (and pushed,
+   and pull requests opened) in a focussed pull request.</li>
+</ol>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://pages.github.sydney.edu.au/informatics/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://pages.github.sydney.edu.au/informatics/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
