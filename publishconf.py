@@ -13,8 +13,7 @@ from pelicanconf import *
 # If your site is available via HTTPS, make sure SITEURL begins with https://
 SITEURL = 'https://pages.github.sydney.edu.au/informatics/tidbits'
 RELATIVE_URLS = False
-# Need the output path to be 'docs' for github pages
-OUTPUT_PATH = 'docs/'
+OUTPUT_PATH = 'build/'
 
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
 CATEGORY_FEED_ATOM = 'feeds/{slug}.atom.xml'
