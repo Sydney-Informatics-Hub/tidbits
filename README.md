@@ -5,7 +5,11 @@ tidbits that we want to share with other SIH team members.
 
 If you want to submit a new tidbit, you can put together
 a Markdown file explaining your tidbit (hopefully with
-some short code examples). These Markdown files go in the
+some short code examples).  The site will be built automatically
+when you commit to `main` (so maybe use a pull request for any draft
+posts).
+
+Markdown files for posts/tidbits go in the
 `content/` directory. It would be great if you could
 also include some metadata at the top of the file, filling
 in the `Title`, `Date`, `Author`, `Category` and `Tags` fields. Posts
@@ -51,6 +55,12 @@ The blog is built with [Pelican](https://blog.getpelican.com/),
 a basic static site generator implemented in Python. We use
 the `tag_cloud` and `tipue_search` plugins to add some basic
 searchability.
+
+We use GitHub Actions to automatically build and deploy the site,
+so you don't need to install Pelican unless you want to preview
+your content locally.
+
+### Installing/testing locally
 
 The dependencies are managed with [Poetry](https://python-poetry.org/).
 Once you've installed Poetry, you should be able to install
