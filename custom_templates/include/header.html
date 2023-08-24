@@ -1,0 +1,93 @@
+{%- macro fa(icon) -%}
+{%- set fa_special_icons = {
+  "feed": "fas fa-rss",
+  "rss": "fas fa-rss",
+} -%}
+{%- if icon in fa_special_icons -%}
+{{ fa_special_icons[icon] }}
+{%- elif icon.split()|select("in", ["fab", "fas", "far", "fal", "fad"])|list -%}
+{{ icon }}
+{%- else -%}
+fab fa-{{icon}}
+{%- endif -%}
+{%- endmacro -%}
+<div class="row">
+  {% if SITEIMAGE %}
+    <div class="col-sm-4">
+      <a href="{{ SITEURL }}/">
+        <img class="img-fluid rounded" src={{ url(SITEIMAGE) }} alt="{{ SITENAME }}">
+      </a>
+    </div>
+  {% endif %}
+  <div class="col-sm-{% if SITEIMAGE %}8{% else %}12{% endif %}">
+    <h1 class="title"><a href="{{ SITEURL }}/">{{ SITENAME }}</a></h1>
+    {% if SITESUBTITLE %}
+      <p class="text-muted">{{ SITESUBTITLE }}</p>
+    {% endif %}
+    {% if LINKS or (DISPLAY_PAGES_ON_MENU and pages) or ICONS %}
+      <ul class="list-inline">
+        {% for title, link in LINKS %}
+          <li class="list-inline-item"><a href="{{ url(link) }}" target="_blank">{{ title }}</a></li>
+        {% endfor %}
+        {% if DISPLAY_PAGES_ON_MENU %}
+          {% for page in pages %}
+            {% if LINKS and loop.first %}
+              <li class="list-inline-item text-muted">|</li>
+            {% endif %}
+            <li class="list-inline-item"><a href="{{ SITEURL }}/{{ page.url }}">{{ page.title }}</a></li>
+          {% endfor %}
+        {% endif %}
+        {% for icon, link in ICONS %}
+          {% if (LINKS or (DISPLAY_PAGES_ON_MENU and pages)) and loop.first %}
+            <li class=" list-inline-item text-muted">|</li>
+          {% endif %}
+          <li class="list-inline-item"><a class="{{ fa(icon) }}" href="{{ url(link) }}" target="_blank"></a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+{% if output_file=="index.html" %}
+
+<div id="tags_container">
+  <h5 class="h5">Tags:</h5>
+
+  <ul class="tagcloud">
+    {% for tag in tag_cloud %}
+    <li class="tag-{{ tag.1 }}">
+      <a href="{{ SITEURL }}/{{ tag.0.url }}"> {{ tag.0 }} </a>
+      {% if TAG_CLOUD_BADGE %}
+      <span class="badge">{{ tag.2 }}</span>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endif %}

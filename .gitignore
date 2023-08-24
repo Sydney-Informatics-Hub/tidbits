@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__/
+# Ignore output from non-publish version of the build
+output/
+
+# Editors
+*.sublime*
