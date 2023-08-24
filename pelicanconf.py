@@ -40,7 +40,7 @@ DIRECT_TEMPLATES = ["index", "tags", "categories", "authors", "archives", "searc
 
 # Tag cloud settings
 TAG_CLOUD_STEPS = 5
-TAG_CLOUD_MAX_ITEMS = 100
+TAG_CLOUD_MAX_ITEMS = 40
 TAG_CLOUD_SORTING = "alphabetically"
 TAG_CLOUD_BADGE = False
 
