@@ -5,8 +5,9 @@ tidbits that we want to share with other SIH team members.
 
 If you want to submit a new tidbit, you can put together
 a Markdown file explaining your tidbit (hopefully with
-some short code examples).  The site will be built automatically
-when you commit to `main` (so maybe use a pull request for any draft
+some short code examples).  The site will be built and deployed automatically
+when you commit to `main`. The build will be checked for any pull requests
+(so maybe use a pull request for any draft
 posts).
 
 Markdown files for posts/tidbits go in the
