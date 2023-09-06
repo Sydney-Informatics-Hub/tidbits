@@ -105,6 +105,10 @@ these complex dependencies. The conda repositories don't just contain
 Python packages: they also include C libraries, compiled binaries, and
 all the other external dependencies that packages like <code>torch</code> depend on.
 <code>conda</code> also tries to handle installing compatible versions for these non-Python dependencies.</p>
+<p>Note that you only get these benefits of <code>conda</code> if you install packages from the
+conda repositories, because conda packages are different to the standard Python packages
+available on <a href="https://pypi.org/">PyPI</a>. If you use <code>conda</code> to create an environment but install
+via <code>pip</code> or a <code>requirements.txt</code>, you don't get <code>conda</code>'s pre-compiled binary packages.</p>
 <p>My personal tips for using <code>conda</code> in complex projects are:</p>
 <ul>
 <li>Use an <code>enviroment.yml</code> file to record your dependencies</li>
