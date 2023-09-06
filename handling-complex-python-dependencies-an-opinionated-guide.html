@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Handling complex Python dependencies: an opinionated guide | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://sydney-informatics-hub.github.io/tidbits/handling-complex-python-dependencies-an-opinionated-guide.html">
+
+
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/static/css/tag_cloud.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/python.atom.xml">  
+  <meta name="description" content="Python dependency management has improved over the years, but you can still run into issues, particularly when using machine learning libraries like Torch or TensorFlow that have compiled or non-Python …">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TNWWV3HK57"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TNWWV3HK57');
+</script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://sydney-informatics-hub.github.io/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Handling complex Python dependencies: an opinionated guide
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2023-09-06T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Wed 06 September 2023
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://sydney-informatics-hub.github.io/tidbits/category/python.html">Python</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/author/marius-mather.html">Marius Mather</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/tag/python.html">#python</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/conda.html">#conda</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>Python dependency management has improved over the years, but you
+can still run into issues, particularly when using machine
+learning libraries like <strong>Torch</strong> or <strong>TensorFlow</strong> that have
+compiled or non-Python dependencies.</p>
+<p>In my opinion, <a href="https://docs.conda.io/en/latest/">conda</a> is very
+good at handling data science/machine learning projects with
+these complex dependencies. The conda repositories don't just contain
+Python packages: they also include C libraries, compiled binaries, and
+all the other external dependencies that packages like <code>torch</code> depend on.
+<code>conda</code> also tries to handle installing compatible versions for these non-Python dependencies.</p>
+<p>My personal tips for using <code>conda</code> in complex projects are:</p>
+<ul>
+<li>Use an <code>enviroment.yml</code> file to record your dependencies</li>
+<li>Use the <code>conda-forge</code> channel - this has a lot more packages
+  than the default conda repository</li>
+<li>Check if the packages you need are available through conda first.
+  If not, you can install them through <code>pip</code> (while still specifying them in <code>environment.yml</code> - see below)</li>
+<li>Don't pin packages to specific versions unless absolutely necessary - this is definitely more in the realm of opinion,
+  but I think very specific version requirements make it harder to update packages in future. I would recommend pinning most
+  packages to the current major version, e.g. <code>dependency&gt;=1.5.0,&lt;2.0</code>, unless you have a specific reason to pin to a minor
+  version.</li>
+</ul>
+<h2>You can still install pip packages! (if they're not in <code>conda-forge</code>)</h2>
+<p>Before installing any packages via <code>pip</code>, you should:</p>
+<ul>
+<li>Search conda (including the <code>conda-forge</code> channel) to see if the package is there:
+  <code>conda search -c conda-forge &lt;package&gt;</code></li>
+<li>See if there's another channel that has the package available - there's a dedicated
+  <code>pytorch</code> channel, and <code>bioconda</code> has a lot of bioinformatics tools.</li>
+</ul>
+<p>To include <code>pip</code> packages in your conda environment, you need two entries for <code>pip</code></p>
+<ul>
+<li>One that just installs the <code>pip</code> package itself</li>
+<li>A nested list that specifies all the packages you want to install</li>
+</ul>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code>dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - ols-py==0.2.5
+</code></pre></div>
+
+<h2>Example yml file for a complex project</h2>
+<p>This is one of my projects that includes multiple complex dependencies, all of which
+I can install using a single conda environment file.</p>
+<ul>
+<li>A number of Python packages, some of which are installable via conda, some not - where possible, I install them from <code>conda</code></li>
+<li>Machine learning libraries like <code>PyTorch</code></li>
+<li>Bioinformatics tools and libraries, which I can install through the <code>bioconda channel</code></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">my_project</span>
+<span class="n">channels</span><span class="o">:</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">defaults</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">bioconda</span>
+<span class="n">dependencies</span><span class="o">:</span>
+<span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Python</span><span class="w"> </span><span class="n">libraries</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">python</span><span class="o">=</span><span class="mf">3.10</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">django</span><span class="o">=</span><span class="mf">3.2</span><span class="o">.</span><span class="mi">16</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">django</span><span class="o">-</span><span class="n">ninja</span><span class="o">&gt;=</span><span class="mf">0.20</span><span class="o">.</span><span class="mi">0</span><span class="o">,&lt;</span><span class="mf">1.0</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">numpy</span>
+<span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Bioinformatics</span><span class="w"> </span><span class="n">libraries</span><span class="o">/</span><span class="n">tools</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">bioconda</span><span class="o">::</span><span class="n">htslib</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">bioconda</span><span class="o">::</span><span class="n">pysam</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">bioconda</span><span class="o">::</span><span class="n">hgvs</span>
+<span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">cython</span><span class="w"> </span><span class="n">makes</span><span class="w"> </span><span class="n">installing</span><span class="w"> </span><span class="n">htslib</span><span class="w"> </span><span class="n">easier</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">cython</span>
+<span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Machine</span><span class="w"> </span><span class="n">learning</span><span class="w"> </span><span class="n">libraries</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">pytorch</span><span class="o">&gt;=</span><span class="mf">1.13</span><span class="o">.</span><span class="mi">1</span><span class="o">,&lt;</span><span class="mf">1.14</span><span class="o">.</span><span class="mi">0</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">transformers</span><span class="o">==</span><span class="mf">4.24</span><span class="o">.</span><span class="mi">0</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">accelerate</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">pip</span>
+<span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Libraries</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">available</span><span class="w"> </span><span class="n">through</span><span class="w"> </span><span class="n">conda</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">pip</span><span class="o">:</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">ols</span><span class="o">-</span><span class="n">py</span><span class="o">==</span><span class="mf">0.2</span><span class="o">.</span><span class="mi">5</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">django</span><span class="o">-</span><span class="n">environ</span><span class="o">&gt;=</span><span class="mf">0.9</span><span class="o">.</span><span class="mi">0</span><span class="o">,&lt;</span><span class="mf">1.0</span>
+</code></pre></div>
+    </div>
+  </article>
+  <script src="https://giscus.app/client.js"
+        data-repo="Sydney-Informatics-Hub/tidbits"
+        data-repo-id="R_kgDOKKuuxw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOKKuux84CY0kA"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
