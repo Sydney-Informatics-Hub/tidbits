@@ -18,6 +18,11 @@ Python packages: they also include C libraries, compiled binaries, and
 all the other external dependencies that packages like `torch` depend on.
 `conda` also tries to handle installing compatible versions for these non-Python dependencies.
 
+Note that you only get these benefits of `conda` if you install packages from the
+conda repositories, because conda packages are different to the standard Python packages
+available on [PyPI](https://pypi.org/). If you use `conda` to create an environment but install
+via `pip` or a `requirements.txt`, you don't get `conda`'s pre-compiled binary packages.
+
 My personal tips for using `conda` in complex projects are:
 
 * Use an `enviroment.yml` file to record your dependencies
