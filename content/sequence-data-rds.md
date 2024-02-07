@@ -156,6 +156,7 @@ Depending on the size of your files, you may not be able to run this on the comm
 #PBS -N download2rds
 
 # Move into directory you want to save sequences to
+dir=/rds/PRJ-KITTYCATDNA/raw_fastq
 cd ${dir}
 
 # Check file integrity
