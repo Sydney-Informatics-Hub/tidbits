@@ -120,6 +120,7 @@ wget&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;-O
 &lt;span class="c1"&gt;#PBS -N download2rds&lt;/span&gt;
 
 &lt;span class="c1"&gt;# Move into directory you want to save sequences to&lt;/span&gt;
+&lt;span class="nv"&gt;dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/rds/PRJ-KITTYCATDNA/raw_fastq
 &lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
 
 &lt;span class="c1"&gt;# Check file integrity&lt;/span&gt;
