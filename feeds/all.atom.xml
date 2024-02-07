@@ -1,5 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/all.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2023-09-06T00:00:00+10:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Handling complex Python dependencies: an opinionated guide</title><link href="https://sydney-informatics-hub.github.io/tidbits/handling-complex-python-dependencies-an-opinionated-guide.html" rel="alternate"></link><published>2023-09-06T00:00:00+10:00</published><updated>2023-09-06T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:sydney-informatics-hub.github.io,2023-09-06:/tidbits/handling-complex-python-dependencies-an-opinionated-guide.html</id><summary type="html">&lt;p&gt;Python dependency management has improved over the years, but you
+<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/all.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2024-02-07T00:00:00+11:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Safely downloading your sequence data to RDS</title><link href="https://sydney-informatics-hub.github.io/tidbits/safely-downloading-your-sequence-data-to-rds.html" rel="alternate"></link><published>2024-02-07T00:00:00+11:00</published><updated>2024-02-07T00:00:00+11:00</updated><author><name>Georgie Samaha</name></author><id>tag:sydney-informatics-hub.github.io,2024-02-07:/tidbits/safely-downloading-your-sequence-data-to-rds.html</id><summary type="html">&lt;p&gt;Imagine you're a biologist, geneticist, vet, or clinician. You've gone through the painstaking process of extracting some genetic material from a set of samples and sent them off for next …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Imagine you're a biologist, geneticist, vet, or clinician. You've gone through the painstaking process of extracting some genetic material from a set of samples and sent them off for next generation sequencing to a commercial sequencing provider. Six weeks later you get an email from your chosen provider saying something like: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;Dear&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Dr&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Cats&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
+
+&lt;span class="n"&gt;I&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;am&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pleased&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;inform&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;that&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;project&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;CATGENES001&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;is&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
+
+&lt;span class="n"&gt;The&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;is&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;available&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;download&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;our&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;platform&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;using&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;link&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
+&lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;sequencing&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dna&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;CATGENES001&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;CATGENES001&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;
+
+&lt;span class="n"&gt;If&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;prefer&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;please&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;one&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;of&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;following&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
+&lt;span class="n"&gt;wget&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;sequencing&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dna&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;CATGENES001&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;CATGENES001&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;
+
+&lt;span class="n"&gt;curl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;sequencing&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dna&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;CATGENES001&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;CATGENES001&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
+
+&lt;span class="n"&gt;Note&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;links&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;will&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;expire&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;THREE&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;WEEKS&lt;/span&gt;&lt;span class="o"&gt;!!&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
+
+&lt;span class="n"&gt;Thank&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
+&lt;span class="n"&gt;Sequencing4U&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now what? Three weeks and then your expensive data is gone forever if you don't act? Yes. How do you know if you 'prefer' the command-line? &lt;/p&gt;
+&lt;p&gt;If you're a University of Sydney staff member or student then chances are you'll need to save your data to RDS. This means you probably have no choice but to 'prefer' the command-line, especially if you're working with genomic data and/or a large number of samples. Follow these instructions to:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Download your data &lt;/li&gt;
+&lt;li&gt;Extract your files from the tarball (&lt;code&gt;.tar&lt;/code&gt;) &lt;/li&gt;
+&lt;li&gt;Validate the integrity of your files (i.e. make sure your files aren't corrupted)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;0. Open a terminal application on your computer&lt;/h3&gt;
+&lt;p&gt;You'll need to use a &lt;a href="https://sydney-informatics-hub.github.io/training.artemis.rds/setup.html"&gt;terminal application to access the command-line and log into Artemis/RDS&lt;/a&gt;.
+* MacOS users can use the terminal application in their Applications folder 
+* Windows users can install &lt;a href="https://sydney-informatics-hub.github.io/customising-nfcore-workshop/setup.html#option-2-install-and-set-up-a-terminal-application"&gt;MobaXterm&lt;/a&gt; or Putty&lt;/p&gt;
+&lt;p&gt;Log into Artemis HPC: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;ssh&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;unikey&lt;/span&gt;&lt;span class="nv"&gt;@hpc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sydney&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;edu&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;au&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Navigate to the directory on RDS you want to download your sequence data to: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cd /rds/PRJ-KITTYCATDNA
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;1. Download your data&lt;/h3&gt;
+&lt;p&gt;A simple way to retrieve files from web links is using the command-line utilities 'wget' or 'curl', as suggested in the email above. You could run these commands directly on the command-line but that isn't very reliable when working with large files that take a long time to download. We will instead wrap one of these commands in a PBS script that uses the dedicated data transfer queue to quickly download and move data around safely. &lt;/p&gt;
+&lt;p&gt;Customise and copy the following example code into a script called &lt;code&gt;download_data.pbs&lt;/code&gt; using the text editor nano: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;nano&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;download_data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pbs&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Fill in: 
+* Your dashR project code (&lt;code&gt;#PBS -P DASHR-CODE&lt;/code&gt;)
+* The path to the RDS directory you want to download your data to (dir=/path/to/rds/directory) 
+* The wget or curl command given by your sequencing provider &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash &lt;/span&gt;
+
+&lt;span class="c1"&gt;#PBS -P KITTYCATDNA&lt;/span&gt;
+&lt;span class="c1"&gt;#PBS -q dtq&lt;/span&gt;
+&lt;span class="c1"&gt;#PBS -l select=1:ncpus=1:mem=50gb&lt;/span&gt;
+&lt;span class="c1"&gt;#PBS -l walltime=08:00:00&lt;/span&gt;
+&lt;span class="c1"&gt;#PBS -N download2rds&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Define download directory&lt;/span&gt;
+&lt;span class="nv"&gt;dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/rds/PRJ-KITTYCATDNA/raw_fastq
+
+&lt;span class="c1"&gt;# Move to download directory and download&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
+wget&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;-O&lt;span class="w"&gt; &lt;/span&gt;https://sequencing-dna-4-u/CATGENES001/CATGENES001.tar
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Save this file (on nano &lt;code&gt;ctrl&lt;/code&gt;+&lt;code&gt;x&lt;/code&gt;, &lt;code&gt;ctrl&lt;/code&gt;+&lt;code&gt;s&lt;/code&gt;) and execute the script: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;qsub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;download_data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pbs&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You can monitor the progress of your download by running the &lt;code&gt;jobstat&lt;/code&gt; or &lt;code&gt;qstat -u &amp;lt;your unikey&amp;gt;&lt;/code&gt; commands on the command-line. Once your job is complete and download has succeeded your job will have left the queue and you'll observe some files in the directory you executed the script from: 
+*  &lt;code&gt;download2rds.o12345&lt;/code&gt;
+*  &lt;code&gt;download2rds.o12345_usage&lt;/code&gt;
+*  &lt;code&gt;download2rds.e12345&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Confirm your job has successfully completed by looking at the exit status row of &lt;code&gt;download2rds.o12345_usage&lt;/code&gt;. If &lt;strong&gt;exit status is 0&lt;/strong&gt; your job completed without error and you can proceed. If not 0, you'll need to identify the source of the error and rerun your download script, making necessary adjustments.   &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;cat&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;download2rds&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;o12345_usage&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;2. Extract files from the tar archive&lt;/h3&gt;
+&lt;p&gt;Assuming your PBS job ran successfully, lets now extract your raw sequence files from the &lt;a href="https://www.cyberciti.biz/faq/tar-extract-linux/"&gt;tarball&lt;/a&gt; you downloaded. For example, with our example link, we downloaded a file called 'CATGENES001.tar'. You can extract everything by running: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;tar -xf CATGENES001.tar
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If your tar file is also further compressed with gzip (e.g. CATGENES001.tar.gz), you'll need to instead run: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;tar -xzf CATGENES001.tar.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Once extracted, you should now have a folder named CATGENES001 in your directory: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;ls -lh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;total&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;148288722&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rwxrwx&lt;/span&gt;&lt;span class="o"&gt;---&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;unikey1111&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RDS&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;FVS&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;KITTYCATDNA&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;RW&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="mi"&gt;770&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;Feb7&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="mi"&gt;14&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="n"&gt;download_datai&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sh&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rwxrwx&lt;/span&gt;&lt;span class="o"&gt;---&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;unikey1111&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RDS&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;FVS&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;KITTYCATDNA&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;RW&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="mi"&gt;230&lt;/span&gt;&lt;span class="n"&gt;M&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Feb7&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="mi"&gt;09&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;36&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="n"&gt;download2rds&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;o12345&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rwxrwx&lt;/span&gt;&lt;span class="o"&gt;---&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;unikey1111&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RDS&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;FVS&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;KITTYCATDNA&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;RW&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;Feb7&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="mi"&gt;09&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;18&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="n"&gt;download2rds&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;o12345&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rwxrwx&lt;/span&gt;&lt;span class="o"&gt;---&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;unikey1111&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RDS&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;FVS&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;KITTYCATDNA&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;RW&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="mf"&gt;1.8&lt;/span&gt;&lt;span class="n"&gt;K&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Feb7&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="mi"&gt;09&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;36&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="n"&gt;download2rds&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;o12345_usage&lt;/span&gt;
+&lt;span class="n"&gt;drwxrws&lt;/span&gt;&lt;span class="o"&gt;---&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;unikey1111&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RDS&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;FVS&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;KITTYCATDNA&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;RW&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="mf"&gt;4.0&lt;/span&gt;&lt;span class="n"&gt;K&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Jan29&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;37&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="n"&gt;CATGENES001&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rwxrwx&lt;/span&gt;&lt;span class="o"&gt;---&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;unikey1111&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RDS&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;FVS&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;KITTYCATDNA&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;RW&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="mi"&gt;140&lt;/span&gt;&lt;span class="n"&gt;G&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Feb7&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="mi"&gt;09&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;36&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="n"&gt;CATGENES001&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;3. Run md5 checksums to validate files&lt;/h3&gt;
+&lt;p&gt;Given we can't go back and download our data again after the provided link expires, we need to make sure our data is not corrupted in some way. We can do this using &lt;a href="https://en.wikipedia.org/wiki/MD5"&gt;md5&lt;/a&gt; checksums. &lt;/p&gt;
+&lt;p&gt;If you look inside the folder you just extracted, you'll likely see a file named something like &lt;code&gt;CATGENES001_md5sum.txt&lt;/code&gt;. It should look something like this: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;4&lt;/span&gt;&lt;span class="n"&gt;df06af823562f0d38eaf02071f7867b&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;CATGENES001&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sample1_R1&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fq&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
+&lt;span class="mf"&gt;3123&lt;/span&gt;&lt;span class="n"&gt;sddg2528950d38erzfz56787543v&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;CATGENES001&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sample1_R2&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fq&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
+&lt;span class="mf"&gt;9&lt;/span&gt;&lt;span class="n"&gt;gfd3e6hr456780987yghgfdewew4545&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;CATGENES001&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sample2_R1&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fq&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
+&lt;span class="mf"&gt;4235&lt;/span&gt;&lt;span class="n"&gt;af82d52d8g0d38eaf02071fd8dfg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;CATGENES001&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sample2_R2&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fq&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Each of the alphanumeric strings provided in this file represent a unique fingerprint of their corresponding fastq file. These unique hashes have been generated by the sequencing company on the original fastq files they generated after sequencing your data. We need to recalculate the md5 checksum of each fastq file to verify their integrity. If the checksums match the original values, the files are identical to the originals and we can be assured they are not corrupted. We do this by running: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;md5sum -c CATGENES001_md5sum.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Depending on the size of your files, you may not be able to run this on the command-line on Artemis due to resource constraints. To avoid this, submit it as another PBS job, using the following script &lt;code&gt;check_md5sum.pbs&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class="c1"&gt;#PBS -P FELINE&lt;/span&gt;
+&lt;span class="c1"&gt;#PBS -q dtq&lt;/span&gt;
+&lt;span class="c1"&gt;#PBS -l select=1:ncpus=1:mem=50gb&lt;/span&gt;
+&lt;span class="c1"&gt;#PBS -l walltime=48:00:00&lt;/span&gt;
+&lt;span class="c1"&gt;#PBS -N download2rds&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Move into directory you want to save sequences to&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Check file integrity&lt;/span&gt;
+md5sum&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;tar_file&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;tar_file&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;_md5sum.txt&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;md5_check.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Execute with: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;qsub check_md5sum.pbs
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Once the job has completed you'll have created a text file &lt;code&gt;md5_check.txt&lt;/code&gt; that should : &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cat md5_check.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;./CATGENES001/sample1_R1.fq.gz: OK
+./CATGENES001/sample1_R2.fq.gz: OK
+./CATGENES001/sample2_R1.fq.gz: OK
+./CATGENES001/sample2_R2.fq.gz: OK
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If the calculated checksum matches the provided checksum, md5sum reports "OK" for that file; otherwise, it reports "FAILED" to indicate a checksum mismatch or file corruption. If this is the case, check if your download command has failed at any point and if that doesn't resolve the issue, contact your sequencing provider for advice. &lt;/p&gt;
+&lt;h3&gt;4. Or do it all at once&lt;/h3&gt;
+&lt;p&gt;Edit this script according to add your own DashR/RDS account name, desired location to download your files, and the link provided by your sequencing company: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash &lt;/span&gt;
+
+&lt;span class="c1"&gt;#PBS -P &lt;/span&gt;
+&lt;span class="c1"&gt;#PBS -q dtq&lt;/span&gt;
+&lt;span class="c1"&gt;#PBS -l select=1:ncpus=1:mem=50gb&lt;/span&gt;
+&lt;span class="c1"&gt;#PBS -l walltime=08:00:00&lt;/span&gt;
+&lt;span class="c1"&gt;#PBS -N ramaciotti2rds&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Set variables&lt;/span&gt;
+&lt;span class="nv"&gt;dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="nv"&gt;tar_file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="nv"&gt;download_link&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Move into directory you want to save sequences to&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Download tar archive&lt;/span&gt;
+wget&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;-O&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;tar_file&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;.tar&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;download_link&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Extract files&lt;/span&gt;
+tar&lt;span class="w"&gt; &lt;/span&gt;-xf&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;tar_file&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;.tar
+
+&lt;span class="c1"&gt;# Check file integrity&lt;/span&gt;
+md5sum&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;tar_file&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;tar_file&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;_md5sum.txt&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;tar_file&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/md5_check.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Useful resources&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://sydney-informatics-hub.github.io/training.artemis/"&gt;SIH Intro to Artemis training materials&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://sydneyuni.atlassian.net/wiki/spaces/RC/pages/185827329/Artemis+User+Guide"&gt;Artemis user guide&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Happy HPCing! :D &lt;/p&gt;</content><category term="unix"></category><category term="bioinformatics"></category><category term="hpc"></category><category term="large-data"></category></entry><entry><title>Handling complex Python dependencies: an opinionated guide</title><link href="https://sydney-informatics-hub.github.io/tidbits/handling-complex-python-dependencies-an-opinionated-guide.html" rel="alternate"></link><published>2023-09-06T00:00:00+10:00</published><updated>2023-09-06T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:sydney-informatics-hub.github.io,2023-09-06:/tidbits/handling-complex-python-dependencies-an-opinionated-guide.html</id><summary type="html">&lt;p&gt;Python dependency management has improved over the years, but you
 can still run into issues, particularly when using machine
 learning libraries like &lt;strong&gt;Torch&lt;/strong&gt; or &lt;strong&gt;TensorFlow&lt;/strong&gt; that have
 compiled or non-Python …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Python dependency management has improved over the years, but you
