@@ -4,7 +4,7 @@ Author: Georgie Samaha
 Category: unix 
 Tags: bioinformatics,hpc,large-data
 
-Imagine you're a biologist, geneticist, vet, or clinician. You've gone through the painstaking process of extracting some genetic material from a set of samples and sent them off for next generation sequencing to a commercial sequencing provider. Six weeks later you get an email from your chosen provider saying something like: 
+Imagine you're a biologist, geneticist, vet, or clinician. You've gone through the painstaking process of extracting some genetic material from a set of samples and sent them off for next generation sequencing with a commercial provider. Six weeks later you get an email from your chosen provider saying something like: 
 
 ```
 Dear Dr Cats, 
@@ -35,7 +35,8 @@ If you're a University of Sydney staff member or student then chances are you'll
 
 ### 0. Open a terminal application on your computer 
 
-You'll need to use a [terminal application to access the command-line and log into Artemis/RDS](https://sydney-informatics-hub.github.io/training.artemis.rds/setup.html).
+You'll need to use a [terminal application to access the command-line and log into Artemis/RDS](https://sydney-informatics-hub.github.io/training.artemis.rds/setup.html):
+
 * MacOS users can use the terminal application in their Applications folder 
 * Windows users can install [MobaXterm](https://sydney-informatics-hub.github.io/customising-nfcore-workshop/setup.html#option-2-install-and-set-up-a-terminal-application) or Putty
 
@@ -59,8 +60,9 @@ nano download_data.pbs
 ```
 
 Fill in: 
+
 * Your dashR project code (`#PBS -P DASHR-CODE`)
-* The path to the RDS directory you want to download your data to (dir=/path/to/rds/directory) 
+* The path to the RDS directory you want to download your data to (`dir=/path/to/rds/directory`) 
 * The wget or curl command given by your sequencing provider 
 
 ```
@@ -87,9 +89,10 @@ qsub download_data.pbs
 ```
 
 You can monitor the progress of your download by running the `jobstat` or `qstat -u <your unikey>` commands on the command-line. Once your job is complete and download has succeeded your job will have left the queue and you'll observe some files in the directory you executed the script from: 
-*  `download2rds.o12345`
-*  `download2rds.o12345_usage`
-*  `download2rds.e12345`
+
+*  `download2rds.o12345`  
+*  `download2rds.o12345_usage`  
+*  `download2rds.e12345`  
 
 Confirm your job has successfully completed by looking at the exit status row of `download2rds.o12345_usage`. If **exit status is 0** your job completed without error and you can proceed. If not 0, you'll need to identify the source of the error and rerun your download script, making necessary adjustments.   
 
@@ -155,8 +158,11 @@ Depending on the size of your files, you may not be able to run this on the comm
 #PBS -l walltime=48:00:00
 #PBS -N download2rds
 
-# Move into directory you want to save sequences to
+# Set variables 
 dir=/rds/PRJ-KITTYCATDNA/raw_fastq
+tar_file=CATGENES001
+
+# Move into directory you want to save sequences to
 cd ${dir}
 
 # Check file integrity
@@ -168,7 +174,7 @@ Execute with:
 qsub check_md5sum.pbs
 ```
 
-Once the job has completed you'll have created a text file `md5_check.txt` that should : 
+Once the job has completed you'll have created a text file `md5_check.txt` that should look like this: 
 
 ```
 cat md5_check.txt
