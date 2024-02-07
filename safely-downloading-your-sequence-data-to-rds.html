@@ -95,7 +95,7 @@
       </ul>
     </header>
     <div class="content">
-      <p>Imagine you're a biologist, geneticist, vet, or clinician. You've gone through the painstaking process of extracting some genetic material from a set of samples and sent them off for next generation sequencing to a commercial sequencing provider. Six weeks later you get an email from your chosen provider saying something like: </p>
+      <p>Imagine you're a biologist, geneticist, vet, or clinician. You've gone through the painstaking process of extracting some genetic material from a set of samples and sent them off for next generation sequencing with a commercial provider. Six weeks later you get an email from your chosen provider saying something like: </p>
 <div class="highlight"><pre><span></span><code><span class="n">Dear</span><span class="w"> </span><span class="n">Dr</span><span class="w"> </span><span class="n">Cats</span><span class="p">,</span><span class="w"> </span>
 
 <span class="n">I</span><span class="w"> </span><span class="n">am</span><span class="w"> </span><span class="n">pleased</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">inform</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">project</span><span class="w"> </span><span class="n">CATGENES001</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">complete</span><span class="o">.</span><span class="w"> </span>
@@ -122,9 +122,11 @@
 <li>Validate the integrity of your files (i.e. make sure your files aren't corrupted)</li>
 </ol>
 <h3>0. Open a terminal application on your computer</h3>
-<p>You'll need to use a <a href="https://sydney-informatics-hub.github.io/training.artemis.rds/setup.html">terminal application to access the command-line and log into Artemis/RDS</a>.
-* MacOS users can use the terminal application in their Applications folder 
-* Windows users can install <a href="https://sydney-informatics-hub.github.io/customising-nfcore-workshop/setup.html#option-2-install-and-set-up-a-terminal-application">MobaXterm</a> or Putty</p>
+<p>You'll need to use a <a href="https://sydney-informatics-hub.github.io/training.artemis.rds/setup.html">terminal application to access the command-line and log into Artemis/RDS</a>:</p>
+<ul>
+<li>MacOS users can use the terminal application in their Applications folder </li>
+<li>Windows users can install <a href="https://sydney-informatics-hub.github.io/customising-nfcore-workshop/setup.html#option-2-install-and-set-up-a-terminal-application">MobaXterm</a> or Putty</li>
+</ul>
 <p>Log into Artemis HPC: </p>
 <div class="highlight"><pre><span></span><code><span class="n">ssh</span><span class="w"> </span><span class="n">unikey</span><span class="nv">@hpc</span><span class="p">.</span><span class="n">sydney</span><span class="p">.</span><span class="n">edu</span><span class="p">.</span><span class="n">au</span>
 </code></pre></div>
@@ -139,10 +141,12 @@
 <div class="highlight"><pre><span></span><code><span class="n">nano</span><span class="w"> </span><span class="n">download_data</span><span class="o">.</span><span class="n">pbs</span>
 </code></pre></div>
 
-<p>Fill in: 
-* Your dashR project code (<code>#PBS -P DASHR-CODE</code>)
-* The path to the RDS directory you want to download your data to (dir=/path/to/rds/directory) 
-* The wget or curl command given by your sequencing provider </p>
+<p>Fill in: </p>
+<ul>
+<li>Your dashR project code (<code>#PBS -P DASHR-CODE</code>)</li>
+<li>The path to the RDS directory you want to download your data to (<code>dir=/path/to/rds/directory</code>) </li>
+<li>The wget or curl command given by your sequencing provider </li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash </span>
 
 <span class="c1">#PBS -P KITTYCATDNA</span>
@@ -163,10 +167,12 @@ wget<span class="w"> </span>-c<span class="w"> </span>-O<span class="w"> </span>
 <div class="highlight"><pre><span></span><code><span class="n">qsub</span><span class="w"> </span><span class="n">download_data</span><span class="o">.</span><span class="n">pbs</span>
 </code></pre></div>
 
-<p>You can monitor the progress of your download by running the <code>jobstat</code> or <code>qstat -u &lt;your unikey&gt;</code> commands on the command-line. Once your job is complete and download has succeeded your job will have left the queue and you'll observe some files in the directory you executed the script from: 
-*  <code>download2rds.o12345</code>
-*  <code>download2rds.o12345_usage</code>
-*  <code>download2rds.e12345</code></p>
+<p>You can monitor the progress of your download by running the <code>jobstat</code> or <code>qstat -u &lt;your unikey&gt;</code> commands on the command-line. Once your job is complete and download has succeeded your job will have left the queue and you'll observe some files in the directory you executed the script from: </p>
+<ul>
+<li><code>download2rds.o12345</code>  </li>
+<li><code>download2rds.o12345_usage</code>  </li>
+<li><code>download2rds.e12345</code>  </li>
+</ul>
 <p>Confirm your job has successfully completed by looking at the exit status row of <code>download2rds.o12345_usage</code>. If <strong>exit status is 0</strong> your job completed without error and you can proceed. If not 0, you'll need to identify the source of the error and rerun your download script, making necessary adjustments.   </p>
 <div class="highlight"><pre><span></span><code><span class="n">cat</span><span class="w"> </span><span class="n">download2rds</span><span class="o">.</span><span class="n">o12345_usage</span>
 </code></pre></div>
@@ -215,8 +221,11 @@ wget<span class="w"> </span>-c<span class="w"> </span>-O<span class="w"> </span>
 <span class="c1">#PBS -l walltime=48:00:00</span>
 <span class="c1">#PBS -N download2rds</span>
 
-<span class="c1"># Move into directory you want to save sequences to</span>
+<span class="c1"># Set variables </span>
 <span class="nv">dir</span><span class="o">=</span>/rds/PRJ-KITTYCATDNA/raw_fastq
+<span class="nv">tar_file</span><span class="o">=</span>CATGENES001
+
+<span class="c1"># Move into directory you want to save sequences to</span>
 <span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">dir</span><span class="si">}</span>
 
 <span class="c1"># Check file integrity</span>
@@ -227,7 +236,7 @@ md5sum<span class="w"> </span>-c<span class="w"> </span><span class="si">${</spa
 <div class="highlight"><pre><span></span><code>qsub check_md5sum.pbs
 </code></pre></div>
 
-<p>Once the job has completed you'll have created a text file <code>md5_check.txt</code> that should : </p>
+<p>Once the job has completed you'll have created a text file <code>md5_check.txt</code> that should look like this: </p>
 <div class="highlight"><pre><span></span><code>cat md5_check.txt
 </code></pre></div>
 

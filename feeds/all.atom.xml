@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/all.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2024-02-07T00:00:00+11:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Safely downloading your sequence data to RDS</title><link href="https://sydney-informatics-hub.github.io/tidbits/safely-downloading-your-sequence-data-to-rds.html" rel="alternate"></link><published>2024-02-07T00:00:00+11:00</published><updated>2024-02-07T00:00:00+11:00</updated><author><name>Georgie Samaha</name></author><id>tag:sydney-informatics-hub.github.io,2024-02-07:/tidbits/safely-downloading-your-sequence-data-to-rds.html</id><summary type="html">&lt;p&gt;Imagine you're a biologist, geneticist, vet, or clinician. You've gone through the painstaking process of extracting some genetic material from a set of samples and sent them off for next …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Imagine you're a biologist, geneticist, vet, or clinician. You've gone through the painstaking process of extracting some genetic material from a set of samples and sent them off for next generation sequencing to a commercial sequencing provider. Six weeks later you get an email from your chosen provider saying something like: &lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/all.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2024-02-07T00:00:00+11:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Safely downloading your sequence data to RDS</title><link href="https://sydney-informatics-hub.github.io/tidbits/safely-downloading-your-sequence-data-to-rds.html" rel="alternate"></link><published>2024-02-07T00:00:00+11:00</published><updated>2024-02-07T00:00:00+11:00</updated><author><name>Georgie Samaha</name></author><id>tag:sydney-informatics-hub.github.io,2024-02-07:/tidbits/safely-downloading-your-sequence-data-to-rds.html</id><summary type="html">&lt;p&gt;Imagine you're a biologist, geneticist, vet, or clinician. You've gone through the painstaking process of extracting some genetic material from a set of samples and sent them off for next …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Imagine you're a biologist, geneticist, vet, or clinician. You've gone through the painstaking process of extracting some genetic material from a set of samples and sent them off for next generation sequencing with a commercial provider. Six weeks later you get an email from your chosen provider saying something like: &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;Dear&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Dr&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Cats&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
 
 &lt;span class="n"&gt;I&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;am&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pleased&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;inform&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;that&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;project&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;CATGENES001&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;is&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
@@ -26,9 +26,11 @@
 &lt;li&gt;Validate the integrity of your files (i.e. make sure your files aren't corrupted)&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;0. Open a terminal application on your computer&lt;/h3&gt;
-&lt;p&gt;You'll need to use a &lt;a href="https://sydney-informatics-hub.github.io/training.artemis.rds/setup.html"&gt;terminal application to access the command-line and log into Artemis/RDS&lt;/a&gt;.
-* MacOS users can use the terminal application in their Applications folder 
-* Windows users can install &lt;a href="https://sydney-informatics-hub.github.io/customising-nfcore-workshop/setup.html#option-2-install-and-set-up-a-terminal-application"&gt;MobaXterm&lt;/a&gt; or Putty&lt;/p&gt;
+&lt;p&gt;You'll need to use a &lt;a href="https://sydney-informatics-hub.github.io/training.artemis.rds/setup.html"&gt;terminal application to access the command-line and log into Artemis/RDS&lt;/a&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;MacOS users can use the terminal application in their Applications folder &lt;/li&gt;
+&lt;li&gt;Windows users can install &lt;a href="https://sydney-informatics-hub.github.io/customising-nfcore-workshop/setup.html#option-2-install-and-set-up-a-terminal-application"&gt;MobaXterm&lt;/a&gt; or Putty&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;Log into Artemis HPC: &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;ssh&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;unikey&lt;/span&gt;&lt;span class="nv"&gt;@hpc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sydney&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;edu&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;au&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -43,10 +45,12 @@
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;nano&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;download_data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pbs&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Fill in: 
-* Your dashR project code (&lt;code&gt;#PBS -P DASHR-CODE&lt;/code&gt;)
-* The path to the RDS directory you want to download your data to (dir=/path/to/rds/directory) 
-* The wget or curl command given by your sequencing provider &lt;/p&gt;
+&lt;p&gt;Fill in: &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Your dashR project code (&lt;code&gt;#PBS -P DASHR-CODE&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;The path to the RDS directory you want to download your data to (&lt;code&gt;dir=/path/to/rds/directory&lt;/code&gt;) &lt;/li&gt;
+&lt;li&gt;The wget or curl command given by your sequencing provider &lt;/li&gt;
+&lt;/ul&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash &lt;/span&gt;
 
 &lt;span class="c1"&gt;#PBS -P KITTYCATDNA&lt;/span&gt;
@@ -67,10 +71,12 @@ wget&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;-O
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;qsub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;download_data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pbs&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;You can monitor the progress of your download by running the &lt;code&gt;jobstat&lt;/code&gt; or &lt;code&gt;qstat -u &amp;lt;your unikey&amp;gt;&lt;/code&gt; commands on the command-line. Once your job is complete and download has succeeded your job will have left the queue and you'll observe some files in the directory you executed the script from: 
-*  &lt;code&gt;download2rds.o12345&lt;/code&gt;
-*  &lt;code&gt;download2rds.o12345_usage&lt;/code&gt;
-*  &lt;code&gt;download2rds.e12345&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;You can monitor the progress of your download by running the &lt;code&gt;jobstat&lt;/code&gt; or &lt;code&gt;qstat -u &amp;lt;your unikey&amp;gt;&lt;/code&gt; commands on the command-line. Once your job is complete and download has succeeded your job will have left the queue and you'll observe some files in the directory you executed the script from: &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;download2rds.o12345&lt;/code&gt;  &lt;/li&gt;
+&lt;li&gt;&lt;code&gt;download2rds.o12345_usage&lt;/code&gt;  &lt;/li&gt;
+&lt;li&gt;&lt;code&gt;download2rds.e12345&lt;/code&gt;  &lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;Confirm your job has successfully completed by looking at the exit status row of &lt;code&gt;download2rds.o12345_usage&lt;/code&gt;. If &lt;strong&gt;exit status is 0&lt;/strong&gt; your job completed without error and you can proceed. If not 0, you'll need to identify the source of the error and rerun your download script, making necessary adjustments.   &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;cat&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;download2rds&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;o12345_usage&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -119,8 +125,11 @@ wget&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;-O
 &lt;span class="c1"&gt;#PBS -l walltime=48:00:00&lt;/span&gt;
 &lt;span class="c1"&gt;#PBS -N download2rds&lt;/span&gt;
 
-&lt;span class="c1"&gt;# Move into directory you want to save sequences to&lt;/span&gt;
+&lt;span class="c1"&gt;# Set variables &lt;/span&gt;
 &lt;span class="nv"&gt;dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/rds/PRJ-KITTYCATDNA/raw_fastq
+&lt;span class="nv"&gt;tar_file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;CATGENES001
+
+&lt;span class="c1"&gt;# Move into directory you want to save sequences to&lt;/span&gt;
 &lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
 
 &lt;span class="c1"&gt;# Check file integrity&lt;/span&gt;
@@ -131,7 +140,7 @@ md5sum&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;qsub check_md5sum.pbs
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Once the job has completed you'll have created a text file &lt;code&gt;md5_check.txt&lt;/code&gt; that should : &lt;/p&gt;
+&lt;p&gt;Once the job has completed you'll have created a text file &lt;code&gt;md5_check.txt&lt;/code&gt; that should look like this: &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cat md5_check.txt
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
