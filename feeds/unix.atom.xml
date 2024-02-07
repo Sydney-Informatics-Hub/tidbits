@@ -113,7 +113,7 @@ wget&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;-O
 &lt;p&gt;Depending on the size of your files, you may not be able to run this on the command-line on Artemis due to resource constraints. To avoid this, submit it as another PBS job, using the following script &lt;code&gt;check_md5sum.pbs&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
 
-&lt;span class="c1"&gt;#PBS -P FELINE&lt;/span&gt;
+&lt;span class="c1"&gt;#PBS -P KITTYCATDNA&lt;/span&gt;
 &lt;span class="c1"&gt;#PBS -q dtq&lt;/span&gt;
 &lt;span class="c1"&gt;#PBS -l select=1:ncpus=1:mem=50gb&lt;/span&gt;
 &lt;span class="c1"&gt;#PBS -l walltime=48:00:00&lt;/span&gt;
@@ -149,7 +149,7 @@ md5sum&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;
 &lt;span class="c1"&gt;#PBS -q dtq&lt;/span&gt;
 &lt;span class="c1"&gt;#PBS -l select=1:ncpus=1:mem=50gb&lt;/span&gt;
 &lt;span class="c1"&gt;#PBS -l walltime=08:00:00&lt;/span&gt;
-&lt;span class="c1"&gt;#PBS -N ramaciotti2rds&lt;/span&gt;
+&lt;span class="c1"&gt;#PBS -N download2rds&lt;/span&gt;
 
 &lt;span class="c1"&gt;# Set variables&lt;/span&gt;
 &lt;span class="nv"&gt;dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;

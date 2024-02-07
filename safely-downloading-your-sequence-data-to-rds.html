@@ -209,7 +209,7 @@ wget<span class="w"> </span>-c<span class="w"> </span>-O<span class="w"> </span>
 <p>Depending on the size of your files, you may not be able to run this on the command-line on Artemis due to resource constraints. To avoid this, submit it as another PBS job, using the following script <code>check_md5sum.pbs</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-<span class="c1">#PBS -P FELINE</span>
+<span class="c1">#PBS -P KITTYCATDNA</span>
 <span class="c1">#PBS -q dtq</span>
 <span class="c1">#PBS -l select=1:ncpus=1:mem=50gb</span>
 <span class="c1">#PBS -l walltime=48:00:00</span>
@@ -245,7 +245,7 @@ md5sum<span class="w"> </span>-c<span class="w"> </span><span class="si">${</spa
 <span class="c1">#PBS -q dtq</span>
 <span class="c1">#PBS -l select=1:ncpus=1:mem=50gb</span>
 <span class="c1">#PBS -l walltime=08:00:00</span>
-<span class="c1">#PBS -N ramaciotti2rds</span>
+<span class="c1">#PBS -N download2rds</span>
 
 <span class="c1"># Set variables</span>
 <span class="nv">dir</span><span class="o">=</span>
