@@ -149,7 +149,7 @@ Depending on the size of your files, you may not be able to run this on the comm
 ```
 #!/bin/bash
 
-#PBS -P FELINE
+#PBS -P KITTYCATDNA
 #PBS -q dtq
 #PBS -l select=1:ncpus=1:mem=50gb
 #PBS -l walltime=48:00:00
@@ -192,7 +192,7 @@ Edit this script according to add your own DashR/RDS account name, desired locat
 #PBS -q dtq
 #PBS -l select=1:ncpus=1:mem=50gb
 #PBS -l walltime=08:00:00
-#PBS -N ramaciotti2rds
+#PBS -N download2rds
 
 # Set variables
 dir=
