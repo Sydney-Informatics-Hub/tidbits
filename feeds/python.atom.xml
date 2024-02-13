@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits - Python</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/python.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2023-09-06T00:00:00+10:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Handling complex Python dependencies: an opinionated guide</title><link href="https://sydney-informatics-hub.github.io/tidbits/handling-complex-python-dependencies-an-opinionated-guide.html" rel="alternate"></link><published>2023-09-06T00:00:00+10:00</published><updated>2023-09-06T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:sydney-informatics-hub.github.io,2023-09-06:/tidbits/handling-complex-python-dependencies-an-opinionated-guide.html</id><summary type="html">&lt;p&gt;Python dependency management has improved over the years, but you
+<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits - Python</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/python.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2024-02-14T00:00:00+11:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Quick debugging with Python f-strings</title><link href="https://sydney-informatics-hub.github.io/tidbits/quick-debugging-with-python-f-strings.html" rel="alternate"></link><published>2024-02-14T00:00:00+11:00</published><updated>2024-02-14T00:00:00+11:00</updated><author><name>Marius Mather</name></author><id>tag:sydney-informatics-hub.github.io,2024-02-14:/tidbits/quick-debugging-with-python-f-strings.html</id><summary type="html">&lt;p&gt;You should probably set up &lt;a href="https://sydney-informatics-hub.github.io/tidbits/use-logging-instead-of-print.html"&gt;logging&lt;/a&gt; for your Python code,
+for any important information you need to keep track of. But, when you
+need to do a little bit of …&lt;/p&gt;</summary><content type="html">&lt;p&gt;You should probably set up &lt;a href="https://sydney-informatics-hub.github.io/tidbits/use-logging-instead-of-print.html"&gt;logging&lt;/a&gt; for your Python code,
+for any important information you need to keep track of. But, when you
+need to do a little bit of "print debugging", Python's &lt;strong&gt;f-strings&lt;/strong&gt;
+are a really convenient option.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;F-strings&lt;/strong&gt; allow you to include variables directly in strings, without using
+methods like &lt;code&gt;str.format()&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;18&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Total apples: &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;# Total apples: 18&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Even better for debugging, if you add &lt;code&gt;=&lt;/code&gt; to the end of the variable, you
+get both the variable name and value printed, making it very easy to quickly
+keep track of what's happening:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;
+&lt;span class="n"&gt;z&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="si"&gt;=}&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="si"&gt;=}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;# y=23, z=46&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;There are lots of other useful formatting tricks you can do with f-strings,
+like formatting large numbers with commas:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;large_n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1048213&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;large_n&lt;/span&gt;&lt;span class="si"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;,&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;# 1,048,213&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;See this &lt;a href="https://fstring.help/cheat/"&gt;cheat sheet&lt;/a&gt; for more.&lt;/p&gt;</content><category term="Python"></category><category term="python"></category></entry><entry><title>Handling complex Python dependencies: an opinionated guide</title><link href="https://sydney-informatics-hub.github.io/tidbits/handling-complex-python-dependencies-an-opinionated-guide.html" rel="alternate"></link><published>2023-09-06T00:00:00+10:00</published><updated>2023-09-06T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:sydney-informatics-hub.github.io,2023-09-06:/tidbits/handling-complex-python-dependencies-an-opinionated-guide.html</id><summary type="html">&lt;p&gt;Python dependency management has improved over the years, but you
 can still run into issues, particularly when using machine
 learning libraries like &lt;strong&gt;Torch&lt;/strong&gt; or &lt;strong&gt;TensorFlow&lt;/strong&gt; that have
 compiled or non-Python …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Python dependency management has improved over the years, but you
@@ -1273,4 +1302,4 @@ with:&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Then copy and paste it in a GitHub Issue:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="https://sydney-informatics-hub.github.io/tidbits/images/pandas-to-markdown/pandas-df-to-markdown.png"&gt;&lt;/p&gt;</content><category term="Python"></category><category term="Python"></category><category term="Pandas"></category><category term="GitHub"></category><category term="Markdown"></category></entry></feed>
+&lt;p&gt;&lt;img alt="Formatted table displayed in a GitHub issue" src="https://sydney-informatics-hub.github.io/tidbits/images/pandas-to-markdown/pandas-df-to-markdown.png"&gt;&lt;/p&gt;</content><category term="Python"></category><category term="Python"></category><category term="Pandas"></category><category term="GitHub"></category><category term="Markdown"></category></entry></feed>
