@@ -18,8 +18,8 @@ It would be great using such shortcuts in Outlook (at least the Outlook web app 
 # The Solution
 Unfortunately the only way is to use this website [https://tohtml.com/](https://tohtml.com/) and copy paste your bit that you want to format.
 
-![]({attach}images/formatted-code-in-email/website.png)
+![Screenshot of the ToHTML code formatting interface]({attach}images/formatted-code-in-email/website.png)
 
 Can handle many languages. The result is this nice email or Powerpoint slide.
 
-![]({attach}images/formatted-code-in-email/formatted-code-in-email.png)
+![Formatted and highlighted code in a powerpoint slide]({attach}images/formatted-code-in-email/formatted-code-in-email.png)

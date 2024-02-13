@@ -47,4 +47,4 @@ Starting from version `1.0` Pandas now inlude a `to_markdown()` method that woul
 
 Then copy and paste it in a GitHub Issue:
 
-![]({attach}images/pandas-to-markdown/pandas-df-to-markdown.png)
+![Formatted table displayed in a GitHub issue]({attach}images/pandas-to-markdown/pandas-df-to-markdown.png)
