@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Debugging bash | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://sydney-informatics-hub.github.io/tidbits/debugging-bash.html">
+
+
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/static/css/tag_cloud.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/unix.atom.xml">  
+  <meta name="description" content="Bash essentials: debugging If you're new to the command-line interface (CLI), there's one thing you should know - unexpected errors or bugs is inevitable. Whether you're a seasoned user of the …">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TNWWV3HK57"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TNWWV3HK57');
+</script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://sydney-informatics-hub.github.io/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Debugging bash
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2024-03-19T00:00:00+11:00">
+          <i class="fas fa-clock"></i>
+          Tue 19 March 2024
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://sydney-informatics-hub.github.io/tidbits/category/unix.html">unix</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/author/georgie-samaha.html">Georgie Samaha</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/tag/bash.html">#bash</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/debug.html">#debug</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/shell.html">#shell</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h2>Bash essentials: debugging</h2>
+<p>If you're new to the command-line interface (CLI), there's one thing you should know - unexpected errors or bugs is inevitable. Whether you're a seasoned user of the CLI or just dipping your toes in the world of the Unix shell, encountering typos, syntax errors, or unforeseen glitches is par for the course. </p>
+<p>Bash reigns supreme in the Unix shell, don't let <a href="https://dev.to/jmfayard/bash-is-a-terrible-programming-language-but-whats-the-alternative--oc2">the snobs convince you it isn't worth learning</a> some basics if you're planning to work in the Unix shell and/or on an HPC. It is an approachable swiss army knife, especially in the context of research computing. </p>
+<p>Unfortunately, bash doesn't naturally handle errors very well. So, it is essential to include some error handling to ensure your scripts fail well when they encounter an error and you can easily tend to the source of those errors. Let's delve into some useful techniques: </p>
+<h3>Tough love</h3>
+<p>Let's force bash to behave in a way that eliminates the chances of some subtle bugs from the outset by starting our script with: </p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">set</span><span class="w"> </span>-eou<span class="w"> </span>pipefail
+</code></pre></div>
+
+<p>You can use <code>set</code> to change the behaviour of the shell and control script execution. By incorporating this <code>set</code> directive above, you're doing the following: </p>
+<ul>
+<li><code>set -e</code> mandates immediate script termination upon any command failure </li>
+<li><code>set -u</code> treats references to undefined variables as errors which helps minimise the likelihood of subtle bugs caused by inadvertent variable omission </li>
+<li><code>set -o pipefail</code> ensures pipeline errors aren't masked. If any command in a pipeline fails, </li>
+</ul>
+<p>Run the scripts below as is, and then with <code>set</code> commands hashed out. Note the execution of the echo command after the failed commands with/without <code>set</code>. </p>
+<h4><code>set -e</code></h4>
+<p>This enables the errexit option which causes the shell to fail if a command returns a non-zero exit status. </p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">set</span><span class="w"> </span>-e
+
+<span class="c1"># List the contents of a directory that doesn&#39;t exist</span>
+ls<span class="w"> </span>fake_directory
+
+<span class="c1"># This echo will not be printed as the ls command fails</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Execution finished!&quot;</span>
+</code></pre></div>
+
+<h4><code>set -u</code></h4>
+<p>This is used to enable the nounset option which treats references to unset variables as errors. </p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">set</span><span class="w"> </span>-u
+
+<span class="c1"># Try to access an undefined variable</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Value of undefined variable: </span><span class="nv">$undefined_variable</span><span class="s2">&quot;</span>
+
+<span class="c1"># This echo will not be printed after the undefined variable</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Execution finished!&quot;</span>
+</code></pre></div>
+
+<h4><code>set -o pipefail</code></h4>
+<p>This is used to enable the pipefail option, causing a pipeline to return a non-zero exit status if any component fails. </p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">set</span><span class="w"> </span>-o<span class="w"> </span>pipefail
+
+<span class="c1"># Pipe the output of grep from a non-existant file to the sort command</span>
+grep<span class="w"> </span><span class="s2">&quot;ABCDEFG&quot;</span><span class="w"> </span>fake_file.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort
+
+<span class="c1"># This will return a non-exit status of 2 </span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$?</span>
+
+<span class="c1"># This echo will be printed after the non-zero exit status because we haven&#39;t run the errexit option</span>
+<span class="c1"># Replace set -o pipefail with set -eo pipefail to stop echo command running</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Execution finished!&quot;</span>
+</code></pre></div>
+
+<h3>Beautiful echo</h3>
+<p>Echo is a very simple solution for doublechecking the output of variables and the results of commands run within your scripts to confirm everything is as it should be: </p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;This is the start of the script&quot;</span><span class="w"> </span>
+
+<span class="nv">variable_A</span><span class="o">=</span>hello
+<span class="nv">variable_B</span><span class="o">=</span>world
+
+<span class="nb">echo</span><span class="w"> </span>variable_A<span class="w"> </span>is<span class="w"> </span><span class="nv">$variable_A</span>
+<span class="nb">echo</span><span class="w"> </span>variable_B<span class="w"> </span>is<span class="w"> </span><span class="nv">$variable_B</span>
+
+<span class="nb">echo</span><span class="w"> </span>doing<span class="w"> </span>something<span class="w"> </span>with<span class="w"> </span><span class="nv">$variable_A</span><span class="w"> </span>and<span class="w"> </span><span class="nv">$variable_B</span><span class="w"> </span>here
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;This is the end of the script&quot;</span>
+</code></pre></div>
+
+<h3>The hero</h3>
+<p>Another nice set command we can use is to enable debugging mode with <code>set -x</code>. This will print each line of your script to the terminal as it is executed. It can be helpful in identifying where errors are occurring and if variables are correctly defined: </p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">set</span><span class="w"> </span>-x
+
+<span class="c1"># Define some variables</span>
+<span class="nv">foo</span><span class="o">=</span><span class="s2">&quot;hello&quot;</span>
+<span class="nv">bar</span><span class="o">=</span><span class="s2">&quot;world&quot;</span>
+
+<span class="c1"># Concatenate variables and print the result</span>
+<span class="nv">result</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$foo</span><span class="s2"> </span><span class="nv">$bar</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Result: </span><span class="nv">$result</span><span class="s2">&quot;</span>
+
+<span class="c1"># Do some maths</span>
+<span class="nv">num1</span><span class="o">=</span><span class="m">10</span>
+<span class="nv">num2</span><span class="o">=</span><span class="m">5</span>
+<span class="nv">sum</span><span class="o">=</span><span class="k">$((</span><span class="nv">num1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">num2</span><span class="k">))</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Sum: </span><span class="nv">$sum</span><span class="s2">&quot;</span>
+
+<span class="c1"># Access an undefined variable (intentional error)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Undefined variable: </span><span class="nv">$undefined_var</span><span class="s2">&quot;</span>
+
+<span class="c1"># End debugging mode</span>
+<span class="nb">set</span><span class="w"> </span>+x
+
+<span class="c1"># Additional commands that won&#39;t be debugged</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Script execution completed.&quot;</span>
+</code></pre></div>
+
+<p>You can also run your script with <code>bash -x script.sh</code> without using <code>set -x</code> within the script. It does the same thing. </p>
+<h3>One step at a time</h3>
+<p>If you're feeling particularly cautious, this <a href="https://wizardzines.com/comics/bash-debugging/">fancy <code>trap</code> command</a> allows you to confirm every line of a script before it runs:  </p>
+<div class="highlight"><pre><span></span><code>trap &#39;(read -p &quot;[$BASH_SOURCE:$LINENO] $BASH_COMMAND&quot;)&#39; DEBUG
+</code></pre></div>
+
+<p>Run it for our echo script above: </p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">trap</span><span class="w"> </span><span class="s1">&#39;(read -p &quot;[$BASH_SOURCE:$LINENO] $BASH_COMMAND&quot;)&#39;</span><span class="w"> </span>DEBUG
+
+<span class="c1"># Define some variables</span>
+<span class="nv">foo</span><span class="o">=</span><span class="s2">&quot;hello&quot;</span>
+<span class="nv">bar</span><span class="o">=</span><span class="s2">&quot;world&quot;</span>
+
+<span class="c1"># Concatenate variables and print the result</span>
+<span class="nv">result</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$foo</span><span class="s2"> </span><span class="nv">$bar</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Result: </span><span class="nv">$result</span><span class="s2">&quot;</span>
+
+<span class="c1"># Do some maths</span>
+<span class="nv">num1</span><span class="o">=</span><span class="m">10</span>
+<span class="nv">num2</span><span class="o">=</span><span class="m">5</span>
+<span class="nv">sum</span><span class="o">=</span><span class="k">$((</span><span class="nv">num1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">num2</span><span class="k">))</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Sum: </span><span class="nv">$sum</span><span class="s2">&quot;</span>
+
+<span class="c1"># Additional commands that won&#39;t be debugged</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Script execution completed.&quot;</span>
+</code></pre></div>
+
+<p>Hit enter to run each line. </p>
+<h3>The final word</h3>
+<p>The <code>die()</code> function can be used to print an error message and terminate a script's execution. It takes one or more arguments and prints output to stderr:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># Print error message if no inputs provided at execution</span>
+die<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">message</span><span class="o">=</span><span class="nv">$1</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">error_file</span><span class="o">=</span><span class="nv">$2</span>
+
+<span class="w">    </span><span class="c1"># Print error message to stderr</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$message</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+
+<span class="w">    </span><span class="c1"># If an error file is specified, write the error message to the file</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$error_file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$message</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$error_file</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span>Check<span class="w"> </span>error.log
+<span class="w">    </span><span class="k">fi</span>
+
+<span class="w">    </span><span class="c1"># Exit the script with a status code of 1</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="o">}</span>
+
+<span class="c1"># Example usage of the die function</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>die<span class="w"> </span><span class="s2">&quot;Usage: </span><span class="nv">$0</span><span class="s2"> &lt;filename&gt; error.log&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span>Check<span class="w"> </span>error.log
+<span class="k">fi</span>
+</code></pre></div>
+
+<h3>Resources</h3>
+<ul>
+<li><a href="https://nikoheikkila.fi/blog/don-t-use-bash-for-scripting-all-the-time/">Niko Heikkila's Don't use bash for scripting (all the time)</a></li>
+<li><a href="https://www.linode.com/docs/guides/an-intermediate-guide-to-bash-scripting/">Intermediate bash scripting</a></li>
+<li><a href="https://www.geeksforgeeks.org/how-to-exit-when-errors-occur-in-bash-scripts/">How to exit when errors occur in bash</a></li>
+<li><a href="https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001745">Best practices for scientific computing</a></li>
+<li><a href="https://github.com/SixArm/unix-shell-script-kit/blob/main/unix-shell-script-kit">Some useful shell exit codes explained</a></li>
+<li><a href="https://wizardzines.com/zines/bite-size-bash/">Julia Evans' Bite Size Bash! zine</a></li>
+</ul>
+    </div>
+  </article>
+  <script src="https://giscus.app/client.js"
+        data-repo="Sydney-Informatics-Hub/tidbits"
+        data-repo-id="R_kgDOKKuuxw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOKKuux84CY0kA"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

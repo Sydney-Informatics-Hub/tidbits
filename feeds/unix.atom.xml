@@ -1,5 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits - unix</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/unix.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2024-02-07T00:00:00+11:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Safely downloading your sequence data to RDS</title><link href="https://sydney-informatics-hub.github.io/tidbits/safely-downloading-your-sequence-data-to-rds.html" rel="alternate"></link><published>2024-02-07T00:00:00+11:00</published><updated>2024-02-07T00:00:00+11:00</updated><author><name>Georgie Samaha</name></author><id>tag:sydney-informatics-hub.github.io,2024-02-07:/tidbits/safely-downloading-your-sequence-data-to-rds.html</id><summary type="html">&lt;p&gt;Imagine you're a biologist, geneticist, vet, or clinician. You've gone through the painstaking process of extracting some genetic material from a set of samples and sent them off for next …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Imagine you're a biologist, geneticist, vet, or clinician. You've gone through the painstaking process of extracting some genetic material from a set of samples and sent them off for next generation sequencing with a commercial provider. Six weeks later you get an email from your chosen provider saying something like: &lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits - unix</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/unix.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2024-03-19T00:00:00+11:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Debugging bash</title><link href="https://sydney-informatics-hub.github.io/tidbits/debugging-bash.html" rel="alternate"></link><published>2024-03-19T00:00:00+11:00</published><updated>2024-03-19T00:00:00+11:00</updated><author><name>Georgie Samaha</name></author><id>tag:sydney-informatics-hub.github.io,2024-03-19:/tidbits/debugging-bash.html</id><summary type="html">&lt;h2&gt;Bash essentials: debugging&lt;/h2&gt;
+&lt;p&gt;If you're new to the command-line interface (CLI), there's one thing you should know - unexpected errors or bugs is inevitable. Whether you're a seasoned user of the …&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Bash essentials: debugging&lt;/h2&gt;
+&lt;p&gt;If you're new to the command-line interface (CLI), there's one thing you should know - unexpected errors or bugs is inevitable. Whether you're a seasoned user of the CLI or just dipping your toes in the world of the Unix shell, encountering typos, syntax errors, or unforeseen glitches is par for the course. &lt;/p&gt;
+&lt;p&gt;Bash reigns supreme in the Unix shell, don't let &lt;a href="https://dev.to/jmfayard/bash-is-a-terrible-programming-language-but-whats-the-alternative--oc2"&gt;the snobs convince you it isn't worth learning&lt;/a&gt; some basics if you're planning to work in the Unix shell and/or on an HPC. It is an approachable swiss army knife, especially in the context of research computing. &lt;/p&gt;
+&lt;p&gt;Unfortunately, bash doesn't naturally handle errors very well. So, it is essential to include some error handling to ensure your scripts fail well when they encounter an error and you can easily tend to the source of those errors. Let's delve into some useful techniques: &lt;/p&gt;
+&lt;h3&gt;Tough love&lt;/h3&gt;
+&lt;p&gt;Let's force bash to behave in a way that eliminates the chances of some subtle bugs from the outset by starting our script with: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-eou&lt;span class="w"&gt; &lt;/span&gt;pipefail
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You can use &lt;code&gt;set&lt;/code&gt; to change the behaviour of the shell and control script execution. By incorporating this &lt;code&gt;set&lt;/code&gt; directive above, you're doing the following: &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;set -e&lt;/code&gt; mandates immediate script termination upon any command failure &lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set -u&lt;/code&gt; treats references to undefined variables as errors which helps minimise the likelihood of subtle bugs caused by inadvertent variable omission &lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set -o pipefail&lt;/code&gt; ensures pipeline errors aren't masked. If any command in a pipeline fails, &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Run the scripts below as is, and then with &lt;code&gt;set&lt;/code&gt; commands hashed out. Note the execution of the echo command after the failed commands with/without &lt;code&gt;set&lt;/code&gt;. &lt;/p&gt;
+&lt;h4&gt;&lt;code&gt;set -e&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;This enables the errexit option which causes the shell to fail if a command returns a non-zero exit status. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-e
+
+&lt;span class="c1"&gt;# List the contents of a directory that doesn&amp;#39;t exist&lt;/span&gt;
+ls&lt;span class="w"&gt; &lt;/span&gt;fake_directory
+
+&lt;span class="c1"&gt;# This echo will not be printed as the ls command fails&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Execution finished!&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4&gt;&lt;code&gt;set -u&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;This is used to enable the nounset option which treats references to unset variables as errors. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-u
+
+&lt;span class="c1"&gt;# Try to access an undefined variable&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Value of undefined variable: &lt;/span&gt;&lt;span class="nv"&gt;$undefined_variable&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# This echo will not be printed after the undefined variable&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Execution finished!&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4&gt;&lt;code&gt;set -o pipefail&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;This is used to enable the pipefail option, causing a pipeline to return a non-zero exit status if any component fails. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-o&lt;span class="w"&gt; &lt;/span&gt;pipefail
+
+&lt;span class="c1"&gt;# Pipe the output of grep from a non-existant file to the sort command&lt;/span&gt;
+grep&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;ABCDEFG&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;fake_file.txt&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sort
+
+&lt;span class="c1"&gt;# This will return a non-exit status of 2 &lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
+
+&lt;span class="c1"&gt;# This echo will be printed after the non-zero exit status because we haven&amp;#39;t run the errexit option&lt;/span&gt;
+&lt;span class="c1"&gt;# Replace set -o pipefail with set -eo pipefail to stop echo command running&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Execution finished!&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Beautiful echo&lt;/h3&gt;
+&lt;p&gt;Echo is a very simple solution for doublechecking the output of variables and the results of commands run within your scripts to confirm everything is as it should be: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;This is the start of the script&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
+
+&lt;span class="nv"&gt;variable_A&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;hello
+&lt;span class="nv"&gt;variable_B&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;world
+
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;variable_A&lt;span class="w"&gt; &lt;/span&gt;is&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$variable_A&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;variable_B&lt;span class="w"&gt; &lt;/span&gt;is&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$variable_B&lt;/span&gt;
+
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;doing&lt;span class="w"&gt; &lt;/span&gt;something&lt;span class="w"&gt; &lt;/span&gt;with&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$variable_A&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;and&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$variable_B&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;here
+
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;This is the end of the script&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;The hero&lt;/h3&gt;
+&lt;p&gt;Another nice set command we can use is to enable debugging mode with &lt;code&gt;set -x&lt;/code&gt;. This will print each line of your script to the terminal as it is executed. It can be helpful in identifying where errors are occurring and if variables are correctly defined: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-x
+
+&lt;span class="c1"&gt;# Define some variables&lt;/span&gt;
+&lt;span class="nv"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;bar&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;world&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Concatenate variables and print the result&lt;/span&gt;
+&lt;span class="nv"&gt;result&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$foo&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$bar&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Result: &lt;/span&gt;&lt;span class="nv"&gt;$result&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Do some maths&lt;/span&gt;
+&lt;span class="nv"&gt;num1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;
+&lt;span class="nv"&gt;num2&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;5&lt;/span&gt;
+&lt;span class="nv"&gt;sum&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$((&lt;/span&gt;&lt;span class="nv"&gt;num1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;num2&lt;/span&gt;&lt;span class="k"&gt;))&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Sum: &lt;/span&gt;&lt;span class="nv"&gt;$sum&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Access an undefined variable (intentional error)&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Undefined variable: &lt;/span&gt;&lt;span class="nv"&gt;$undefined_var&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# End debugging mode&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;+x
+
+&lt;span class="c1"&gt;# Additional commands that won&amp;#39;t be debugged&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Script execution completed.&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You can also run your script with &lt;code&gt;bash -x script.sh&lt;/code&gt; without using &lt;code&gt;set -x&lt;/code&gt; within the script. It does the same thing. &lt;/p&gt;
+&lt;h3&gt;One step at a time&lt;/h3&gt;
+&lt;p&gt;If you're feeling particularly cautious, this &lt;a href="https://wizardzines.com/comics/bash-debugging/"&gt;fancy &lt;code&gt;trap&lt;/code&gt; command&lt;/a&gt; allows you to confirm every line of a script before it runs:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;trap &amp;#39;(read -p &amp;quot;[$BASH_SOURCE:$LINENO] $BASH_COMMAND&amp;quot;)&amp;#39; DEBUG
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Run it for our echo script above: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="nb"&gt;trap&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;(read -p &amp;quot;[$BASH_SOURCE:$LINENO] $BASH_COMMAND&amp;quot;)&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;DEBUG
+
+&lt;span class="c1"&gt;# Define some variables&lt;/span&gt;
+&lt;span class="nv"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;bar&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;world&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Concatenate variables and print the result&lt;/span&gt;
+&lt;span class="nv"&gt;result&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$foo&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$bar&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Result: &lt;/span&gt;&lt;span class="nv"&gt;$result&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Do some maths&lt;/span&gt;
+&lt;span class="nv"&gt;num1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;
+&lt;span class="nv"&gt;num2&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;5&lt;/span&gt;
+&lt;span class="nv"&gt;sum&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$((&lt;/span&gt;&lt;span class="nv"&gt;num1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;num2&lt;/span&gt;&lt;span class="k"&gt;))&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Sum: &lt;/span&gt;&lt;span class="nv"&gt;$sum&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Additional commands that won&amp;#39;t be debugged&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Script execution completed.&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Hit enter to run each line. &lt;/p&gt;
+&lt;h3&gt;The final word&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;die()&lt;/code&gt; function can be used to print an error message and terminate a script's execution. It takes one or more arguments and prints output to stderr:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Print error message if no inputs provided at execution&lt;/span&gt;
+die&lt;span class="o"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;message&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;error_file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# Print error message to stderr&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$message&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# If an error file is specified, write the error message to the file&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-n&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$error_file&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$message&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$error_file&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;Check&lt;span class="w"&gt; &lt;/span&gt;error.log
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# Exit the script with a status code of 1&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;exit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Example usage of the die function&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-eq&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;die&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Usage: &lt;/span&gt;&lt;span class="nv"&gt;$0&lt;/span&gt;&lt;span class="s2"&gt; &amp;lt;filename&amp;gt; error.log&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;Check&lt;span class="w"&gt; &lt;/span&gt;error.log
+&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Resources&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://nikoheikkila.fi/blog/don-t-use-bash-for-scripting-all-the-time/"&gt;Niko Heikkila's Don't use bash for scripting (all the time)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.linode.com/docs/guides/an-intermediate-guide-to-bash-scripting/"&gt;Intermediate bash scripting&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.geeksforgeeks.org/how-to-exit-when-errors-occur-in-bash-scripts/"&gt;How to exit when errors occur in bash&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001745"&gt;Best practices for scientific computing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/SixArm/unix-shell-script-kit/blob/main/unix-shell-script-kit"&gt;Some useful shell exit codes explained&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://wizardzines.com/zines/bite-size-bash/"&gt;Julia Evans' Bite Size Bash! zine&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="unix"></category><category term="bash"></category><category term="debug"></category><category term="shell"></category></entry><entry><title>Safely downloading your sequence data to RDS</title><link href="https://sydney-informatics-hub.github.io/tidbits/safely-downloading-your-sequence-data-to-rds.html" rel="alternate"></link><published>2024-02-07T00:00:00+11:00</published><updated>2024-02-07T00:00:00+11:00</updated><author><name>Georgie Samaha</name></author><id>tag:sydney-informatics-hub.github.io,2024-02-07:/tidbits/safely-downloading-your-sequence-data-to-rds.html</id><summary type="html">&lt;p&gt;Imagine you're a biologist, geneticist, vet, or clinician. You've gone through the painstaking process of extracting some genetic material from a set of samples and sent them off for next …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Imagine you're a biologist, geneticist, vet, or clinician. You've gone through the painstaking process of extracting some genetic material from a set of samples and sent them off for next generation sequencing with a commercial provider. Six weeks later you get an email from your chosen provider saying something like: &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;Dear&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Dr&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Cats&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
 
 &lt;span class="n"&gt;I&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;am&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pleased&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;inform&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;that&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;project&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;CATGENES001&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;is&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
