@@ -21,6 +21,8 @@ This should install everything you need (on the fisrt run) and launch a server h
 http://localhost:7860/
 ```
 
+![]({attach}images/local_llm_image.png)
+
 3. Download a model to run.
 The easiest is to copy a link to an llm model hosted on [Hugging Face](https://huggingface.co/TheBloke).
 This is daunting as there are thousands to choose from. You are limited by the size of your local GPU, but "bigger" is not always better anyway. Different models may be more powerful at different tasks. If you still can't decide, just get this one:
