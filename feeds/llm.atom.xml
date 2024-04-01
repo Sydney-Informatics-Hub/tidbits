@@ -20,6 +20,7 @@ bash start_macos.sh
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;http://localhost:7860/
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
+&lt;p&gt;&lt;img alt="" src="https://sydney-informatics-hub.github.io/tidbits/images/local_llm_image.png"&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Download a model to run.
 The easiest is to copy a link to an llm model hosted on &lt;a href="https://huggingface.co/TheBloke"&gt;Hugging Face&lt;/a&gt;.
