@@ -21,7 +21,7 @@ This should install everything you need (on the fisrt run) and launch a server h
 http://localhost:7860/
 ```
 
-![]({attach}images/local_llm_image.png)
+![]({attach}images/local_llm_image.png){ width=50% }
 
 3. Download a model to run.
 The easiest is to copy a link to an llm model hosted on [Hugging Face](https://huggingface.co/TheBloke).
