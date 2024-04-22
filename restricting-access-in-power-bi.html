@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  "Restricting access in Power BI" | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://sydney-informatics-hub.github.io/tidbits/restricting-access-in-power-bi.html">
+
+
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/static/css/tag_cloud.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/misc.atom.xml">  
+  <meta name="description" content="What is Power BI? Power BI is a tool by Microsoft that helps businesses understand their data. It turns raw numbers into easy-to-read charts and graphs. With Power BI, you …">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TNWWV3HK57"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TNWWV3HK57');
+</script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://sydney-informatics-hub.github.io/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  "Restricting access in Power BI"
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2024-04-22T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Mon 22 April 2024
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://sydney-informatics-hub.github.io/tidbits/category/misc.html">Misc</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/author/eden-zhang.html">Eden Zhang</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/tag/powerbi.html">#powerBI</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/dashboard.html">#dashboard</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/access.html">#access</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h3>What is Power BI?</h3>
+<p><strong>Power BI</strong> is a tool by Microsoft that helps businesses understand their data. It turns raw numbers into easy-to-read charts and graphs.</p>
+<p>With Power BI, you can:</p>
+<ul>
+<li>
+<p><strong>Connect to Data:</strong> Get information from different sources like Excel or databases.</p>
+</li>
+<li>
+<p><strong>Make Charts:</strong> Create various charts and graphs to understand trends.</p>
+</li>
+<li>
+<p><strong>Share Insights:</strong> Share your findings with your team.</p>
+</li>
+<li>
+<p><strong>Monitor in Real-Time:</strong> Keep track of important numbers as they change.</p>
+</li>
+</ul>
+<p>You can download the <a href="https://powerbi.microsoft.com/en-us/desktop/">desktop application</a>.</p>
+<p><br></p>
+<h3>Dashboards</h3>
+<p><strong>Dashboards</strong> in Power BI are like summary pages, showing the most important information at a glance, similar to a car dashboard.</p>
+<p>The interface:</p>
+<p><img alt="" src="images/pbi/interface.png"></p>
+<p>There are 3 main tabs on the LHS (from top to bottom):</p>
+<ol>
+<li><strong>Report:</strong> You create reports and visuals, where most of your creation time is spent.</li>
+<li><strong>Data:</strong> You see the tables, measures, and other data used in the data model associated with your report and transform the data fro best use in the report's model.</li>
+<li><strong>Model:</strong> You see and manage the relationships among tables in your data model.</li>
+</ol>
+<p><img alt="" src="images/pbi/sidebar.png"></p>
+<p><br></p>
+<h3>Managing user access levels</h3>
+<p>Security in Power BI is crucial for safeguarding sensitive data and ensuring authorized access. With features like row-level security (RLS) and object-level security (OLS), organizations can enforce granular permissions, restricting access to specific data rows and objects within reports. This will only affect users with <strong>Viewer</strong> permissions and doesn't apply to <em>Admins</em>, <em>Members</em> or <em>Contributors</em>.</p>
+<ul>
+<li>
+<p>RLS allows you to restrict access to specific rows of data based on user attributes.</p>
+</li>
+<li>
+<p>OLS enables you to control access to individual objects within a report or dashboard.</p>
+</li>
+</ul>
+<p>Together, these features provide powerful security controls to ensure that users only see the data they are authorized to access and interact with. However, there is no "page-level" security, you can limit what viewers see in the sense that there will be no visible drop-down menu link but they can still access the content if provided with the link, which they can copy and paste into a browser.</p>
+<p>For example:</p>
+<p><img alt="" src="images/pbi/example.png"></p>
+<h4>Assigning roles for RLS</h4>
+<p>RLS allows you to restrict access to rows of data based on the characteristics of the user viewing the data. For example, you might want to ensure that sales representatives can only see data for the customers they are responsible for.</p>
+<ol>
+<li><strong>Define Roles</strong>: In Power BI Desktop, create roles and define RLS rules in the "Manage Roles" section.</li>
+</ol>
+<p><img alt="" src="images/pbi/create_role.png"> </p>
+<p>This can be done using the in-built filters:</p>
+<p><img alt="" src="images/pbi/rls_filter.png"></p>
+<p>OR via DAX expressions:</p>
+<p><img alt="" src="images/pbi/rls_dax.png"></p>
+<ol>
+<li><strong>Assign Users or Groups</strong>: In the Power BI service, add users or groups to each role in the dataset settings.</li>
+</ol>
+<p><img alt="" src="images/pbi/rls_add_member.png"></p>
+<ol>
+<li><strong>Test and Validate</strong>: Thoroughly test each role to ensure users only access authorized data.</li>
+</ol>
+<p><img alt="" src="images/pbi/rls_test.png"></p>
+<h4>Define permissions for OLS</h4>
+<p>OLS in Power BI is about controlling who can see and interact with specific parts of your reports and dashboards.</p>
+<ol>
+<li>
+<p><strong>Identify Objects</strong>: Determine which objects in your Power BI content need restricted access.</p>
+</li>
+<li>
+<p><strong>Define Access Permissions</strong>: Decide who should view, edit, or interact with each object using roles.</p>
+</li>
+</ol>
+<p><img alt="" src="images/pbi/ols_external.png"> 
+<img alt="" src="images/pbi/ols_roles.png"></p>
+<ol>
+<li><strong>Access Settings to Manage Permissions</strong>: Navigate to workspace or report settings in Power BI. Set permissions for each object, specifying users or groups and their access level.</li>
+</ol>
+<p><img alt="" src="images/pbi/ols_define.png"></p>
+<ol>
+<li><strong>Test</strong>: Ensure permissions work as intended by testing thoroughly.</li>
+</ol>
+<p><br></p>
+<h4>Publish and maintain</h4>
+<p>Publish your report to the Power BI service, where the RLS and/or OLS rules are applied to the dataset. Regularly review and update roles as needed to adapt to changing requirements or user access patterns.</p>
+<p>For more information, see the <a href="https://learn.microsoft.com/en-us/power-bi/enterprise/">official documentation</a>.</p>
+    </div>
+  </article>
+  <script src="https://giscus.app/client.js"
+        data-repo="Sydney-Informatics-Hub/tidbits"
+        data-repo-id="R_kgDOKKuuxw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOKKuux84CY0kA"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
