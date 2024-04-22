@@ -1,5 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits - Misc</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/misc.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2024-04-19T00:00:00+10:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>"Cleaning up a server? Find big files and folders with ncdu"</title><link href="https://sydney-informatics-hub.github.io/tidbits/cleaning-up-a-server-find-big-files-and-folders-with-ncdu.html" rel="alternate"></link><published>2024-04-19T00:00:00+10:00</published><updated>2024-04-19T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:sydney-informatics-hub.github.io,2024-04-19:/tidbits/cleaning-up-a-server-find-big-files-and-folders-with-ncdu.html</id><summary type="html">&lt;p&gt;You might have used disk space analyzers like &lt;a href="https://diskanalyzer.com/"&gt;WizTree&lt;/a&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits - misc</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/misc.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2024-04-22T00:00:00+10:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>2024-04-22_powerbi_restricting_access</title><link href="https://sydney-informatics-hub.github.io/tidbits/2024-04-22_powerbi_restricting_access.html" rel="alternate"></link><published>2024-04-22T00:00:00+10:00</published><updated>2024-04-22T00:00:00+10:00</updated><author><name>Sydney Informatics Hub</name></author><id>tag:sydney-informatics-hub.github.io,2024-04-22:/tidbits/2024-04-22_powerbi_restricting_access.html</id><summary type="html">
+
+
+&lt;div class="container-fluid main-container"&gt;
+
+
+
+
+&lt;div id="header"&gt;
+
+
+
+
+&lt;/div&gt;
+
+
+&lt;p&gt;title: Restricting access in Power BI author: Eden Zhang date:
+2024-04-22 Category: PowerBI Tags: powerBI, dashboard&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;div id="what-is-power-bi" class="section level3"&gt;
+&lt;h3&gt;What is Power BI?&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Power BI&lt;/strong&gt; is a tool by Microsoft that helps
+businesses …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">
+
+
+&lt;div class="container-fluid main-container"&gt;
+
+
+
+
+&lt;div id="header"&gt;
+
+
+
+
+&lt;/div&gt;
+
+
+&lt;p&gt;title: Restricting access in Power BI author: Eden Zhang date:
+2024-04-22 Category: PowerBI Tags: powerBI, dashboard&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;div id="what-is-power-bi" class="section level3"&gt;
+&lt;h3&gt;What is Power BI?&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Power BI&lt;/strong&gt; is a tool by Microsoft that helps
+businesses understand their data. It turns raw numbers into easy-to-read
+charts and graphs.&lt;/p&gt;
+&lt;p&gt;With Power BI, you can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Connect to Data:&lt;/strong&gt; Get information from different
+sources like Excel or databases.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Make Charts:&lt;/strong&gt; Create various charts and graphs to
+understand trends.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Share Insights:&lt;/strong&gt; Share your findings with your
+team.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Monitor in Real-Time:&lt;/strong&gt; Keep track of important
+numbers as they change.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You can download the &lt;a href="https://powerbi.microsoft.com/en-us/desktop/"&gt;desktop
+application&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id="dashboards" class="section level3"&gt;
+&lt;h3&gt;Dashboards&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Dashboards&lt;/strong&gt; in Power BI are like summary pages,
+showing the most important information at a glance, similar to a car
+dashboard.&lt;/p&gt;
+&lt;p&gt;The interface:&lt;/p&gt;
+&lt;pre class="sh"&gt;&lt;code&gt;![]({attach}images/pbi/ez_1a.png)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There are 3 main tabs on the LHS (from top to bottom):&lt;/p&gt;
+&lt;ol style="list-style-type: decimal"&gt;
+&lt;li&gt;&lt;strong&gt;Report:&lt;/strong&gt; You create reports and visuals, where most
+of your creation time is spent.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data:&lt;/strong&gt; You see the tables, measures, and other data
+used in the data model associated with your report and transform the
+data fro best use in the report’s model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model:&lt;/strong&gt; You see and manage the relationships among
+tables in your data model.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="sh"&gt;&lt;code&gt;![]({attach}images/pbi/ez_1b.png)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id="managing-user-access-levels" class="section level3"&gt;
+&lt;h3&gt;Managing user access levels&lt;/h3&gt;
+&lt;p&gt;Security in Power BI is crucial for safeguarding sensitive data and
+ensuring authorized access. With features like row-level security (RLS)
+and object-level security (OLS), organizations can enforce granular
+permissions, restricting access to specific data rows and objects within
+reports. This will only affect users with &lt;strong&gt;Viewer&lt;/strong&gt;
+permissions and doesn’t apply to &lt;em&gt;Admins&lt;/em&gt;, &lt;em&gt;Members&lt;/em&gt; or
+&lt;em&gt;Contributors&lt;/em&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;RLS allows you to restrict access to specific rows of data based
+on user attributes.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;OLS enables you to control access to individual objects within a
+report or dashboard.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Together, these features provide powerful security controls to ensure
+that users only see the data they are authorized to access and interact
+with. However, there is no “page-level” security, you can limit what
+viewers see in the sense that there will be no visible drop-down menu
+link but they can still access the content if provided with the link,
+which they can copy and paste into a browser.&lt;/p&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;pre class="sh"&gt;&lt;code&gt;![]({attach}images/pbi/ez_1c.png)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id="assigning-roles-for-rls" class="section level4"&gt;
+&lt;h4&gt;Assigning roles for RLS&lt;/h4&gt;
+&lt;p&gt;RLS allows you to restrict access to rows of data based on the
+characteristics of the user viewing the data. For example, you might
+want to ensure that sales representatives can only see data for the
+customers they are responsible for.&lt;/p&gt;
+&lt;ol style="list-style-type: decimal"&gt;
+&lt;li&gt;&lt;strong&gt;Define Roles&lt;/strong&gt;: In Power BI Desktop, create roles and
+define RLS rules using the GUI or DAX expressions in the “Manage Roles”
+section.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="sh"&gt;&lt;code&gt;![]({attach}images/pbi/ez_1d.png)
+![]({attach}images/pbi/ez_1e.png)
+![]({attach}images/pbi/ez_1f.png)&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start="2" style="list-style-type: decimal"&gt;
+&lt;li&gt;&lt;strong&gt;Assign Users or Groups&lt;/strong&gt;: In the Power BI service,
+add users or groups to each role in the dataset settings.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="sh"&gt;&lt;code&gt;![]({attach}images/pbi/ez_1g.png)&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start="3" style="list-style-type: decimal"&gt;
+&lt;li&gt;&lt;strong&gt;Test and Validate&lt;/strong&gt;: Thoroughly test each role to
+ensure users only access authorized data.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="sh"&gt;&lt;code&gt;![]({attach}images/pbi/ez_1h.png)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id="define-permissions-for-ols" class="section level4"&gt;
+&lt;h4&gt;Define permissions for OLS&lt;/h4&gt;
+&lt;p&gt;OLS in Power BI is about controlling who can see and interact with
+specific parts of your reports and dashboards.&lt;/p&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;pre class="sh"&gt;&lt;code&gt;![]({attach}images/pbi/ez_1i.png)&lt;/code&gt;&lt;/pre&gt;
+&lt;ol style="list-style-type: decimal"&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Identify Objects&lt;/strong&gt;: Determine which objects in
+your Power BI content need restricted access.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Define Access Permissions&lt;/strong&gt;: Decide who should
+view, edit, or interact with each object using roles.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="sh"&gt;&lt;code&gt;![]({attach}images/pbi/ez_1j.png)
+![]({attach}images/pbi/ez_1k.png)&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start="3" style="list-style-type: decimal"&gt;
+&lt;li&gt;&lt;strong&gt;Access Settings to Manage Permissions&lt;/strong&gt;: Navigate to
+workspace or report settings in Power BI. Set permissions for each
+object, specifying users or groups and their access level.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="sh"&gt;&lt;code&gt;![]({attach}images/pbi/ez_1l.png)
+![]({attach}images/pbi/ez_1m.png)&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start="4" style="list-style-type: decimal"&gt;
+&lt;li&gt;&lt;strong&gt;Test&lt;/strong&gt;: Ensure permissions work as intended by
+testing thoroughly.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id="publish-and-maintain" class="section level4"&gt;
+&lt;h4&gt;Publish and maintain&lt;/h4&gt;
+&lt;p&gt;Publish your report to the Power BI service, where the RLS and/or OLS
+rules are applied to the dataset. Regularly review and update roles as
+needed to adapt to changing requirements or user access patterns.&lt;/p&gt;
+&lt;p&gt;For more information, see the &lt;a href="https://learn.microsoft.com/en-us/power-bi/enterprise/"&gt;official
+documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+
+
+&lt;/div&gt;
+
+&lt;script&gt;
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+&lt;/script&gt;
+
+&lt;!-- tabsets --&gt;
+
+&lt;script&gt;
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown &gt; .nav-tabs &gt; li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+&lt;/script&gt;
+
+&lt;!-- code folding --&gt;
+
+
+&lt;!-- dynamically load mathjax for compatibility with self-contained --&gt;
+&lt;script&gt;
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+&lt;/script&gt;
+
+</content><category term="misc"></category></entry><entry><title>"Cleaning up a server? Find big files and folders with ncdu"</title><link href="https://sydney-informatics-hub.github.io/tidbits/cleaning-up-a-server-find-big-files-and-folders-with-ncdu.html" rel="alternate"></link><published>2024-04-19T00:00:00+10:00</published><updated>2024-04-19T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:sydney-informatics-hub.github.io,2024-04-19:/tidbits/cleaning-up-a-server-find-big-files-and-folders-with-ncdu.html</id><summary type="html">&lt;p&gt;You might have used disk space analyzers like &lt;a href="https://diskanalyzer.com/"&gt;WizTree&lt;/a&gt;
 to find what's using up your hard drive space on your computer. 
 If you're running out of room on a server …&lt;/p&gt;</summary><content type="html">&lt;p&gt;You might have used disk space analyzers like &lt;a href="https://diskanalyzer.com/"&gt;WizTree&lt;/a&gt;
 to find what's using up your hard drive space on your computer. 
