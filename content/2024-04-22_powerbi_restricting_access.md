@@ -30,7 +30,7 @@ You can download the [desktop application](https://powerbi.microsoft.com/en-us/d
 
 The interface:
 
-![](images/pbi/ez_1a.png)
+![GUI for desktop app](images/pbi/ez_1a.png)
 
 There are 3 main tabs on the LHS (from top to bottom):
 
@@ -38,7 +38,7 @@ There are 3 main tabs on the LHS (from top to bottom):
 2.  **Data:** You see the tables, measures, and other data used in the data model associated with your report and transform the data fro best use in the report's model.
 3.  **Model:** You see and manage the relationships among tables in your data model.
 
-![](images/pbi/ez_1b.png)
+![LHS menu](images/pbi/ez_1b.png)
 
 <br>
 
@@ -58,15 +58,17 @@ RLS allows you to restrict access to rows of data based on the characteristics o
 
 1.  **Define Roles**: In Power BI Desktop, create roles and define RLS rules using the GUI or DAX expressions in the "Manage Roles" section.
 
-![](images/pbi/ez_1d.png) ![](images/pbi/ez_1e.png) ![](images/pbi/ez_1f.png)
+![Manage access toolbar](images/pbi/ez_1d.png) 
+![Rules using filter](images/pbi/ez_1e.png) 
+![Rules using DAX](images/pbi/ez_1f.png)
 
 2.  **Assign Users or Groups**: In the Power BI service, add users or groups to each role in the dataset settings.
 
-![](images/pbi/ez_1g.png)
+![Adding members](images/pbi/ez_1g.png)
 
 3.  **Test and Validate**: Thoroughly test each role to ensure users only access authorized data.
 
-![](images/pbi/ez_1h.png)
+![View as roles](images/pbi/ez_1h.png)
 
 #### Define permissions for OLS
 
@@ -74,17 +76,18 @@ OLS in Power BI is about controlling who can see and interact with specific part
 
 For example:
 
-![](images/pbi/ez_1i.png)
+![OLS example](images/pbi/ez_1i.png)
 
 1.  **Identify Objects**: Determine which objects in your Power BI content need restricted access.
 
 2.  **Define Access Permissions**: Decide who should view, edit, or interact with each object using roles.
 
-![](images/pbi/ez_1j.png) ![](images/pbi/ez_1k.png)
+![Tabular editor](images/pbi/ez_1j.png) 
+![Using roles to define permissions](images/pbi/ez_1k.png)
 
 3.  **Access Settings to Manage Permissions**: Navigate to workspace or report settings in Power BI. Set permissions for each object, specifying users or groups and their access level.
 
-![](images/pbi/ez_1l.png) ![](images/pbi/ez_1m.png)
+![Table permissions](images/pbi/ez_1m.png)
 
 4.  **Test**: Ensure permissions work as intended by testing thoroughly.
 
