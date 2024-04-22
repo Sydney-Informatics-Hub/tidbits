@@ -1,13 +1,10 @@
 ---
-editor_options: 
-  markdown: 
-    wrap: 72
+title: "Restricting access in Power BI"
+author: Eden Zhang
+date: 2024-04-22
+Category: Misc
+Tags: powerBI,dashboard,access
 ---
-
-title: Restricting access in Power BI author: Eden Zhang date:
-2024-04-22 Category: PowerBI Tags: powerBI, dashboard
-
-<br>
 
 ### What is Power BI?
 
@@ -39,9 +36,7 @@ important information at a glance, similar to a car dashboard.
 
 The interface:
 
-``` sh
-![]({attach}images/pbi/ez_1a.png)
-```
+![](images/pbi/ez_1a.png)
 
 There are 3 main tabs on the LHS (from top to bottom):
 
@@ -53,9 +48,7 @@ There are 3 main tabs on the LHS (from top to bottom):
 3.  **Model:** You see and manage the relationships among tables in your
     data model.
 
-``` sh
-![]({attach}images/pbi/ez_1b.png)
-```
+![](images/pbi/ez_1b.png)
 
 <br>
 
@@ -83,9 +76,7 @@ which they can copy and paste into a browser.
 
 For example:
 
-``` sh
-![]({attach}images/pbi/ez_1c.png)
-```
+![](images/pbi/ez_1c.png)
 
 #### Assigning roles for RLS
 
@@ -98,25 +89,19 @@ customers they are responsible for.
     rules using the GUI or DAX expressions in the "Manage Roles"
     section.
 
-``` sh
-![]({attach}images/pbi/ez_1d.png)
-![]({attach}images/pbi/ez_1e.png)
-![]({attach}images/pbi/ez_1f.png)
-```
+![](images/pbi/ez_1d.png)
+![](images/pbi/ez_1e.png)
+![](images/pbi/ez_1f.png)
 
 2.  **Assign Users or Groups**: In the Power BI service, add users or
     groups to each role in the dataset settings.
 
-``` sh
-![]({attach}images/pbi/ez_1g.png)
-```
+![](images/pbi/ez_1g.png)
 
 3.  **Test and Validate**: Thoroughly test each role to ensure users
     only access authorized data.
 
-``` sh
-![]({attach}images/pbi/ez_1h.png)
-```
+![](images/pbi/ez_1h.png)
 
 #### Define permissions for OLS
 
@@ -125,9 +110,7 @@ specific parts of your reports and dashboards.
 
 For example:
 
-``` sh
-![]({attach}images/pbi/ez_1i.png)
-```
+![](images/pbi/ez_1i.png)
 
 1.  **Identify Objects**: Determine which objects in your Power BI
     content need restricted access.
@@ -135,19 +118,15 @@ For example:
 2.  **Define Access Permissions**: Decide who should view, edit, or
     interact with each object using roles.
 
-``` sh
-![]({attach}images/pbi/ez_1j.png)
-![]({attach}images/pbi/ez_1k.png)
-```
+![](images/pbi/ez_1j.png)
+![](images/pbi/ez_1k.png)
 
 3.  **Access Settings to Manage Permissions**: Navigate to workspace or
     report settings in Power BI. Set permissions for each object,
     specifying users or groups and their access level.
 
-``` sh
-![]({attach}images/pbi/ez_1l.png)
-![]({attach}images/pbi/ez_1m.png)
-```
+![](images/pbi/ez_1l.png)
+![](images/pbi/ez_1m.png)
 
 4.  **Test**: Ensure permissions work as intended by testing thoroughly.
 
