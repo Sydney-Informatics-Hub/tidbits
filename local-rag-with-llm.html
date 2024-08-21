@@ -6,9 +6,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>  #chatgpt Articles | SIH Tech Tidbits
+  <title>  Local RAG with LLM | SIH Tech Tidbits
 </title>
-  <link rel="canonical" href="https://sydney-informatics-hub.github.io/tidbits/tag/chatgpt.html">
+  <link rel="canonical" href="https://sydney-informatics-hub.github.io/tidbits/local-rag-with-llm.html">
 
 
   <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/bootstrap.min.css">
@@ -19,7 +19,9 @@
 
   <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
         href="https://sydney-informatics-hub.github.io/tidbits/feeds/all.atom.xml">
-  
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/llm.atom.xml">  
+  <meta name="description" content="Don't want to share your private data? You can run your own local LLM to query your own documents in a couple steps with a RAG! Get a local LLM …">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TNWWV3HK57"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -70,60 +72,77 @@
 
   <div class="main">
     <div class="container">
-      <h1>  #chatgpt Articles
+      <h1>  Local RAG with LLM
 </h1>
       <hr>
-    <article class="row teaser">
-      <header class="col-sm-4 text-muted">
-        <ul>
-          <li title="2024-08-21T00:00:00+10:00">
-            <i class="fas fa-clock"></i>
-            Wed 21 August 2024
-          </li>
-          <li>
-            <i class="fas fa-folder-open"></i>
-            <a href="https://sydney-informatics-hub.github.io/tidbits/category/llm.html">llm</a>
-          </li>
-            <li>
-              <i class="fas fa-user"></i>
-                <a href="https://sydney-informatics-hub.github.io/tidbits/author/nathaniel-butterworth.html">Nathaniel Butterworth</a>            </li>
-        </ul>
-      </header>
-      <div class="col-sm-8">
-        <h4 class="title">
-          <a href="https://sydney-informatics-hub.github.io/tidbits/local-rag-with-llm.html">Local RAG with LLM</a>
-        </h4>
-        <div class="content">
-          Don't want to share your private data? You can run your own local LLM to query your own documents in a couple steps with a RAG! Get a local LLM …
-        </div>
-      </div>
-    </article>
-      <hr>
-    <article class="row teaser">
-      <header class="col-sm-4 text-muted">
-        <ul>
-          <li title="2024-03-28T00:00:00+11:00">
-            <i class="fas fa-clock"></i>
-            Thu 28 March 2024
-          </li>
-          <li>
-            <i class="fas fa-folder-open"></i>
-            <a href="https://sydney-informatics-hub.github.io/tidbits/category/llm.html">llm</a>
-          </li>
-            <li>
-              <i class="fas fa-user"></i>
-                <a href="https://sydney-informatics-hub.github.io/tidbits/author/nathaniel-butterworth.html">Nathaniel Butterworth</a>            </li>
-        </ul>
-      </header>
-      <div class="col-sm-8">
-        <h4 class="title">
-          <a href="https://sydney-informatics-hub.github.io/tidbits/run-chatgpt-at-home.html">Run chatGPT at home</a>
-        </h4>
-        <div class="content">
-          Don't want to share your private questions with chatGPT? You can run your own local version in a couple steps! Get the interface: git clone https://github.com/oobabooga/text-generation-webui …
-        </div>
-      </div>
-    </article>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2024-08-21T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Wed 21 August 2024
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://sydney-informatics-hub.github.io/tidbits/category/llm.html">llm</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/author/nathaniel-butterworth.html">Nathaniel Butterworth</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/tag/python.html">#python</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/llm.html">#llm</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/ai.html">#ai</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/chatgpt.html">#chatgpt</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/rag.html">#rag</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>Don't want to share your private data? You can run your own local LLM to query your own documents in a couple steps with a RAG!</p>
+<ol>
+<li>Get a local LLM</li>
+<li>Get <a href="https://ollama.com/download">Ollama</a></li>
+<li>Follow the instructions to install. </li>
+<li>Open a Terminal and download a model (e.g. llama3.1).</li>
+<li>And serve the model locally.</li>
+</ol>
+<div class="highlight"><pre><span></span><code>ollama pull llama3.1
+ollama serve
+</code></pre></div>
+
+<ol>
+<li>Get the interface:
+We will use <a href="https://www.langchain.com/">LangChain</a> to handle the <a href="https://js.langchain.com/v0.1/docs/modules/data_connection/vectorstores/">vector store</a> and Steamlit to give you a fancy front-end to interact with the LLM and data upload.</li>
+</ol>
+<div class="highlight"><pre><span></span><code>git clone https://github.com/Sydney-Informatics-Hub/LLM-local-RAG/
+cd LLM-local-RAG
+conda create -n localrag python=3.11 pip
+conda activate localrag
+pip install langchain streamlit streamlit_chat chromadb fastembed pypdf langchain_community
+</code></pre></div>
+
+<ol>
+<li>Start chatting!</li>
+</ol>
+<div class="highlight"><pre><span></span><code>streamlit run app.py
+</code></pre></div>
+
+<p>Upload your docs and start asking questions!</p>
+<p><img alt="" src="https://sydney-informatics-hub.github.io/tidbits/images/chatPDF.png" width="100%"></p>
+    </div>
+  </article>
+  <script src="https://giscus.app/client.js"
+        data-repo="Sydney-Informatics-Hub/tidbits"
+        data-repo-id="R_kgDOKKuuxw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOKKuux84CY0kA"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
     </div>
   </div>
 

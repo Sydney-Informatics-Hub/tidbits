@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits - llm</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/llm.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2024-03-28T00:00:00+11:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Run chatGPT at home</title><link href="https://sydney-informatics-hub.github.io/tidbits/run-chatgpt-at-home.html" rel="alternate"></link><published>2024-03-28T00:00:00+11:00</published><updated>2024-03-28T00:00:00+11:00</updated><author><name>Nathaniel Butterworth</name></author><id>tag:sydney-informatics-hub.github.io,2024-03-28:/tidbits/run-chatgpt-at-home.html</id><summary type="html">&lt;p&gt;Don't want to share your private questions with chatGPT? You can run your own local version in a couple steps!&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits - llm</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/llm.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2024-08-21T00:00:00+10:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Local RAG with LLM</title><link href="https://sydney-informatics-hub.github.io/tidbits/local-rag-with-llm.html" rel="alternate"></link><published>2024-08-21T00:00:00+10:00</published><updated>2024-08-21T00:00:00+10:00</updated><author><name>Nathaniel Butterworth</name></author><id>tag:sydney-informatics-hub.github.io,2024-08-21:/tidbits/local-rag-with-llm.html</id><summary type="html">&lt;p&gt;Don't want to share your private data? You can run your own local LLM to query your own documents in a couple steps with a RAG!&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Get a local LLM …&lt;/li&gt;&lt;/ol&gt;</summary><content type="html">&lt;p&gt;Don't want to share your private data? You can run your own local LLM to query your own documents in a couple steps with a RAG!&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Get a local LLM&lt;/li&gt;
+&lt;li&gt;Get &lt;a href="https://ollama.com/download"&gt;Ollama&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Follow the instructions to install. &lt;/li&gt;
+&lt;li&gt;Open a Terminal and download a model (e.g. llama3.1).&lt;/li&gt;
+&lt;li&gt;And serve the model locally.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;ollama pull llama3.1
+ollama serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Get the interface:
+We will use &lt;a href="https://www.langchain.com/"&gt;LangChain&lt;/a&gt; to handle the &lt;a href="https://js.langchain.com/v0.1/docs/modules/data_connection/vectorstores/"&gt;vector store&lt;/a&gt; and Steamlit to give you a fancy front-end to interact with the LLM and data upload.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git clone https://github.com/Sydney-Informatics-Hub/LLM-local-RAG/
+cd LLM-local-RAG
+conda create -n localrag python=3.11 pip
+conda activate localrag
+pip install langchain streamlit streamlit_chat chromadb fastembed pypdf langchain_community
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Start chatting!&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;streamlit run app.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Upload your docs and start asking questions!&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://sydney-informatics-hub.github.io/tidbits/images/chatPDF.png" width="100%"&gt;&lt;/p&gt;</content><category term="llm"></category><category term="python"></category><category term="llm"></category><category term="ai"></category><category term="chatgpt"></category><category term="rag"></category></entry><entry><title>Run chatGPT at home</title><link href="https://sydney-informatics-hub.github.io/tidbits/run-chatgpt-at-home.html" rel="alternate"></link><published>2024-03-28T00:00:00+11:00</published><updated>2024-03-28T00:00:00+11:00</updated><author><name>Nathaniel Butterworth</name></author><id>tag:sydney-informatics-hub.github.io,2024-03-28:/tidbits/run-chatgpt-at-home.html</id><summary type="html">&lt;p&gt;Don't want to share your private questions with chatGPT? You can run your own local version in a couple steps!&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Get the interface:&lt;/li&gt;
 &lt;/ol&gt;
