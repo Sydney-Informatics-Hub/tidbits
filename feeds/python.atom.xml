@@ -1,5 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits - Python</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/python.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2024-05-29T00:00:00+10:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Reduce Python's memory use with slots</title><link href="https://sydney-informatics-hub.github.io/tidbits/reduce-pythons-memory-use-with-slots.html" rel="alternate"></link><published>2024-05-29T00:00:00+10:00</published><updated>2024-05-29T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:sydney-informatics-hub.github.io,2024-05-29:/tidbits/reduce-pythons-memory-use-with-slots.html</id><summary type="html">&lt;p&gt;Python's classes are pretty flexible by default - you usually
+<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits - python</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/python.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2024-09-17T00:00:00+10:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Publishing Packages using Poetry</title><link href="https://sydney-informatics-hub.github.io/tidbits/publishing-packages-using-poetry.html" rel="alternate"></link><published>2024-09-17T00:00:00+10:00</published><updated>2024-09-17T00:00:00+10:00</updated><author><name>Hamish Croser</name></author><id>tag:sydney-informatics-hub.github.io,2024-09-17:/tidbits/publishing-packages-using-poetry.html</id><summary type="html">&lt;p&gt;&lt;a href="https://python-poetry.org/"&gt;Poetry&lt;/a&gt; is a command-line dependency management and packaging tool for Python. It offers commands for creating a new project, adding and removing dependencies, and managing package metadata for publishing.&lt;/p&gt;
+&lt;h2&gt;Getting …&lt;/h2&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://python-poetry.org/"&gt;Poetry&lt;/a&gt; is a command-line dependency management and packaging tool for Python. It offers commands for creating a new project, adding and removing dependencies, and managing package metadata for publishing.&lt;/p&gt;
+&lt;h2&gt;Getting started&lt;/h2&gt;
+&lt;p&gt;Poetry requires Python 3.8+. It is multi-platform and the goal is to make it work equally well on Linux, macOS and Windows.&lt;/p&gt;
+&lt;p&gt;To install poetry, use &lt;code&gt;python3 -m pip install poetry&lt;/code&gt; in the command line. Note: the environment in which Poetry is installed should be distinct from the project environment to ensure there are no conflicts between Poetry's dependencies and those of the package.&lt;/p&gt;
+&lt;p&gt;Once installed, Poetry offers two commands for getting started: &lt;code&gt;poetry new&lt;/code&gt; and &lt;code&gt;poetry init&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;poetry new &amp;lt;package-name&amp;gt;&lt;/code&gt; will create a new project directory with a default layout. Use this command if you don't have an existing project.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;poetry init&lt;/code&gt; will interactively create a pyproject.toml file. Use this command if you have an existing project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;The pyproject.toml file&lt;/h2&gt;
+&lt;p&gt;The &lt;a href="https://python-poetry.org/docs/pyproject/"&gt;pyproject.toml&lt;/a&gt; file is the human-readable source of truth for your package metadata, dependencies, and compatible Python versions.
+The &lt;code&gt;poetry init&lt;/code&gt; command will prompt you for the required information for your pyproject.toml file, and it will produce something like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;[tool.poetry]&lt;/span&gt;
+&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;example&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;0.1.0&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;description&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;An example project&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;authors&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Hamish Croser &amp;lt;h.croser1@gmail.com&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;license&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;MIT&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;readme&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;README.md&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[tool.poetry.dependencies]&lt;/span&gt;
+&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;^3.10&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;requests&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;^2.32.3&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;tqdm&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;^4.66.5&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;chardet&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;^5.2.0&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[build-system]&lt;/span&gt;
+&lt;span class="n"&gt;requires&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;poetry-core&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;build-backend&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;poetry.core.masonry.api&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Managing dependencies&lt;/h2&gt;
+&lt;p&gt;To add or remove dependencies from your package, you can either directly edit the pyproject.toml file or use &lt;code&gt;poetry add &amp;lt;dependency&amp;gt;&lt;/code&gt; and &lt;code&gt;poetry remove &amp;lt;dependency&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;While the direct dependencies are stored in the pyproject.toml file, your package's downstream dependencies will be stored in a file called poetry.lock. This file is not intended to be edited manually and can be generated by calling &lt;code&gt;poetry lock&lt;/code&gt; (or &lt;code&gt;poetry install&lt;/code&gt; if no poetry.lock exists yet). The purpose of this file is to set an exact version of all dependencies to ensure the exact environment can be recreated.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;poetry install&lt;/code&gt; command will install the dependencies specified in the poetry.lock file if it exists, or it will generate the poetry.lock file and install the dependencies if it doesn't exist.&lt;/p&gt;
+&lt;p&gt;Both the &lt;code&gt;poetry lock&lt;/code&gt; and &lt;code&gt;poetry install&lt;/code&gt; commands will resolve dependencies according to the constraints specified in the pyproject.toml file. If the dependency resolution fails, consider widening the &lt;a href="https://python-poetry.org/docs/dependency-specification/#version-constraints"&gt;dependency version constraints&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Publishing a package&lt;/h2&gt;
+&lt;h3&gt;File structure&lt;/h3&gt;
+&lt;p&gt;Poetry assumes your package contains a package with the same name as tool.poetry.name located in the root of your project. If this is not the case, populate tool.poetry.packages to specify your packages and their locations. For example if your package name is 'example-project' but your source files are located in example_project, add &lt;code&gt;packages = [{include = "example_project"}]&lt;/code&gt; under the &lt;code&gt;[tool.poetry]&lt;/code&gt; section of your pyproject.toml file to ensure the source files are found and added to the package.&lt;/p&gt;
+&lt;h3&gt;PyPI credentials&lt;/h3&gt;
+&lt;p&gt;By default, Poetry publishes packages to PyPI (Python Package Index) which will allow you to use &lt;code&gt;pip install &amp;lt;package_name&amp;gt;&lt;/code&gt; in other environments.&lt;/p&gt;
+&lt;p&gt;In order to publish to PyPI, you will first need to create a user account here: https://pypi.org/account/register/
+Once you have made an account, navigate to your account settings, scroll down to the 'API tokens' section, and add an API token.&lt;/p&gt;
+&lt;p&gt;Once you have obtained your PyPI API token, call the following in your Python environment, replacing '&lt;TOKEN&gt;' with your PyPI API token:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;poetry config pypi-token.pypi &amp;lt;TOKEN&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;Publishing the package&lt;/h3&gt;
+&lt;p&gt;Once your PyPI credentials are set, you can build and publish your package.&lt;/p&gt;
+&lt;p&gt;To build your package, use:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;poetry build&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;To publish your package, use:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;poetry publish&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;To combine the two steps into one, use:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;poetry publish --build&lt;/code&gt;&lt;/p&gt;
+&lt;h4&gt;Versioning&lt;/h4&gt;
+&lt;p&gt;Optionally, you can bump the version of your package before publishing using &lt;code&gt;poetry version &amp;lt;BUMP_RULE&amp;gt;&lt;/code&gt; where &lt;BUMP_RULE&gt; may be one of patch, minor, major, prepatch, preminor, premajor, prerelease. More details can be found here: https://python-poetry.org/docs/cli/#version&lt;/p&gt;
+&lt;h4&gt;Dry-run and testing&lt;/h4&gt;
+&lt;p&gt;Publishing a package can be risky, and it's a good idea to test things out before commiting.&lt;/p&gt;
+&lt;p&gt;When using the &lt;code&gt;publish&lt;/code&gt; command, you can add the &lt;code&gt;--dry-run&lt;/code&gt; argument like so: &lt;code&gt;poetry publish --dry-run&lt;/code&gt;. When called, this will perform all actions except uploading the package.&lt;/p&gt;
+&lt;p&gt;In addition to the above, before publishing to the main PyPI repository you can publish to PyPI's test repository: https://test.pypi.org/
+To do this, first obtain a TestPyPI API token as described earlier under PyPI credentials. Then enter the following commands:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;poetry config repositories.test-pypi https://test.pypi.org/legacy/&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;poetry config pypi-token.test-pypi &amp;lt;TEST_TOKEN&amp;gt;&lt;/code&gt; replacing &lt;TEST_TOKEN&gt; with your TestPyPI API token&lt;/p&gt;
+&lt;p&gt;The following will publish to TestPyPI:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;poetry publish -r test-pypi&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;poetry publish&lt;/code&gt; command will still publish to the standard PyPI.&lt;/p&gt;
+&lt;h2&gt;Further information&lt;/h2&gt;
+&lt;p&gt;If you plan on using Poetry for packaging or just as a dependency manager for your projects, reference the documentation as much as possible: https://python-poetry.org/docs/
+The documentation is very well laid out and contains much more information than can fit in this guide.&lt;/p&gt;</content><category term="python"></category><category term="python"></category><category term="development"></category><category term="packaging"></category></entry><entry><title>Reduce Python's memory use with slots</title><link href="https://sydney-informatics-hub.github.io/tidbits/reduce-pythons-memory-use-with-slots.html" rel="alternate"></link><published>2024-05-29T00:00:00+10:00</published><updated>2024-05-29T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:sydney-informatics-hub.github.io,2024-05-29:/tidbits/reduce-pythons-memory-use-with-slots.html</id><summary type="html">&lt;p&gt;Python's classes are pretty flexible by default - you usually
 initialize them with some attributes, but you can attach new
 attributes to them after creation:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DefaultPoint&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;

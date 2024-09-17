@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Publishing Packages using Poetry | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://sydney-informatics-hub.github.io/tidbits/publishing-packages-using-poetry.html">
+
+
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/static/css/tag_cloud.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/python.atom.xml">  
+  <meta name="description" content="Poetry is a command-line dependency management and packaging tool for Python. It offers commands for creating a new project, adding and removing dependencies, and managing package metadata for publishing. Getting …">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TNWWV3HK57"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TNWWV3HK57');
+</script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://sydney-informatics-hub.github.io/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Publishing Packages using Poetry
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2024-09-17T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Tue 17 September 2024
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://sydney-informatics-hub.github.io/tidbits/category/python.html">python</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/author/hamish-croser.html">Hamish Croser</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/tag/python.html">#python</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/development.html">#development</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/packaging.html">#packaging</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p><a href="https://python-poetry.org/">Poetry</a> is a command-line dependency management and packaging tool for Python. It offers commands for creating a new project, adding and removing dependencies, and managing package metadata for publishing.</p>
+<h2>Getting started</h2>
+<p>Poetry requires Python 3.8+. It is multi-platform and the goal is to make it work equally well on Linux, macOS and Windows.</p>
+<p>To install poetry, use <code>python3 -m pip install poetry</code> in the command line. Note: the environment in which Poetry is installed should be distinct from the project environment to ensure there are no conflicts between Poetry's dependencies and those of the package.</p>
+<p>Once installed, Poetry offers two commands for getting started: <code>poetry new</code> and <code>poetry init</code>:</p>
+<ul>
+<li><code>poetry new &lt;package-name&gt;</code> will create a new project directory with a default layout. Use this command if you don't have an existing project.</li>
+<li><code>poetry init</code> will interactively create a pyproject.toml file. Use this command if you have an existing project.</li>
+</ul>
+<h2>The pyproject.toml file</h2>
+<p>The <a href="https://python-poetry.org/docs/pyproject/">pyproject.toml</a> file is the human-readable source of truth for your package metadata, dependencies, and compatible Python versions.
+The <code>poetry init</code> command will prompt you for the required information for your pyproject.toml file, and it will produce something like this:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[tool.poetry]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;example&quot;</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;An example project&quot;</span>
+<span class="n">authors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Hamish Croser &lt;h.croser1@gmail.com&gt;&quot;</span><span class="p">]</span>
+<span class="n">license</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MIT&quot;</span>
+<span class="n">readme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;README.md&quot;</span>
+
+<span class="k">[tool.poetry.dependencies]</span>
+<span class="n">python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^3.10&quot;</span>
+<span class="n">requests</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^2.32.3&quot;</span>
+<span class="n">tqdm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^4.66.5&quot;</span>
+<span class="n">chardet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^5.2.0&quot;</span>
+
+<span class="k">[build-system]</span>
+<span class="n">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;poetry-core&quot;</span><span class="p">]</span>
+<span class="n">build-backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;poetry.core.masonry.api&quot;</span>
+</code></pre></div>
+
+<h2>Managing dependencies</h2>
+<p>To add or remove dependencies from your package, you can either directly edit the pyproject.toml file or use <code>poetry add &lt;dependency&gt;</code> and <code>poetry remove &lt;dependency&gt;</code>.</p>
+<p>While the direct dependencies are stored in the pyproject.toml file, your package's downstream dependencies will be stored in a file called poetry.lock. This file is not intended to be edited manually and can be generated by calling <code>poetry lock</code> (or <code>poetry install</code> if no poetry.lock exists yet). The purpose of this file is to set an exact version of all dependencies to ensure the exact environment can be recreated.</p>
+<p>The <code>poetry install</code> command will install the dependencies specified in the poetry.lock file if it exists, or it will generate the poetry.lock file and install the dependencies if it doesn't exist.</p>
+<p>Both the <code>poetry lock</code> and <code>poetry install</code> commands will resolve dependencies according to the constraints specified in the pyproject.toml file. If the dependency resolution fails, consider widening the <a href="https://python-poetry.org/docs/dependency-specification/#version-constraints">dependency version constraints</a>.</p>
+<h2>Publishing a package</h2>
+<h3>File structure</h3>
+<p>Poetry assumes your package contains a package with the same name as tool.poetry.name located in the root of your project. If this is not the case, populate tool.poetry.packages to specify your packages and their locations. For example if your package name is 'example-project' but your source files are located in example_project, add <code>packages = [{include = "example_project"}]</code> under the <code>[tool.poetry]</code> section of your pyproject.toml file to ensure the source files are found and added to the package.</p>
+<h3>PyPI credentials</h3>
+<p>By default, Poetry publishes packages to PyPI (Python Package Index) which will allow you to use <code>pip install &lt;package_name&gt;</code> in other environments.</p>
+<p>In order to publish to PyPI, you will first need to create a user account here: https://pypi.org/account/register/
+Once you have made an account, navigate to your account settings, scroll down to the 'API tokens' section, and add an API token.</p>
+<p>Once you have obtained your PyPI API token, call the following in your Python environment, replacing '<TOKEN>' with your PyPI API token:</p>
+<p><code>poetry config pypi-token.pypi &lt;TOKEN&gt;</code></p>
+<h3>Publishing the package</h3>
+<p>Once your PyPI credentials are set, you can build and publish your package.</p>
+<p>To build your package, use:</p>
+<p><code>poetry build</code></p>
+<p>To publish your package, use:</p>
+<p><code>poetry publish</code></p>
+<p>To combine the two steps into one, use:</p>
+<p><code>poetry publish --build</code></p>
+<h4>Versioning</h4>
+<p>Optionally, you can bump the version of your package before publishing using <code>poetry version &lt;BUMP_RULE&gt;</code> where <BUMP_RULE> may be one of patch, minor, major, prepatch, preminor, premajor, prerelease. More details can be found here: https://python-poetry.org/docs/cli/#version</p>
+<h4>Dry-run and testing</h4>
+<p>Publishing a package can be risky, and it's a good idea to test things out before commiting.</p>
+<p>When using the <code>publish</code> command, you can add the <code>--dry-run</code> argument like so: <code>poetry publish --dry-run</code>. When called, this will perform all actions except uploading the package.</p>
+<p>In addition to the above, before publishing to the main PyPI repository you can publish to PyPI's test repository: https://test.pypi.org/
+To do this, first obtain a TestPyPI API token as described earlier under PyPI credentials. Then enter the following commands:</p>
+<p><code>poetry config repositories.test-pypi https://test.pypi.org/legacy/</code></p>
+<p><code>poetry config pypi-token.test-pypi &lt;TEST_TOKEN&gt;</code> replacing <TEST_TOKEN> with your TestPyPI API token</p>
+<p>The following will publish to TestPyPI:</p>
+<p><code>poetry publish -r test-pypi</code></p>
+<p>The <code>poetry publish</code> command will still publish to the standard PyPI.</p>
+<h2>Further information</h2>
+<p>If you plan on using Poetry for packaging or just as a dependency manager for your projects, reference the documentation as much as possible: https://python-poetry.org/docs/
+The documentation is very well laid out and contains much more information than can fit in this guide.</p>
+    </div>
+  </article>
+  <script src="https://giscus.app/client.js"
+        data-repo="Sydney-Informatics-Hub/tidbits"
+        data-repo-id="R_kgDOKKuuxw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOKKuux84CY0kA"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
