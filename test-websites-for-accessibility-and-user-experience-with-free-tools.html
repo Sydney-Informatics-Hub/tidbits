@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Test websites for accessibility and user experience with free tools | SIH Tech Tidbits
+</title>
+  <link rel="canonical" href="https://sydney-informatics-hub.github.io/tidbits/test-websites-for-accessibility-and-user-experience-with-free-tools.html">
+
+
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/pygments/paraiso-dark.min.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/theme/css/theme.css">
+  <link rel="stylesheet" href="https://sydney-informatics-hub.github.io/tidbits/static/css/tag_cloud.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://sydney-informatics-hub.github.io/tidbits/feeds/web.atom.xml">  
+  <meta name="description" content="While you can test the code and logic for a website using automated testing tools like Vitest or Cypress, it can be harder to test what users see, and all …">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TNWWV3HK57"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TNWWV3HK57');
+</script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://sydney-informatics-hub.github.io/tidbits/">SIH Tech Tidbits</a></h1>
+      <p class="text-muted">Useful tips, libraries and tools from the <a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'>Sydney Informatics Hub</a> team</p>
+  </div>
+</div>
+
+<div id="search_box">
+  <h5 class="h5">Search:</h5>
+  <form>
+    <div class="form-row">
+      <div class="col-auto">
+        <input
+          class="form-control"
+          type="text"
+          name="q"
+          id="tipue_search_input"
+          pattern=".{3,}"
+          title="At least 3 characters"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="tipue_search_content"></div>
+</div>
+
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Test websites for accessibility and user experience with free tools
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2024-09-19T00:00:00+10:00">
+          <i class="fas fa-clock"></i>
+          Thu 19 September 2024
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://sydney-informatics-hub.github.io/tidbits/category/web.html">Web</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/author/marius-mather.html">Marius Mather</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://sydney-informatics-hub.github.io/tidbits/tag/webdev.html">#webdev</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/programming.html">#programming</a>,               <a href="https://sydney-informatics-hub.github.io/tidbits/tag/design.html">#design</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <p>While you can test the code and logic for a website using automated
+testing tools like <a href="https://vitest.dev/">Vitest</a> or <a href="https://www.cypress.io/">Cypress</a>,
+it can be harder to test what users see, and all the things that can
+potentially impact their experience, like:</p>
+<ul>
+<li>Page load times</li>
+<li>Layouts that jump around and shift</li>
+<li>Accessibility for users with vision issues, or users of screen readers</li>
+<li>How your site looks when you share it to social media</li>
+</ul>
+<p>There are a few automated tools that can provide quick and easy checks for
+issues you might not spot otherwise.</p>
+<h2>PageSpeed Insights (Google)</h2>
+<p><a href="https://pagespeed.web.dev/">PageSpeed Insights</a> gives a good overall breakdown
+of loading times, accessibility, and general web development best practices,
+giving you a simple overall score in each category and a breakdown
+of the specific issues it flags:</p>
+<p><img alt="Example PageSpeed results" src="images/2024-09-19-website_testing_tools/pagespeed.png"></p>
+<p>You can also perform these checks directly from Chrome's dev tools - look for
+the <strong>Lighthouse</strong> tab. You can use this to test sites that are only
+running locally/in development mode.</p>
+<h2>Mozilla Observatory</h2>
+<p><a href="https://observatory.mozilla.org/">Mozilla Observatory</a> can test your site for
+some basic security issues, which is particularly important if you're accepting
+data or authenticating users. It can be particularly useful for checking
+that your site is using HTTPS correctly, as well as letting you know about
+ways you could improve the site's <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy</a>.</p>
+<p>This is mostly relevant for sites where you're running your own server - for sites
+hosted on GitHub Pages or similar services, you may not have much control over these
+issues.</p>
+<p><img alt="Example Observatory results" src="images/2024-09-19-website_testing_tools/observatory.png"></p>
+<h2>OpenGraph Preview</h2>
+<p><a href="https://www.opengraph.xyz">OpenGraph Preview</a> can you show you how your site will look when
+shared to social media, e.g. Facebook or Twitter. These previews <a href="https://ogp.me/">use meta tags</a>
+in the header of your site, and can be tricky to get right without previewing them.</p>
+<p><img alt="Example OpenGraph preview" src="images/2024-09-19-website_testing_tools/opengraph.png"></p>
+<h2>Accessibility Checker</h2>
+<p>Tools like <a href="https://www.accessibilitychecker.org">Accessibility Checker</a> can provide a bit more
+detail on accessibility flaws that PageSpeed flags - be aware that this one seems to warn
+you a lot about potential lawsuits and tries to sell you services to fix it. But it does include
+tools for checking the exact level of contrast between foreground and background, which
+can be an important feature for users with vision issues.</p>
+    </div>
+  </article>
+  <script src="https://giscus.app/client.js"
+        data-repo="Sydney-Informatics-Hub/tidbits"
+        data-repo-id="R_kgDOKKuuxw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOKKuux84CY0kA"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://sydney-informatics-hub.github.io/tidbits/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/tipuesearch_set.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/tipuesearch_content.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sydney-informatics-hub.github.io/tidbits/static/js/activate_search.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

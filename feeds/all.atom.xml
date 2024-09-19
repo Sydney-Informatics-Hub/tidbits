@@ -1,5 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/all.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2024-09-17T00:00:00+10:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Publishing Packages using Poetry</title><link href="https://sydney-informatics-hub.github.io/tidbits/publishing-packages-using-poetry.html" rel="alternate"></link><published>2024-09-17T00:00:00+10:00</published><updated>2024-09-17T00:00:00+10:00</updated><author><name>Hamish Croser</name></author><id>tag:sydney-informatics-hub.github.io,2024-09-17:/tidbits/publishing-packages-using-poetry.html</id><summary type="html">&lt;p&gt;&lt;a href="https://python-poetry.org/"&gt;Poetry&lt;/a&gt; is a command-line dependency management and packaging tool for Python. It offers commands for creating a new project, adding and removing dependencies, and managing package metadata for publishing.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>SIH Tech Tidbits</title><link href="https://sydney-informatics-hub.github.io/tidbits/" rel="alternate"></link><link href="https://sydney-informatics-hub.github.io/tidbits/feeds/all.atom.xml" rel="self"></link><id>https://sydney-informatics-hub.github.io/tidbits/</id><updated>2024-09-19T00:00:00+10:00</updated><subtitle>Useful tips, libraries and tools from the &lt;a href='https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html'&gt;Sydney Informatics Hub&lt;/a&gt; team</subtitle><entry><title>Test websites for accessibility and user experience with free tools</title><link href="https://sydney-informatics-hub.github.io/tidbits/test-websites-for-accessibility-and-user-experience-with-free-tools.html" rel="alternate"></link><published>2024-09-19T00:00:00+10:00</published><updated>2024-09-19T00:00:00+10:00</updated><author><name>Marius Mather</name></author><id>tag:sydney-informatics-hub.github.io,2024-09-19:/tidbits/test-websites-for-accessibility-and-user-experience-with-free-tools.html</id><summary type="html">&lt;p&gt;While you can test the code and logic for a website using automated
+testing tools like &lt;a href="https://vitest.dev/"&gt;Vitest&lt;/a&gt; or &lt;a href="https://www.cypress.io/"&gt;Cypress&lt;/a&gt;,
+it can be harder to test what users see, and all …&lt;/p&gt;</summary><content type="html">&lt;p&gt;While you can test the code and logic for a website using automated
+testing tools like &lt;a href="https://vitest.dev/"&gt;Vitest&lt;/a&gt; or &lt;a href="https://www.cypress.io/"&gt;Cypress&lt;/a&gt;,
+it can be harder to test what users see, and all the things that can
+potentially impact their experience, like:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Page load times&lt;/li&gt;
+&lt;li&gt;Layouts that jump around and shift&lt;/li&gt;
+&lt;li&gt;Accessibility for users with vision issues, or users of screen readers&lt;/li&gt;
+&lt;li&gt;How your site looks when you share it to social media&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;There are a few automated tools that can provide quick and easy checks for
+issues you might not spot otherwise.&lt;/p&gt;
+&lt;h2&gt;PageSpeed Insights (Google)&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://pagespeed.web.dev/"&gt;PageSpeed Insights&lt;/a&gt; gives a good overall breakdown
+of loading times, accessibility, and general web development best practices,
+giving you a simple overall score in each category and a breakdown
+of the specific issues it flags:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Example PageSpeed results" src="images/2024-09-19-website_testing_tools/pagespeed.png"&gt;&lt;/p&gt;
+&lt;p&gt;You can also perform these checks directly from Chrome's dev tools - look for
+the &lt;strong&gt;Lighthouse&lt;/strong&gt; tab. You can use this to test sites that are only
+running locally/in development mode.&lt;/p&gt;
+&lt;h2&gt;Mozilla Observatory&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://observatory.mozilla.org/"&gt;Mozilla Observatory&lt;/a&gt; can test your site for
+some basic security issues, which is particularly important if you're accepting
+data or authenticating users. It can be particularly useful for checking
+that your site is using HTTPS correctly, as well as letting you know about
+ways you could improve the site's &lt;a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP"&gt;Content Security Policy&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This is mostly relevant for sites where you're running your own server - for sites
+hosted on GitHub Pages or similar services, you may not have much control over these
+issues.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Example Observatory results" src="images/2024-09-19-website_testing_tools/observatory.png"&gt;&lt;/p&gt;
+&lt;h2&gt;OpenGraph Preview&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.opengraph.xyz"&gt;OpenGraph Preview&lt;/a&gt; can you show you how your site will look when
+shared to social media, e.g. Facebook or Twitter. These previews &lt;a href="https://ogp.me/"&gt;use meta tags&lt;/a&gt;
+in the header of your site, and can be tricky to get right without previewing them.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Example OpenGraph preview" src="images/2024-09-19-website_testing_tools/opengraph.png"&gt;&lt;/p&gt;
+&lt;h2&gt;Accessibility Checker&lt;/h2&gt;
+&lt;p&gt;Tools like &lt;a href="https://www.accessibilitychecker.org"&gt;Accessibility Checker&lt;/a&gt; can provide a bit more
+detail on accessibility flaws that PageSpeed flags - be aware that this one seems to warn
+you a lot about potential lawsuits and tries to sell you services to fix it. But it does include
+tools for checking the exact level of contrast between foreground and background, which
+can be an important feature for users with vision issues.&lt;/p&gt;</content><category term="Web"></category><category term="webdev"></category><category term="programming"></category><category term="design"></category></entry><entry><title>Publishing Packages using Poetry</title><link href="https://sydney-informatics-hub.github.io/tidbits/publishing-packages-using-poetry.html" rel="alternate"></link><published>2024-09-17T00:00:00+10:00</published><updated>2024-09-17T00:00:00+10:00</updated><author><name>Hamish Croser</name></author><id>tag:sydney-informatics-hub.github.io,2024-09-17:/tidbits/publishing-packages-using-poetry.html</id><summary type="html">&lt;p&gt;&lt;a href="https://python-poetry.org/"&gt;Poetry&lt;/a&gt; is a command-line dependency management and packaging tool for Python. It offers commands for creating a new project, adding and removing dependencies, and managing package metadata for publishing.&lt;/p&gt;
 &lt;h2&gt;Getting …&lt;/h2&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://python-poetry.org/"&gt;Poetry&lt;/a&gt; is a command-line dependency management and packaging tool for Python. It offers commands for creating a new project, adding and removing dependencies, and managing package metadata for publishing.&lt;/p&gt;
 &lt;h2&gt;Getting started&lt;/h2&gt;
 &lt;p&gt;Poetry requires Python 3.8+. It is multi-platform and the goal is to make it work equally well on Linux, macOS and Windows.&lt;/p&gt;
