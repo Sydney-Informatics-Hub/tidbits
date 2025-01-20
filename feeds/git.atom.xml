@@ -12,11 +12,13 @@
 &lt;h2&gt;Simple approach&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;Check out a commit in which the bug occurs (usually the latest)&lt;/li&gt;
-&lt;li&gt;Enter the following commands to begin:
-    &lt;code&gt;shell
-    $ git bisect start
-    $ git bisect bad                 # Current version is bad
-    $ git bisect good v1.0.0         # v1.0.0 is known to be good&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Enter the following commands to begin:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;shell
+ $ git bisect start
+ $ git bisect bad                 # Current version is bad
+ $ git bisect good v1.0.0         # v1.0.0 is known to be good&lt;/code&gt;&lt;/p&gt;
+&lt;ol&gt;
 &lt;li&gt;Git will check out a version between the marked 'good' and 'bad' for testing. Perform the test for the bug.&lt;/li&gt;
 &lt;li&gt;If the version works correctly, enter &lt;code&gt;git bisect good&lt;/code&gt;. Otherwise, enter &lt;code&gt;git bisect bad&lt;/code&gt;. If the commit cannot be tested for a reason unrelated to the bug, enter &lt;code&gt;git bisect skip&lt;/code&gt; and Git will select another commit candidate.&lt;/li&gt;
 &lt;li&gt;Repeat steps 3 and 4 iteratively until the offending commit has been identified.&lt;/li&gt;
@@ -25,11 +27,13 @@
 &lt;p&gt;The simple approach is useful if your testing must be performed manually. If there is an automated test that will check for the bug, Git bisect can automatically test the versions and return the offending commit. In order to proceed, you will need a script that exits with code 0 if the test has passed and exists with a code between 1 and 127 (inclusive) if the test has failed.&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Check out a commit in which the bug occurs (usually the latest)&lt;/li&gt;
-&lt;li&gt;Enter the following commands to begin:
-    &lt;code&gt;shell
-    $ git bisect start
-    $ git bisect bad                 # Current version is bad
-    $ git bisect good v1.0.0         # v1.0.0 is known to be good&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Enter the following commands to begin:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;shell
+ $ git bisect start
+ $ git bisect bad                 # Current version is bad
+ $ git bisect good v1.0.0         # v1.0.0 is known to be good&lt;/code&gt;&lt;/p&gt;
+&lt;ol&gt;
 &lt;li&gt;Instead of performing the tests yourself, enter &lt;code&gt;git bisect run &amp;lt;test_script&amp;gt; &amp;lt;arguments&amp;gt;&lt;/code&gt; and Git will use the script to test each version and identify the offending commit once it is complete.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h1&gt;Git Documentation&lt;/h1&gt;
