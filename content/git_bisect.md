@@ -22,11 +22,11 @@ To get started you'll need to know:
 1. Check out a commit in which the bug occurs (usually the latest)
 2. Enter the following commands to begin:
 
- ```shell
- $ git bisect start
- $ git bisect bad                 # Current version is bad
- $ git bisect good v1.0.0         # v1.0.0 is known to be good
- ```
+```shell
+$ git bisect start
+$ git bisect bad                 # Current version is bad
+$ git bisect good v1.0.0         # v1.0.0 is known to be good
+```
 
 3. Git will check out a version between the marked 'good' and 'bad' for testing. Perform the test for the bug.
 4. If the version works correctly, enter `git bisect good`. Otherwise, enter `git bisect bad`. If the commit cannot be tested for a reason unrelated to the bug, enter `git bisect skip` and Git will select another commit candidate.
@@ -39,11 +39,11 @@ The simple approach is useful if your testing must be performed manually. If the
 1. Check out a commit in which the bug occurs (usually the latest)
 2. Enter the following commands to begin:
 
- ```shell
- $ git bisect start
- $ git bisect bad                 # Current version is bad
- $ git bisect good v1.0.0         # v1.0.0 is known to be good
- ```
+```shell
+$ git bisect start
+$ git bisect bad                 # Current version is bad
+$ git bisect good v1.0.0         # v1.0.0 is known to be good
+```
 
 3. Instead of performing the tests yourself, enter `git bisect run <test_script> <arguments>` and Git will use the script to test each version and identify the offending commit once it is complete.
 
