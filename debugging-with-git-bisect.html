@@ -107,14 +107,12 @@
 <h2>Simple approach</h2>
 <ol>
 <li>Check out a commit in which the bug occurs (usually the latest)</li>
-<li>Enter the following commands to begin:</li>
-</ol>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>bisect<span class="w"> </span>start
-$<span class="w"> </span>git<span class="w"> </span>bisect<span class="w"> </span>bad<span class="w">                 </span><span class="c1"># Current version is bad</span>
-$<span class="w"> </span>git<span class="w"> </span>bisect<span class="w"> </span>good<span class="w"> </span>v1.0.0<span class="w">         </span><span class="c1"># v1.0.0 is known to be good</span>
-</code></pre></div>
-
-<ol>
+<li>Enter the following commands to begin:
+    <pre><code class="language-shell">
+    $ git bisect start
+    $ git bisect bad                 # Current version is bad
+    $ git bisect good v1.0.0         # v1.0.0 is known to be good
+    </code></pre></li>
 <li>Git will check out a version between the marked 'good' and 'bad' for testing. Perform the test for the bug.</li>
 <li>If the version works correctly, enter <code>git bisect good</code>. Otherwise, enter <code>git bisect bad</code>. If the commit cannot be tested for a reason unrelated to the bug, enter <code>git bisect skip</code> and Git will select another commit candidate.</li>
 <li>Repeat steps 3 and 4 iteratively until the offending commit has been identified.</li>
@@ -123,15 +121,18 @@ $<span class="w"> </span>git<span class="w"> </span>bisect<span class="w"> </spa
 <p>The simple approach is useful if your testing must be performed manually. If there is an automated test that will check for the bug, Git bisect can automatically test the versions and return the offending commit. In order to proceed, you will need a script that exits with code 0 if the test has passed and exists with a code between 1 and 127 (inclusive) if the test has failed.</p>
 <ol>
 <li>Check out a commit in which the bug occurs (usually the latest)</li>
-<li>Enter the following commands to begin:</li>
-</ol>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>bisect<span class="w"> </span>start
-$<span class="w"> </span>git<span class="w"> </span>bisect<span class="w"> </span>bad<span class="w">                 </span><span class="c1"># Current version is bad</span>
-$<span class="w"> </span>git<span class="w"> </span>bisect<span class="w"> </span>good<span class="w"> </span>v1.0.0<span class="w">         </span><span class="c1"># v1.0.0 is known to be good</span>
-</code></pre></div>
-
-<ol>
-<li>Instead of performing the tests yourself, enter <code>git bisect run &lt;test_script&gt; &lt;arguments&gt;</code> and Git will use the script to test each version and identify the offending commit once it is complete.</li>
+<li>
+<p>Enter the following commands to begin:
+ <br>
+<pre><code class="language-shell">
+   $ git bisect start
+   $ git bisect bad                 # Current version is bad
+   $ git bisect good v1.0.0         # v1.0.0 is known to be good
+   </code></pre></p>
+</li>
+<li>
+<p>Instead of performing the tests yourself, enter <code>git bisect run &lt;test_script&gt; &lt;arguments&gt;</code> and Git will use the script to test each version and identify the offending commit once it is complete.</p>
+</li>
 </ol>
 <h1>Git Documentation</h1>
 <p>There is much more detail about Git bisect in the documentation, which you can find here: <a href="https://git-scm.com/docs/git-bisect">https://git-scm.com/docs/git-bisect</a></p>
