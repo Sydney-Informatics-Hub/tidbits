@@ -14,10 +14,11 @@
 &lt;li&gt;Check out a commit in which the bug occurs (usually the latest)&lt;/li&gt;
 &lt;li&gt;Enter the following commands to begin:&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;code&gt;shell
- $ git bisect start
- $ git bisect bad                 # Current version is bad
- $ git bisect good v1.0.0         # v1.0.0 is known to be good&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;bisect&lt;span class="w"&gt; &lt;/span&gt;start
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;bisect&lt;span class="w"&gt; &lt;/span&gt;bad&lt;span class="w"&gt;                 &lt;/span&gt;&lt;span class="c1"&gt;# Current version is bad&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;bisect&lt;span class="w"&gt; &lt;/span&gt;good&lt;span class="w"&gt; &lt;/span&gt;v1.0.0&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="c1"&gt;# v1.0.0 is known to be good&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 &lt;ol&gt;
 &lt;li&gt;Git will check out a version between the marked 'good' and 'bad' for testing. Perform the test for the bug.&lt;/li&gt;
 &lt;li&gt;If the version works correctly, enter &lt;code&gt;git bisect good&lt;/code&gt;. Otherwise, enter &lt;code&gt;git bisect bad&lt;/code&gt;. If the commit cannot be tested for a reason unrelated to the bug, enter &lt;code&gt;git bisect skip&lt;/code&gt; and Git will select another commit candidate.&lt;/li&gt;
@@ -29,10 +30,11 @@
 &lt;li&gt;Check out a commit in which the bug occurs (usually the latest)&lt;/li&gt;
 &lt;li&gt;Enter the following commands to begin:&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;code&gt;shell
- $ git bisect start
- $ git bisect bad                 # Current version is bad
- $ git bisect good v1.0.0         # v1.0.0 is known to be good&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;bisect&lt;span class="w"&gt; &lt;/span&gt;start
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;bisect&lt;span class="w"&gt; &lt;/span&gt;bad&lt;span class="w"&gt;                 &lt;/span&gt;&lt;span class="c1"&gt;# Current version is bad&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;bisect&lt;span class="w"&gt; &lt;/span&gt;good&lt;span class="w"&gt; &lt;/span&gt;v1.0.0&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="c1"&gt;# v1.0.0 is known to be good&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 &lt;ol&gt;
 &lt;li&gt;Instead of performing the tests yourself, enter &lt;code&gt;git bisect run &amp;lt;test_script&amp;gt; &amp;lt;arguments&amp;gt;&lt;/code&gt; and Git will use the script to test each version and identify the offending commit once it is complete.&lt;/li&gt;
 &lt;/ol&gt;

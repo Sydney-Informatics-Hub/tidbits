@@ -109,10 +109,11 @@
 <li>Check out a commit in which the bug occurs (usually the latest)</li>
 <li>Enter the following commands to begin:</li>
 </ol>
-<p><code>shell
- $ git bisect start
- $ git bisect bad                 # Current version is bad
- $ git bisect good v1.0.0         # v1.0.0 is known to be good</code></p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>bisect<span class="w"> </span>start
+$<span class="w"> </span>git<span class="w"> </span>bisect<span class="w"> </span>bad<span class="w">                 </span><span class="c1"># Current version is bad</span>
+$<span class="w"> </span>git<span class="w"> </span>bisect<span class="w"> </span>good<span class="w"> </span>v1.0.0<span class="w">         </span><span class="c1"># v1.0.0 is known to be good</span>
+</code></pre></div>
+
 <ol>
 <li>Git will check out a version between the marked 'good' and 'bad' for testing. Perform the test for the bug.</li>
 <li>If the version works correctly, enter <code>git bisect good</code>. Otherwise, enter <code>git bisect bad</code>. If the commit cannot be tested for a reason unrelated to the bug, enter <code>git bisect skip</code> and Git will select another commit candidate.</li>
@@ -124,10 +125,11 @@
 <li>Check out a commit in which the bug occurs (usually the latest)</li>
 <li>Enter the following commands to begin:</li>
 </ol>
-<p><code>shell
- $ git bisect start
- $ git bisect bad                 # Current version is bad
- $ git bisect good v1.0.0         # v1.0.0 is known to be good</code></p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>bisect<span class="w"> </span>start
+$<span class="w"> </span>git<span class="w"> </span>bisect<span class="w"> </span>bad<span class="w">                 </span><span class="c1"># Current version is bad</span>
+$<span class="w"> </span>git<span class="w"> </span>bisect<span class="w"> </span>good<span class="w"> </span>v1.0.0<span class="w">         </span><span class="c1"># v1.0.0 is known to be good</span>
+</code></pre></div>
+
 <ol>
 <li>Instead of performing the tests yourself, enter <code>git bisect run &lt;test_script&gt; &lt;arguments&gt;</code> and Git will use the script to test each version and identify the offending commit once it is complete.</li>
 </ol>
