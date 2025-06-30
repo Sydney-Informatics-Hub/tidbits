@@ -119,17 +119,17 @@ arrange() - reorder the rows of data.
 </ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># Load packages</span>
 
-<span class="kn">from</span> <span class="nn">siuba</span> <span class="kn">import</span> <span class="n">_</span><span class="p">,</span> <span class="n">group_by</span><span class="p">,</span> <span class="n">summarize</span><span class="p">,</span> <span class="n">mutate</span><span class="p">,</span>  <span class="n">arrange</span>
-<span class="kn">from</span> <span class="nn">siuba.data</span> <span class="kn">import</span> <span class="n">mtcars</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">siuba</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">group_by</span><span class="p">,</span><span class="w"> </span><span class="n">summarize</span><span class="p">,</span><span class="w"> </span><span class="n">mutate</span><span class="p">,</span><span class="w">  </span><span class="n">arrange</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">siuba.data</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">mtcars</span>
 
 <span class="p">(</span><span class="n">mtcars</span>
-  <span class="o">&gt;&gt;</span> <span class="n">group_by</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">cyl</span><span class="p">)</span>
-  <span class="o">&gt;&gt;</span> <span class="n">summarize</span><span class="p">(</span><span class="n">avg_hp</span> <span class="o">=</span> <span class="n">_</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
-  <span class="p">)</span>
+<span class="w">  </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">group_by</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">cyl</span><span class="p">)</span>
+<span class="w">  </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">summarize</span><span class="p">(</span><span class="n">avg_hp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="w">  </span><span class="p">)</span>
 
-<span class="p">(</span><span class="n">mtcars</span> <span class="o">&gt;&gt;</span> <span class="n">group_by</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">cyl</span><span class="p">)</span> <span class="o">&gt;&gt;</span> 
-    <span class="n">mutate</span><span class="p">(</span><span class="n">var</span> <span class="o">=</span> <span class="n">_</span><span class="o">.</span><span class="n">hp</span> <span class="o">-</span> <span class="n">_</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">&gt;&gt;</span> 
-    <span class="n">arrange</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">cyl</span><span class="p">))</span>
+<span class="p">(</span><span class="n">mtcars</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">group_by</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">cyl</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span>
+<span class="w">    </span><span class="n">mutate</span><span class="p">(</span><span class="k">var</span><span class="w"> </span><span class="err">= </span><span class="nv">_</span><span class="o">.</span><span class="n">hp</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">_</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span>
+<span class="w">    </span><span class="n">arrange</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">cyl</span><span class="p">))</span>
 </code></pre></div>
 
 <p>Lazy expression provides concise syntax which also reduces the need for many lambda expressions.</p>
@@ -152,52 +152,52 @@ arrange() - reorder the rows of data.
 </code></pre></div>
 
 <p>Suiba works with plotnine (the ggplot equivalent for python) to make python feel alot like R in data manipulation and plotting.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">siuba</span> <span class="kn">import</span> <span class="n">mutate</span><span class="p">,</span> <span class="n">_</span>
-<span class="kn">from</span> <span class="nn">plotnine</span> <span class="kn">import</span> <span class="n">ggplot</span><span class="p">,</span> <span class="n">aes</span><span class="p">,</span> <span class="n">geom_point</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">siuba</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">mutate</span><span class="p">,</span><span class="w"> </span><span class="n">_</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">plotnine</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">ggplot</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">,</span><span class="w"> </span><span class="n">geom_point</span>
 
 <span class="p">(</span><span class="n">mtcars</span>
-  <span class="o">&gt;&gt;</span> <span class="n">mutate</span><span class="p">(</span><span class="n">hp_per_cyl</span> <span class="o">=</span> <span class="n">_</span><span class="o">.</span><span class="n">hp</span> <span class="o">/</span> <span class="n">_</span><span class="o">.</span><span class="n">cyl</span><span class="p">)</span>
-  <span class="o">&gt;&gt;</span> <span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="s2">&quot;cyl&quot;</span><span class="p">,</span> <span class="s2">&quot;hp_per_cyl&quot;</span><span class="p">))</span>
-   <span class="o">+</span> <span class="n">geom_point</span><span class="p">()</span>
+<span class="w">  </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">mutate</span><span class="p">(</span><span class="n">hp_per_cyl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_</span><span class="o">.</span><span class="n">hp</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">_</span><span class="o">.</span><span class="n">cyl</span><span class="p">)</span>
+<span class="w">  </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="s2">&quot;cyl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;hp_per_cyl&quot;</span><span class="p">))</span>
+<span class="w">   </span><span class="o">+</span><span class="w"> </span><span class="n">geom_point</span><span class="p">()</span>
 <span class="p">)</span>
 </code></pre></div>
 
 <p>Nest and Unnest operations available.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">siuba</span> <span class="kn">import</span> <span class="n">_</span><span class="p">,</span> <span class="n">mutate</span><span class="p">,</span> <span class="n">unnest</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">siuba</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">mutate</span><span class="p">,</span><span class="w"> </span><span class="n">unnest</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="n">tagged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span>
-    <span class="s1">&#39;tags&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a,b,c&#39;</span><span class="p">,</span> <span class="s1">&#39;d,e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">]</span>
+<span class="n">tagged</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<span class="w">    </span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span>
+<span class="w">    </span><span class="s1">&#39;tags&#39;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;a,b,c&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;d,e&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;f&#39;</span><span class="p">]</span>
 <span class="p">})</span>
 
 <span class="p">(</span><span class="n">tagged</span>
-    <span class="o">&gt;&gt;</span> <span class="n">mutate</span><span class="p">(</span><span class="n">split_tags</span> <span class="o">=</span> <span class="n">_</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
-    <span class="o">&gt;&gt;</span> <span class="n">unnest</span><span class="p">(</span><span class="s2">&quot;split_tags&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">mutate</span><span class="p">(</span><span class="n">split_tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
+<span class="w">    </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">unnest</span><span class="p">(</span><span class="s2">&quot;split_tags&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 </code></pre></div>
 
 <h2>Using databases:</h2>
 <p>Interaction is the same if data is remote data such as sql table, rather than datframe. Generating the SQL query that corresponds to the data manipulation is also available with show_query().</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
-<span class="kn">from</span> <span class="nn">siuba.sql</span> <span class="kn">import</span> <span class="n">LazyTbl</span>
-<span class="kn">from</span> <span class="nn">siuba</span> <span class="kn">import</span> <span class="n">show_query</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">create_engine</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">siuba.sql</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">LazyTbl</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">siuba</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">show_query</span>
 
 <span class="c1"># copy in to sqlite</span>
-<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;sqlite:///:memory:&quot;</span><span class="p">)</span>
-<span class="n">mtcars</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s2">&quot;mtcars&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span> <span class="o">=</span> <span class="s2">&quot;replace&quot;</span><span class="p">)</span>
+<span class="n">engine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;sqlite:///:memory:&quot;</span><span class="p">)</span>
+<span class="n">mtcars</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s2">&quot;mtcars&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">engine</span><span class="p">,</span><span class="w"> </span><span class="n">if_exists</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;replace&quot;</span><span class="p">)</span>
 
 
 <span class="c1"># connect with siuba</span>
-<span class="n">tbl_mtcars</span> <span class="o">=</span> <span class="n">LazyTbl</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;mtcars&quot;</span><span class="p">)</span>
+<span class="n">tbl_mtcars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LazyTbl</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;mtcars&quot;</span><span class="p">)</span>
 
-<span class="n">query_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">tbl_mtcars</span>
-  <span class="o">&gt;&gt;</span> <span class="n">group_by</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">cyl</span><span class="p">)</span>
-  <span class="o">&gt;&gt;</span> <span class="n">summarize</span><span class="p">(</span><span class="n">avg_hp</span> <span class="o">=</span> <span class="n">_</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
-  <span class="p">)</span>
+<span class="n">query_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">tbl_mtcars</span>
+<span class="w">  </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">group_by</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">cyl</span><span class="p">)</span>
+<span class="w">  </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">summarize</span><span class="p">(</span><span class="n">avg_hp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="w">  </span><span class="p">)</span>
 <span class="c1">#Under the hood siuba’s summarize function is converting the lazy expression show in the code below to SQL</span>
 
-<span class="n">query_data</span> <span class="o">&gt;&gt;</span> <span class="n">show_query</span><span class="p">()</span>
+<span class="n">query_data</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">show_query</span><span class="p">()</span>
 </code></pre></div>
 
 <p>Comparison with other similar packages are available here:</p>
